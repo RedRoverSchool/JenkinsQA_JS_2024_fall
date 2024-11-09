@@ -1,10 +1,10 @@
 /// <reference types="cypress"/>
 describe('Check RE', ()=>{
-    it.only('Checks each in Jenkins', ()=>{
-        cy.visit('http://localhost:8080/login?from=%2F')
-        cy.get('input[id="j_username"]').type('admin')
-        cy.get('input[id="j_password"]').type('Password123')
-        cy.get('button').contains('Sign in').click()
+    it('Checks each in Jenkins', ()=>{
+        // cy.visit('http://localhost:8080/login?from=%2F')
+        // cy.get('input[id="j_username"]').type('admin')
+        // cy.get('input[id="j_password"]').type('Password123')
+        // cy.get('button').contains('Sign in').click()
       
         cy.get('a').contains('Dashboard').realHover()
        
