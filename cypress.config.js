@@ -1,7 +1,10 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  requestTimeout: 10000,
+  viewportWidth: 1920,
+  viewportHeight: 1080,
+  chromeWebSecurity: false,
+  requestTimeout: 7000,
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
