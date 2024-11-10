@@ -4,7 +4,7 @@ const PORT = Cypress.env('local.port');
 const HOST = Cypress.env('local.host');
 
 Cypress.Commands.add('cleanData', () => { 
-  var sessionId;
+  var sessionId
 
     function getUrl() {
       return `http://${HOST}:${PORT}/`
