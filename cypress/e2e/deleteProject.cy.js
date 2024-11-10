@@ -6,7 +6,7 @@ describe('US_001|Delete the project', ()=>{
     //     cy.get('button').contains('Sign in').click()})
 
     it('TC-001-1-A|Create a project', ()=>{
-        cy.get('span').contains('New Item').click()
+        cy.get('span').contains('New Item').click();
         cy.wait(5000)
         cy.get('input[name="name"]').clear()
         cy.get('input[name="name"]').type('NewPrj')

@@ -1,7 +1,7 @@
 const USERNAME = Cypress.env('local.admin.username');
 const PASSWORD = Cypress.env('local.admin.password');
 const LOCAL_PORT = Cypress.env('local.port');
-const LOCAL_HOST = Cypress.env('local.host');
+const LOCAL_HOST = Cypress.env('local.host')
 
 beforeEach(() => {
    // cy.cleanData()

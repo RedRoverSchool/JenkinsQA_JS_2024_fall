@@ -21,7 +21,7 @@ Cypress.Commands.add('cleanData', () => {
     function getCrumbFromPage(page) {
       const CRUMB_TAG = 'data-crumb-value="';
 
-      let crumbTagBeginIndex = page.indexOf(CRUMB_TAG) + CRUMB_TAG.length;
+      let crumbTagBeginIndex = page.indexOf(CRUMB_TAG) + CRUMB_TAG.length
       let crumbTagEndIndex = page.indexOf('"', crumbTagBeginIndex);
 
       return page.substring(crumbTagBeginIndex, crumbTagEndIndex);

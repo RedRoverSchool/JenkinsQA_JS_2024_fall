@@ -17,7 +17,7 @@
 import './commands'
 import './globalHooks'
 import './cleanData'
-import "cypress-real-events"
+import "cypress-real-events";
 
 Cypress.on('uncaught:exception', () => false)
 
