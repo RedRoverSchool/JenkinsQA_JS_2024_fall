@@ -1,9 +1,6 @@
 /// <reference types="cypress"/>
 describe('US_001|Delete the project', ()=>{
-    // beforeEach(() => {cy.visit('http://localhost:8080/login?from=%2F')
-    //     cy.get('input[id="j_username"]').type('admin')
-    //     cy.get('input[id="j_password"]').type('Password123')
-    //     cy.get('button').contains('Sign in').click()})
+  
 
     it('TC-001-1-A|Create a project', ()=>{
         cy.get('span').contains('New Item').click()
