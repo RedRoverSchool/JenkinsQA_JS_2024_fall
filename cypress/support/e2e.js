@@ -15,16 +15,14 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
-import 'cypress-real-events/support';
-
-
-// cy.origin('https://example.cypress.io', () => {
-//     Cypress.on('uncaught:exception', (err, runnable) => {
-//       // returning false here prevents Cypress
-//       // inside the cy.origin() method from failing the test
-//       return false
-//     })
-// })
+import "cypress-real-events"
+import './globalHooks'
+import './cleanData'
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false
+  })
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

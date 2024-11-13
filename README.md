@@ -23,7 +23,7 @@ student should create the spec containing the name of the userstory (US): ```hea
 **Spec structure:**
 
 - Each block ```describe``` should contain the name of spec file
-- Each test (```it```) should contain name of test case (```AT```) 
+- Each test (```it```) should contain name of test case (```TC```) 
 
 example:
 describe('Header', () => {
