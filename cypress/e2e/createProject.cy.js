@@ -26,5 +26,5 @@ describe('US_001 | Create the project and delete', () => {
        cy.get('button.jenkins-button.jenkins-button--primary ').click()
        cy.get('span').contains('First Project').should('not.exist')
 
- })
+        })
 })
