@@ -4,7 +4,7 @@ const LOCAL_PORT = Cypress.env('local.port');
 const LOCAL_HOST = Cypress.env('local.host');
 
 beforeEach(() => {
-   // cy.cleanData();
+    cy.cleanData();
     cy.visit(`http://${LOCAL_HOST}:${LOCAL_PORT}/login`);
       cy.get('#j_username').type(USERNAME);
       cy.get('input[name="j_password"]').type(PASSWORD);
