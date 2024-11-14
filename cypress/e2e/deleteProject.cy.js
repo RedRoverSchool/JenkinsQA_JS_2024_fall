@@ -1,6 +1,7 @@
 /// <reference types="cypress"/>
 describe('US_001|Delete the project', ()=>{
-  
+    const LOCAL_PORT = Cypress.env('local.port');
+    const LOCAL_HOST = Cypress.env('local.host');
 
     it('TC-001-1-A|Create a project', ()=>{
         cy.get('span').contains('New Item').click()
@@ -11,12 +12,11 @@ describe('US_001|Delete the project', ()=>{
         cy.get('button').contains('OK').click()
         cy.get('button').contains('Save').click()
         cy.url().should('include', 'NewPrj')
-      
-    })
-    it('TC-001-1-A|Delete a project', ()=>{
+        cy.get('#jenkins-head-icon').click()
+    
         cy.get('span').contains('NewPrj').scrollIntoView()
         cy.get('span').contains('NewPrj').realHover()
-        cy.get('button[data-href="http://localhost:8080/job/NewPrj/"]').click()
+        cy.get(`button[data-href="http://${LOCAL_HOST}:${LOCAL_PORT}/job/NewPrj/"]`).click()
         cy.get('button[href="/job/NewPrj/doDelete"]').click()
 
         cy.get('button.jenkins-button.jenkins-button--primary ').click()
