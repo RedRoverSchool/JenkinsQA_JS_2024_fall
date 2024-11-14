@@ -20,7 +20,7 @@ describe('US_001|Delete the project', ()=>{
         cy.get('button[href="/job/NewPrj/doDelete"]').click()
 
         cy.get('button.jenkins-button.jenkins-button--primary ').click()
-        cy.get('span').contains('NewPrj').should('not.exist')
+        cy.get('span').eq('NewPrj').should('not.exist')
       
     })
 
