@@ -1,5 +1,8 @@
 /// <reference types="cypress" />
-
+const USERNAME = Cypress.env('local.admin.username');
+const PASSWORD = Cypress.env('local.admin.password');
+const LOCAL_PORT = Cypress.env('local.port');
+const LOCAL_HOST = Cypress.env('local.host');
 
 
 describe('Folder Movement Tests', () => {
@@ -12,7 +15,7 @@ describe('Folder Movement Tests', () => {
         cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
         cy.get('button').contains('OK').click()
         cy.get('button').contains('Save').click()
-        cy.get('[src="/static/c8d61ae5/images/title.svg"]').click()
+        cy.get('#jenkins-home-link').click()
         cy.get('span').contains('New Item').click()
         cy.wait(1000)
         cy.get('input[name="name"]').clear()
@@ -25,8 +28,8 @@ describe('Folder Movement Tests', () => {
 
     it('Selects path to move a folder', () => {
         cy.get('[href="job/Folder_02/"]').realHover({ position: 'center' })
-        cy.get('[data-href="http://localhost:8080/job/Folder_02/"]').should('be.visible')
-        cy.get('[data-href="http://localhost:8080/job/Folder_02/"]').click();
+        cy.get(`[data-href="http://${LOCAL_HOST}:${LOCAL_PORT}/job/Folder_02/"]`).should('be.visible')
+        cy.get(`[data-href="http://${LOCAL_HOST}:${LOCAL_PORT}/job/Folder_02/"]`).click();
         cy.get('[href="/job/Folder_02/move"]').should('be.visible')
         cy.get('[href="/job/Folder_02/move"]').click();
         cy.get('[name="destination"].select').should('be.visible')
