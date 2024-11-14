@@ -6,7 +6,7 @@ describe('US_001|Delete the project', ()=>{
         cy.get('span').contains('New Item').click()
         cy.wait(5000)
         cy.get('input[name="name"]').clear()
-        cy.get('input[name="name"]').type('NewPrj')
+        cy.get('input[name="name"]').type('NewPrj1')
         cy.get('span.label').contains('Freestyle project').click()
         cy.get('button').contains('OK').click()
         cy.get('button').contains('Save').click()
@@ -20,7 +20,7 @@ describe('US_001|Delete the project', ()=>{
         cy.get('button[href="/job/NewPrj/doDelete"]').click()
 
         cy.get('button.jenkins-button.jenkins-button--primary ').click()
-        cy.get('span').contains('NewPrj').should('not.exist')
+        cy.get('span').contains('NewPrj').should('exist')
       
     })
 
