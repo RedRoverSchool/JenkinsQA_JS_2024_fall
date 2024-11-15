@@ -51,7 +51,7 @@ describe('Folder Movement Tests', () => {
         cy.get('[name="Submit"]').click();
     });
 
-    it('Delete creates two folders', () => {
+    it('Delete two folders', () => {
         cy.get('span').contains('Folder_01').scrollIntoView()
         cy.get('span').contains('Folder_01').realHover()
         cy.get('button[data-href="http://localhost:8080/job/Folder_01/"]').click()
