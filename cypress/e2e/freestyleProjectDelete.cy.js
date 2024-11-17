@@ -1,6 +1,5 @@
 /// <reference types="cypress"/>
 
-
 describe('Freestyle project Delete', () => {
   beforeEach('Create freestyle project', () => {
     cy.get('a[href="newJob"]').click()
