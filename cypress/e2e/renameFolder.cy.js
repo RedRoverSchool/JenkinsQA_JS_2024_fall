@@ -8,7 +8,6 @@ describe('Folder > Rename Folder', () => {
     it('Successfully enter a valid folder name in the special field', () => {
         //preconditions
         cy.get('span').contains('New Item').click()
-        cy.wait(1000)
         cy.get('input[name="name"]').clear()
         cy.get('input[name="name"]').type('Test Folder')
         cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
