@@ -1,4 +1,7 @@
 /// <reference types="cypress" />
+
+const projectName = 'New Freestyle Project';
+const projectDescription = 'New Freestyle Project Description';
   
 describe('US_00.001 | New item > Create Freestyle Project', () => {
     
@@ -13,8 +16,6 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
     });
     
     it('TC_00.001.02 | New item > Create Freestyle Project > Verify a new freestyle project can be created from the Dahsboard page', () => {
-        
-        const projectName = 'New Freestyle Project';
 
         cy.get('a[href$="/newJob"]').click();
         cy.get('input#name').type(projectName);
@@ -34,6 +35,19 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('#items li[class$="FreeStyleProject"]').click();
         
         cy.get('div[class$="validation-message"]').should('have.text', emptyFieldReminder);
+
+    });
+
+    it('TC_00.001.05 | New item > Create Freestyle Project > Verify a description can be added when creating a new Freestyle Project', () => {
+        
+        cy.get('a[href$="/newJob"]').click();
+        cy.get('input#name').type(projectName);
+        cy.get('#items li[class$="FreeStyleProject"]').click();
+        cy.get('button[id="ok-button"]').click();
+        cy.get('textarea[name="description"]').type(projectDescription);
+        cy.get('button[name="Submit"]').click();
+
+        cy.get('div#description').should('have.text', projectDescription);
 
     });
     
