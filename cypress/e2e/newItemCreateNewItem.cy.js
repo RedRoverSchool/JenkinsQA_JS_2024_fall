@@ -6,7 +6,7 @@ describe('US_00.000 | New Item > Create New item', () => {
         cy.get('input#j_username').type('admin')
         cy.get('input#j_password').type('admin')
         cy.get('button.jenkins-button.jenkins-button--primary').contains('Sign in').click()
-        cy.get('span').contains(jobName).should('not.exist')
+        cy.get('h1').contains('Welcome to Jenkins!').should('be.visible')
         cy.get('a[href="newJob"]').contains('Create a job').click()
         cy.get('input#name.jenkins-input').type(jobName)
         cy.get('.desc').eq(0).click()
