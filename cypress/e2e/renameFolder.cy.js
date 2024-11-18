@@ -5,7 +5,7 @@ const LOCAL_PORT = Cypress.env('local.port');
 const LOCAL_HOST = Cypress.env('local.host');
 
 describe('Folder > Rename Folder', () => {
-    it('Verify to rename the folder from drop-down menu of the folder element in the breadcrumbs', () => {
+    it('US_04.001 |Verify to rename the folder from drop-down menu of the folder element in the breadcrumbs', () => {
         cy.get('span').contains('New Item').click()
         cy.wait(1000)
         cy.get('input[name="name"]').clear()
