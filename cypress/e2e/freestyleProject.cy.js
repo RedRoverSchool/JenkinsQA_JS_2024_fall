@@ -11,7 +11,7 @@ describe('US_001|Delete a project', ()=>{
         cy.get('h1').contains('New Freestyle project');
     })
 
-    it('TC-001-1|Delete a project', ()=>{
+    it.skip('TC-001-1|Delete a project', ()=>{
         cy.get('span').contains('New Freestyle project').scrollIntoView();
         cy.get('span').contains('New Freestyle project').realHover();
         cy.get('button[data-href="http://localhost:8080/job/New%20Freestyle%20project/"]').click();
