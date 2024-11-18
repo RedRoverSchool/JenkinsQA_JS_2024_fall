@@ -3,7 +3,7 @@
 describe('create a "New item', () => {
 
 it('create new item from the "New Item" link in the left sidebar', () => {
-    cy.get(".task-link.task-link-no-confirm[it='hudson.model.Hudson@3b9563cc']").click()
+    cy.get(':nth-child(1) > .task-link-wrapper > .task-link').click()
     cy.url().should('include', '/newJob')
     cy.get('input[name="name"]').type("test2")
     cy.get(".hudson_model_FreeStyleProject").click()
