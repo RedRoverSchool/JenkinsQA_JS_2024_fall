@@ -4,7 +4,7 @@ const PASSWORD = Cypress.env('local.admin.password');
 const LOCAL_PORT = Cypress.env('local.port');
 const LOCAL_HOST = Cypress.env('local.host');
 
-describe('Folder > Rename Folder', () => {
+describe('US_04.001 |Folder > Rename Folder', () => {
         it('Verify that error message is displayed when an invalid folder name is entered in the Rename Folder field', () => {
             cy.get('span').contains('New Item').click()
             cy.wait(1000)
