@@ -32,6 +32,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
 
         cy.get('a[href$="/newJob"]').click();
         cy.get('#items li[class$="FreeStyleProject"]').click();
+        
         cy.get('div[class$="validation-message"]').should('have.text', emptyFieldReminder);
 
     });
