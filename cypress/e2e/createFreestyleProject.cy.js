@@ -90,7 +90,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('div[class$="validation-message"]').should('have.text', duplicateNameError);
         cy.get('button[id="ok-button"]')
           .should('be.disabled')
-          .should('be.visible');
+          .and('be.visible');
 
     });
 });
