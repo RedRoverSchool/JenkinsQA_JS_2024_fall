@@ -49,6 +49,16 @@ describe('US_14.002 | Header > Search Box', () => {
       });
 
   });
+  
+  it('TC_14.002.09 | Verify that the selection of an auto-complete suggestion redirects to the relevant page', () => {
+    
+    cy.get('input#search-box').type('lo');
+    cy.get('div#search-box-completion li').eq(0).click();
+    cy.get('input#search-box').type('{Enter}');
+
+    cy.get('div#main-panel h1').should('include.text', 'Log Recorders');
+
+  });
 
   it("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
     cy.get("*.hidden-sm").contains('admin').click()
