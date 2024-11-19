@@ -116,7 +116,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('button[name="Submit"]').click();
 
         cy.get('a').contains("Dashboard").click();
-        cy.get(`td a[href="job/${projectName}/"]`).click()
+        cy.get('table[id="projectstatus"] tbody').contains(projectName).click()
         cy.get(':nth-child(6) > .task-link-wrapper > .task-link').click();
         cy.get('button[data-section-id="build-triggers"]').click()
 
