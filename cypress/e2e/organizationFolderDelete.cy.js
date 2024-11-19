@@ -11,8 +11,8 @@ describe('US_06.005 | Organization folder > Delete Organization Folder', () => {
         cy.get('[name="Submit"]').click();
         cy.get('[id="main-panel"]').should('contain.text', `${name}`)
 
-        cy.get('a[href*="/delete"]').click();
-        cy.get('[name="Submit"]').click();
+        cy.get('[class="task "]').contains("Delete Organization Folder").click();
+        cy.get('button').contains('Yes').click();
         cy.get('h1').should('not.contain.text', `${name}`);
     });
 });
