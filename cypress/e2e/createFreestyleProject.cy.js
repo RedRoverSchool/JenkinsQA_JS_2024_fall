@@ -102,4 +102,15 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
 
     });
 
+    it('TC_00.001.10 | Create Freestyle Project using the "New Item" button', () => {
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(projectName);
+        cy.get('div').contains('Freestyle project').click();
+        cy.get('button#ok-button').click();
+        cy.get('button:contains("Save")').click();
+        cy.get('a:contains("Dashboard")').click();
+
+        cy.get('td a').should('contain', projectName);
+    });
+
 });
