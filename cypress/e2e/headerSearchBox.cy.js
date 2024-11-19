@@ -34,5 +34,20 @@ describe('US_14.002 | Header > Search Box', () => {
         cy.get('.yui-ac-content').its('length').should('be.greaterThan', 0);
         cy.get('#item_config').should('contain.text', 'config');
         cy.get('#item_configure').should('contain.text', 'configure');
-  });     
+  });
+
+  it('TC_14.002.07 | Verify the search box provides auto-completion', () => {
+
+    const autoCompletionItems = ['config', 'configure'];
+    
+    cy.get('input#search-box').type('con');
+    cy.get('div#search-box-completion li')
+      .filter(':visible')
+      .should('have.length', autoCompletionItems.length)
+      .each((item, index) => {
+        cy.wrap(item).should('have.text', autoCompletionItems[index]);
+      });
+
+  });
+
 });
