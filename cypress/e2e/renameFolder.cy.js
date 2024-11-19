@@ -21,7 +21,7 @@ describe('Folder > Rename Folder', () => {
         cy.get('[href="job/Test%20Folder/"] .jenkins-menu-dropdown-chevron').click();
         cy.get('.jenkins-dropdown__item[href="/job/Test%20Folder/confirm-rename"]').click();
         cy.get('[checkdependson="newName"]').click();
-        cy.get('[checkdependson="newName"]').type(' 1219').should('have.value', 'Test Folder 1219'); 
+        cy.get('[checkdependson="newName"]').type(' 1219').should('have.value', 'Test Folder 1219');
     });
 
     it('Enter a folder name in a non-Latin language', () => {
@@ -44,10 +44,28 @@ describe('Folder > Rename Folder', () => {
         // manually deleting the folder.
         cy.get('[formnovalidate="formNoValidate"]').click();
         cy.get('h1').invoke('text')
-        .then((text) =>{
-            expect(text.trim()).to.eq('Тестовая 日本語 中文');
-        })
+            .then((text) => {
+                expect(text.trim()).to.eq('Тестовая 日本語 中文');
+            })
         cy.get('[data-title="Delete Folder"]').click();
         cy.get('[data-id="ok"]').click();
     });
-});
+
+    it('Verify that error message is displayed when an invalid folder name is entered in the Rename Folder field', () => {
+        cy.get('span').contains('New Item').click()
+        cy.get('input[name="name"]').type('Folder1')
+        cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
+        cy.get('button').contains('OK').click()
+        cy.get('button').contains('Save').click()
+        cy.get('#jenkins-home-link').click()
+        cy.get('[href="job/Folder1/"]').realHover({ position: 'center' })
+        cy.get(`[data-href="http://${LOCAL_HOST}:${LOCAL_PORT}/job/Folder1/"]`).should('be.visible')
+        cy.get(`[data-href="http://${LOCAL_HOST}:${LOCAL_PORT}/job/Folder1/"]`).click();
+        cy.get('a[href="/job/Folder1/confirm-rename"]').click()
+        cy.get('input[name="newName"]').clear()
+        cy.get('input[name="newName"]').type('Folder*')
+        cy.get('button[name="Submit"]').click()
+        cy.get('div[id="main-panel"]').should('contain', 'is an unsafe character')
+    });
+})
+
