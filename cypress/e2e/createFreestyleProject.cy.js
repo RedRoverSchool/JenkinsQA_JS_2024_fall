@@ -6,7 +6,7 @@ const folderName = 'New Folder';
   
 describe('US_00.001 | New item > Create Freestyle Project', () => {
     
-    it('Create a new Freestyle Project using the "New Item" button from the Dashboard', () => {
+    it('TC_00.001.03 | Create a new Freestyle Project using the "New Item" button from the Dashboard', () => {
         cy.get(':nth-child(1) > .task-link-wrapper > .task-link').first().click();
         cy.get('.jenkins-input').type('Sandra');
         cy.get('.label').first().click();
