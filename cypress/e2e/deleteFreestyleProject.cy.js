@@ -13,6 +13,6 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
         cy.get('button[data-href="http://localhost:8080/job/New%20Freestyle%20project/"]').click();
         cy.get('button[href="/job/New%20Freestyle%20project/doDelete"]').click();
         cy.get('button.jenkins-button.jenkins-button--primary ').click();
-        cy.get('span').contains('New Freestyle project').should('not.exist');
+        cy.get('#main-panel h1').should('have.text', "Welcome to Jenkins!");
     })
 })
