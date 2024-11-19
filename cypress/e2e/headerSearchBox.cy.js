@@ -49,7 +49,7 @@ describe('US_14.002 | Header > Search Box', () => {
       });
 
   });
-  
+
     it("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
     cy.get("*.hidden-sm").contains('admin').click()
     cy.get(".task-link-text").contains('Configure').click({force: true})
@@ -61,4 +61,3 @@ describe('US_14.002 | Header > Search Box', () => {
   })
 });
 
-});
