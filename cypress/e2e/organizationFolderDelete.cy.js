@@ -8,11 +8,10 @@ describe('US_06.005 | Organization folder > Delete Organization Folder', () => {
         cy.get('[class="jenkins_branch_OrganizationFolder"]').click();
         cy.get('[id="ok-button"]').click();
         cy.get('[name="Submit"]').click();
-        cy.get('[id="main-panel"]').should('contain.text', name)
+        cy.get('[id="main-panel"]').should('contain.text', name);
     });
 
     it('TC_06.005-01 | Delete Organization Folder on project page', () => {
-   
         cy.get('[class="task "]').contains("Delete Organization Folder").click();
         cy.get('button').contains('Yes').click();
         cy.get('[id="main-panel"]').should('not.contain.text', name);
@@ -21,11 +20,10 @@ describe('US_06.005 | Organization folder > Delete Organization Folder', () => {
     it('TC_06.005-02 | Delete Organization Folder via folder dropdown menu under the header', () => {
         cy.get(':nth-child(3) > .model-link').contains(name).trigger('mouseover');
         cy.get(':nth-child(3) > .model-link > .jenkins-menu-dropdown-chevron').click({force:true});
-        cy.get('.jenkins-dropdown > [href$="/delete"]');
-        cy.get('a[class$="dropdown__item "][href$="/delete"]').click();
-     
-        cy.get('[class="task "]').contains("Delete Organization Folder").click();
+        cy.get('.jenkins-dropdown > [href$="elete"]');
+        cy.get('a[class$="dropdown__item "][href$="elete"]').click();
         cy.get('button').contains('Yes').click();
+ 
         cy.get('[id="main-panel"]').should('not.contain.text', name);
     });
 });
