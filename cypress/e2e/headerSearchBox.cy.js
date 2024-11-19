@@ -49,7 +49,7 @@ describe('US_14.002 | Header > Search Box', () => {
       });
 
   });
-
+  
   it('TC_14.002.09 | Verify that the selection of an auto-complete suggestion redirects to the relevant page', () => {
     
     cy.get('input#search-box').type('lo');
@@ -60,4 +60,15 @@ describe('US_14.002 | Header > Search Box', () => {
 
   });
 
+  it("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
+    cy.get("*.hidden-sm").contains('admin').click()
+    cy.get(".task-link-text").contains('Configure').click({force: true})
+    cy.get("[name='insensitiveSearch']").check({force: true})
+    cy.get("[name='Submit']").click()
+    cy.get("#search-box").click();
+    cy.get("#search-box").type("MA");
+    
+    cy.get(".yui-ac-bd").should('have.text', 'manage')
+  })
 });
+
