@@ -48,7 +48,6 @@ describe('Folder > Rename Folder', () => {
             expect(text.trim()).to.eq('Тестовая 日本語 中文');
         })
         cy.get('[data-title="Delete Folder"]').click();
-        cy.wait(1000)
         cy.get('[data-id="ok"]').click();
     });
 });
