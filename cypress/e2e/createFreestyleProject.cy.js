@@ -6,7 +6,7 @@ const folderName = 'New Folder';
   
 describe('US_00.001 | New item > Create Freestyle Project', () => {
     
-    it('Create a new Freestyle Project using the "New Item" button from the Dashboard', () => {
+    it('TC_00.001.03 | Create a new Freestyle Project using the "New Item" button from the Dashboard', () => {
         cy.get(':nth-child(1) > .task-link-wrapper > .task-link').first().click();
         cy.get('.jenkins-input').type('Sandra');
         cy.get('.label').first().click();
@@ -69,7 +69,15 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('#main-panel').should('include.text', `${folderName}/${projectName}`);
 
     });
-    
+
+    it('TC_00.001-08 | Friendly messages are shown', () =>{
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('.hudson_model_FreeStyleProject').click();
+
+        cy.get('#itemname-required').should('be.visible').and('have.text', '» This field cannot be empty, please enter a valid name');
+        cy.get('#ok-button').should('be.disabled');
+    });
+  
     it('TC_00.001.07 | Verify that duplicate names are not accepted during project creation', () => {
         
         const duplicateNameError = `» A job already exists with the name ‘${projectName}’`
@@ -93,4 +101,5 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
           .and('be.visible');
 
     });
+
 });
