@@ -3,7 +3,6 @@
 describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
     it('TC_00.001.04 A|FreestyleProject > Delete Project from the dashboard', () => {
         cy.get('span').contains('Create a job').click();
-        cy.wait(500);
         cy.get('input[name="name"]').type('New Freestyle project');
         cy.get('span.label').contains('Freestyle project').click();
         cy.get('button').contains("OK").click();
