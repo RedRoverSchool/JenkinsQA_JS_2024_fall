@@ -46,7 +46,7 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get("a#jenkins-home-link").click();
         cy.get("table.jenkins-table.sortable").contains(jobName).should("exist");
     });
-    it('TC_00_000.03 | New Item > Create New item | From the "New Item" link in the left sidebar', () => {
+    it('TC_00.000.03 | New Item > Create New item | From the "New Item" link in the left sidebar', () => {
         cy.get(':nth-child(1) > .task-link-wrapper > .task-link').click();
         cy.url().should('include', '/newJob');
         cy.get('input[name="name"]').type('test2');
