@@ -13,6 +13,5 @@ describe('US_04.001|Folder > Rename Folder', ()=>{
         cy.get('input[name ="newName"]').type('Folder1')
         cy.get('button[name="Submit"]').click()
         cy.url().should('include', 'Folder1')
-        
-    })
+            })
 })
