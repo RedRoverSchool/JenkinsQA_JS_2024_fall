@@ -36,7 +36,21 @@ describe('US_14.002 | Header > Search Box', () => {
         cy.get('#item_configure').should('contain.text', 'configure');
   });
 
-  it("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
+  it('TC_14.002.07 | Verify the search box provides auto-completion', () => {
+
+    const autoCompletionItems = ['config', 'configure'];
+    
+    cy.get('input#search-box').type('con');
+    cy.get('div#search-box-completion li')
+      .filter(':visible')
+      .should('have.length', autoCompletionItems.length)
+      .each((item, index) => {
+        cy.wrap(item).should('have.text', autoCompletionItems[index]);
+      });
+
+  });
+  
+    it("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
     cy.get("*.hidden-sm").contains('admin').click()
     cy.get(".task-link-text").contains('Configure').click({force: true})
     cy.get("[name='insensitiveSearch']").check({force: true})
@@ -45,4 +59,6 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get("#search-box").type("MA");
     cy.get(".yui-ac-bd").should('have.text', 'manage')
   })
+});
+
 });
