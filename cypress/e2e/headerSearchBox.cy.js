@@ -60,4 +60,12 @@ describe('US_14.002 | Header > Search Box', () => {
 
   });
 
+  it('TC_14.002.10 | Verify that the warning message is displayed when no matches are found', () => {
+    
+    cy.get('input#search-box').type('no matches{Enter}');
+
+    cy.get('.error').should('have.text', 'Nothing seems to match.');
+    
+  });
+
 });
