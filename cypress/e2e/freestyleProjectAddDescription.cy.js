@@ -1,9 +1,10 @@
 /// <reference types="cypress"/>
 
 describe("US_01.001 | FreestyleProject > Add description", () => {
-  
+
   const newItemName = "Freestyle Project Name_1";
   const description = "New description for Freestyle Project";
+  const newDescription = "Updated project description";
 
   beforeEach(() => {
     cy.get('[href="/view/all/newJob"]').click();
@@ -34,5 +35,19 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
     cy.get('[id="description"]')
       .should("be.visible")
       .and("have.text", description);
+  });
+
+  it("TC_01.001.03 | Verify updating an existing description", () => {
+   
+    cy.get('[name="Submit"]').click();
+    cy.get('#breadcrumbBar [href="/"]').click();
+    cy.get('#projectstatus [href^="job/"]').first().click();
+    cy.get('[id="description"]').should("exist");
+    cy.get('[href="editDescription"]').click();
+    cy.get(".jenkins-input").clear().type(newDescription);
+    cy.get('[name="Submit"]').click();
+    cy.get("#description")
+      .should("be.visible")
+      .and("have.text", newDescription);
   });
 });
