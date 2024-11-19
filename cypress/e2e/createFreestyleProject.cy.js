@@ -70,7 +70,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
 
     });
     
-    it.only('TC_00.001.07 | Verify that duplicate names are not accepted during project creation', () => {
+    it('TC_00.001.07 | Verify that duplicate names are not accepted during project creation', () => {
         
         const duplicateNameError = `» A job already exists with the name ‘${projectName}’`
         
