@@ -69,5 +69,13 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('#main-panel').should('include.text', `${folderName}/${projectName}`);
 
     });
-    
+
+    it('TC_00.001-08 | Friendly messages are shown', () =>{
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('.hudson_model_FreeStyleProject').click();
+
+        cy.get('#itemname-required').should('be.visible').and('have.text', '» This field cannot be empty, please enter a valid name');
+        cy.get('#ok-button').should('be.disabled');
+    });
+
 });
