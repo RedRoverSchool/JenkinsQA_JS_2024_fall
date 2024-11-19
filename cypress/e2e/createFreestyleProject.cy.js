@@ -70,4 +70,27 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
 
     });
     
+    it.only('TC_00.001.07 | Verify that duplicate names are not accepted during project creation', () => {
+        
+        const duplicateNameError = `» A job already exists with the name ‘${projectName}’`
+        
+        cy.get('a[href$="/newJob"]').click();
+        cy.get('input#name').type(projectName);
+        cy.get('#items li').then((items) => {
+            const randomIndex = Math.floor(Math.random() * items.length);
+            cy.wrap(items).eq(randomIndex).click();
+        });
+        cy.get('button[id="ok-button"]').click();
+        cy.get('button[name="Submit"]').click();
+        cy.get('li[class="jenkins-breadcrumbs__list-item"]').eq(0).click();
+        cy.get('a[href$="/newJob"]').click();
+        cy.get('input#name').type(projectName);
+        cy.get('#items li[class$="FreeStyleProject"]').click();
+
+        cy.get('div[class$="validation-message"]').should('have.text', duplicateNameError);
+        cy.get('button[id="ok-button"]')
+          .should('be.disabled')
+          .should('be.visible');
+
+    });
 });
