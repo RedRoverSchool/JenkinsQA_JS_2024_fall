@@ -137,7 +137,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
             .should('have.text', scheduleBuild)
     })
         
-    it.only('TC_00.001-11 | Create Freestyle Project by clicking on Create a Job', () => {
+    it('TC_00.001-11 | Create Freestyle Project by clicking on Create a Job', () => {
         cy.get('a[href="newJob"]').click();
         cy.get('[id="name"]').type(projectName);
         cy.get('[class="hudson_model_FreeStyleProject"]').click();
