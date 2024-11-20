@@ -6,4 +6,5 @@ describe('US_14.003| Header > Click Log out', () => {
         cy.get('.app-sign-in-register__content-inner').contains('Sign in to Jenkins').should('exist')
         cy.url().should('eq', 'http://localhost:8080/login?from=%2F')
     })
+
 })
