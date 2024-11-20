@@ -16,7 +16,7 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get(".jenkins-app-bar h1").should('contain.text', 'testJob')
   });
 
-  it('TC_14.002-04 | Message that no matches found', ()=>{
+  it('TC_14.002-04 | Message that no matches found', () => {
     let unicNameProject = "The most unique project name is 12-35658_312"
     cy.get('input[name="q"]').type(unicNameProject + '{enter}')
     cy.url().should('includes', '/search/')
@@ -27,18 +27,18 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('div#main-panel > div.error').should('have.css', 'color', 'rgb(230, 0, 31)')
     cy.get('div#main-panel > div.error').contains("Nothing seems to match.")
   })
-  
+
   it('TC_14.002-06-A | If there are multiple matches, the result page displays all matches', () => {
-        cy.get('#search-box').clear().type('conf{enter}'); 
-        cy.url().should('include', '/search');
-        cy.get('.yui-ac-content').its('length').should('be.greaterThan', 0);
-        cy.get('#item_config').should('contain.text', 'config');
-        cy.get('#item_configure').should('contain.text', 'configure');
+    cy.get('#search-box').clear().type('conf{enter}');
+    cy.url().should('include', '/search');
+    cy.get('.yui-ac-content').its('length').should('be.greaterThan', 0);
+    cy.get('#item_config').should('contain.text', 'config');
+    cy.get('#item_configure').should('contain.text', 'configure');
   });
 
   it('TC_14.002.07 | Verify the search box provides auto-completion', () => {
     const autoCompletionItems = ['config', 'configure'];
-    
+
     cy.get('input#search-box').type('con');
     cy.get('div#search-box-completion li')
       .filter(':visible')
@@ -46,8 +46,8 @@ describe('US_14.002 | Header > Search Box', () => {
       .each((item, index) => {
         cy.wrap(item).should('have.text', autoCompletionItems[index]);
       });
-  });    
-  
+  });
+
   it('TC_14.002.09 | Verify that the selection of an auto-complete suggestion redirects to the relevant page', () => {
     cy.get('input#search-box').type('lo');
     cy.get('div#search-box-completion li').eq(0).click();
@@ -58,8 +58,8 @@ describe('US_14.002 | Header > Search Box', () => {
 
   it("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
     cy.get("*.hidden-sm").contains('admin').click();
-    cy.get(".task-link-text").contains('Configure').click({force: true});
-    cy.get("[name='insensitiveSearch']").check({force: true});
+    cy.get(".task-link-text").contains('Configure').click({ force: true });
+    cy.get("[name='insensitiveSearch']").check({ force: true });
     cy.get("[name='Submit']").click();
     cy.get("#search-box").click();
     cy.get("#search-box").type("MA");
@@ -69,19 +69,18 @@ describe('US_14.002 | Header > Search Box', () => {
   it('TC_14.002.10 | Verify that the warning message is displayed when no matches are found', () => {
     cy.get('input#search-box').type('no matches{Enter}');
     cy.get('.error').should('have.text', 'Nothing seems to match.');
-    
+
   });
-  
+
   it('TC_14.002-08-A |Case insensitive search', () => {
-    cy.get('div[class="login page-header__hyperlinks"] a[class="model-link"]').should('be.visible').click()
+    cy.get('.login .model-link').should('be.visible').click()
     cy.url().should('include', '/user');
-    cy.get('div:nth-child(3) span:nth-child(1) a:nth-child(1)').click()
+    cy.get('a[href$="/configure"]').click({ force: true });
     cy.get("label[class='attach-previous ']").should('contain', 'Insensitive search tool').and('exist')
-      cy.get("input[name='insensitiveSearch']")
-          .should("exist")
-          .uncheck({ force: true }) 
-          .should("not.be.checked")
-          .check({ force: true })   
-          .should("be.checked");
+    cy.get("input[name='insensitiveSearch']").should("exist")
+    .uncheck({ force: true })
+    .should("not.be.checked")
+    .check({ force: true })
+    .should("be.checked");
   });
 });
