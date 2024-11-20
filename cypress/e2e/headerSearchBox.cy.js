@@ -78,9 +78,13 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('a[href$="/configure"]').click({ force: true });
     cy.get("label[class='attach-previous ']").should('contain', 'Insensitive search tool').and('exist')
     cy.get("input[name='insensitiveSearch']").should("exist")
-    .uncheck({ force: true })
-    .should("not.be.checked")
-    .check({ force: true })
-    .should("be.checked");
+      .uncheck({ force: true })
+      .should("not.be.checked")
+      .check({ force: true })
+      .should("be.checked");
   });
+
+  it.only('TC_14.002.12 | Verify that Dashboard page in Jenkins has a search box on its top right', () => {
+    cy.get('input#search-box').should('be.visible').and('have.attr', 'placeholder')
+  })
 });
