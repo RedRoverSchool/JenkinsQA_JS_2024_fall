@@ -50,4 +50,14 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
       .should("be.visible")
       .and("have.text", newDescription);
   });
+
+  it('TC_01.001-04-A|Adding the description to an existing Project',()=>{
+    cy.contains('Dashboard').click()
+    cy.get('span').contains(newItemName).click()
+    cy.get('[href="editDescription"]').click()
+    cy.get('.jenkins-input   ').type(description)
+    cy.get('[align="right"] > .jenkins-button').click()
+    cy.get('#description').should('be.visible')
+    .and('have.text', description)
+  })
 });
