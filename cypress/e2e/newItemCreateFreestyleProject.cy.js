@@ -34,7 +34,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
     
     });
 
-    it.only('TC_00.001.04 | Verify a friendly reminder appeared when attempting to create a new Freestyle Project without a name', function () {
+    it('TC_00.001.04 | Verify a friendly reminder appeared when attempting to create a new Freestyle Project without a name', function () {
 
         cy.get('a[href$="/newJob"]').click();
         cy.get('#items li[class$="FreeStyleProject"]').click();
