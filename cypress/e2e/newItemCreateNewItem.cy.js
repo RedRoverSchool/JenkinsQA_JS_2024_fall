@@ -150,4 +150,17 @@ describe("US_00.000 | New Item > Create New item", () => {
 
         cy.get('table.jenkins-table.sortable').contains(jobName).should("exist");
     })
+
+    it('TC_00.000.10 | Verify that to create a new item, user should choose "an item type" first', () => {
+
+        cy.get('span').contains('New Item').click()
+        cy.get('input#name.jenkins-input').type(jobName)
+        cy.get('#ok-button').contains('OK').should('be.disabled')
+        cy.get('span').contains('Freestyle project').click()
+        cy.get('#ok-button').contains('OK').should('be.enabled')
+        cy.get('#ok-button').click()
+        cy.get('a#jenkins-home-link').click()
+
+        cy.get('table.jenkins-table.sortable').contains(jobName).should('exist')
+    })
 })
