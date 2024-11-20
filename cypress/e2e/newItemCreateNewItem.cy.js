@@ -92,4 +92,17 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get('a#jenkins-home-link').click()
         cy.get('table.jenkins-table.sortable').contains(jobName).should('exist')
     })
+
+    it('TC_00.000.9|New Item > Create New item|Verify New item can be created from "Create a job"button',()=>{
+
+        cy.get('span').contains('Create a job').click()
+        cy.get('.jenkins-input').clear()
+        cy.get('.jenkins-input').type(jobName)
+        cy.get('span.label').contains('Freestyle project').click()
+        cy.get('button').contains('OK').click()
+        cy.get('button').contains('Save').click()
+        cy.get('a.model-link').contains('Dashboard').click()
+
+        cy.get('table.jenkins-table.sortable').contains(jobName).should("exist");
+    })
 })
