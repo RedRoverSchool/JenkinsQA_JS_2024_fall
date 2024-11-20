@@ -1,11 +1,10 @@
 /// <reference types="cypress" />
-describe('New Item > Create Pipeline Project', () => {
-    const newItemName = 'New Item Name';
-    it('Pipeline item type is highlighted when selected', () => {
-        cy.get('span').contains('New Item').click()
-        cy.get('input#name').type(newItemName)
-        cy.get('span.label').contains('Pipeline').click();
-        cy.get('.org_jenkinsci_plugins_workflow_job_WorkflowJob')
-            .should('have.attr', 'aria-checked', 'true');
-    })
-})
+describe("New Item > Create Pipeline Project", () => {
+  it("New Item > Create Pipeline Project | Special characters are not allowed in the project name", () => {
+    cy.get(".task-link-text").contains("New Item").click({ force: true });
+    cy.get("#name.jenkins-input").type("New<>Name");
+    cy.get("#itemname-invalid")
+      .should("have.text", "» ‘<’ is an unsafe character")
+      .and("have.css", "color", "rgb(230, 0, 31)");
+  });
+});
