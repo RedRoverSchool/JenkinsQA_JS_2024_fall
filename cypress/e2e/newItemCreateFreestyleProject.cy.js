@@ -151,4 +151,14 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get('[id="main-panel"]').should('contain.text', projectName).and('be.visible');
     });
 
+    it('TC_00.001.12 | Verify that space projects name is not accepted during project creation', () => {
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(' ');
+        cy.get('div').contains('Freestyle project').click();
+        cy.get('button#ok-button').click();
+
+        cy.get('#main-panel').should('include.text', 'Error')
+                             .and('include.text', 'No name is specified');
+    });
+
 });
