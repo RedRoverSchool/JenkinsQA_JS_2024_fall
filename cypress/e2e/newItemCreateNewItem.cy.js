@@ -5,6 +5,7 @@ describe("US_00.000 | New Item > Create New item", () => {
     const sidebarJobName = "Item_2";
     const existingJobName = 'Item_1';
     const newJobName = 'Item_2';
+    const wrongJobName = 'Item#1'
     const LOCAL_PORT = Cypress.env("local.port");
     const LOCAL_HOST = Cypress.env("local.host");
 
@@ -118,7 +119,26 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get('table.jenkins-table.sortable').contains(newJobName).should('exist')
     })
 
-    it('TC_00.000.9|New Item > Create New item|Verify New item can be created from "Create a job"button',()=>{
+    it('TC_00.000.08 | Verify item name does not contain any special characters', () => {
+        
+        cy.get('span').contains('New Item').click()
+        cy.get('input#name.jenkins-input').type(wrongJobName)
+        cy.get('#itemname-invalid.input-validation-message').should('have.text', '» ‘#’ is an unsafe character')
+        cy.get('input#name.jenkins-input').clear()
+        cy.get('input#name.jenkins-input').type(jobName)
+        cy.get('span').contains('Freestyle project').click()
+        cy.get('#ok-button').click()
+
+        cy.get('a#jenkins-home-link').click()
+        cy.get('table.jenkins-table.sortable').contains(jobName).should('exist')
+
+        cy.get('table.jenkins-table.sortable').contains(jobName).then(($item) => {
+            let itemName = $item.text();
+            cy.wrap(itemName).should('not.match', /[!@#$%^&*[\]\/\\|;:<>,?]/);
+        })
+    })
+
+    it('TC_00.000.09 | Verify New item can be created from "Create a job" button',()=>{
 
         cy.get('span').contains('Create a job').click()
         cy.get('.jenkins-input').clear()
