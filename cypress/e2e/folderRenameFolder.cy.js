@@ -1,9 +1,9 @@
-/// <reference types="cypress" />
+/// <reference types="cypress"/>
+
 const USERNAME = Cypress.env('local.admin.username');
 const PASSWORD = Cypress.env('local.admin.password');
 const LOCAL_PORT = Cypress.env('local.port');
 const LOCAL_HOST = Cypress.env('local.host');
-
 
 describe('US_04.001 | Folder > Rename Folder', () => {
     it('TC_04.001.06 | Folder > Rename Folder | Successfully enter a valid folder name in the special field', () => {
@@ -72,6 +72,85 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         .then((text) =>{
             expect(text.trim()).to.eq('Test_Folder7+');
         })
+       
     });
 
-});
+
+    it('TC_04.001.09-A | Folder > Rename Folder | Rename folder on the folder page', () => {
+
+        let oldName='Papka';
+        let newName='newNamepapka'
+
+        cy.get('[href="/view/all/newJob"]').click();
+        cy.get('#name').type(oldName); 
+        cy.get('label').contains('Folder').click();
+        cy.get('#ok-button').click();
+        cy.get('[name="Submit"]').click();
+        cy.url().should('include',oldName);
+        cy.get('#main-panel').contains(oldName).should('be.visible');
+        cy.get('[href$="confirm-rename"]').click();
+        cy.get('[checkdependson="newName"]').clear();
+        cy.get('[checkdependson="newName"]').type(newName);
+        cy.get('[name="Submit"]').click();
+
+        cy.url().should('include',newName);
+        cy.get('h1').should('contain.text', 'newName')
+    
+    });
+
+
+    it('TC_04.001.02 | Rename folder from drop-down menu', () => {
+        cy.get('span').contains('New Item').click()
+        cy.get('input[id="name"]').type('NewFolder')
+        cy.get('.desc').eq(3).click()
+        cy.get('#ok-button').click()
+        cy.get('button[name="Submit"]').click()
+        cy.get('#jenkins-home-link').click()
+        cy.get('a').contains('NewFolder').realHover()
+        cy.get('button[data-href="http://localhost:8080/job/NewFolder/"]').click({force: true})
+        cy.get('a[class="jenkins-dropdown__item "]').contains('Rename').click()
+        cy.get('input[name="newName"]').clear()
+        cy.get('input[name="newName"]').type('RenameFolder')
+        cy.get('button[name="Submit"]').click()
+        cy.get('h1').should('include.text','RenameFolder')
+        cy.url().should('include', '/RenameFolder')
+
+    });
+
+    it('TC_04.001.04 |Verify to rename the folder from drop-down menu of the folder element in the breadcrumbs', () => {
+        cy.get('span').contains('New Item').click()
+        cy.wait(1000)
+        cy.get('input[name="name"]').clear()
+        cy.get('input[name="name"]').type('Folder')
+        cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
+        cy.get('button').contains('OK').click()
+        cy.get('button').contains('Save').click()
+        cy.get('div[id="breadcrumbBar"]').contains('Folder')
+        cy.get('a[href="/job/Folder/"]').realHover()
+        cy.get(`[data-href="http://${LOCAL_HOST}:${LOCAL_PORT}/job/Folder/"]`).should('be.visible')
+        cy.get(`button[data-href="http://${LOCAL_HOST}:${LOCAL_PORT}/job/Folder/"]`).click()
+        cy.get('a[href="/job/Folder/confirm-rename"]').eq(0).click()
+        cy.get('input[name="newName"]').clear()
+        cy.get('input[name="newName"]').type('Folder2')
+        cy.get('button[name="Submit"]').click()
+        cy.get('div[id="main-panel"]').contains('Folder2')
+
+    });
+    it('TC_04.001.03| Verify that error message is displayed when an invalid folder name is entered in the Rename Folder field', () => {
+        cy.get('span').contains('New Item').click()
+        cy.get('input[name="name"]').type('Folder1')
+        cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
+        cy.get('button').contains('OK').click()
+        cy.get('button').contains('Save').click()
+        cy.get('#jenkins-home-link').click()
+        cy.get('[href="job/Folder1/"]').realHover({ position: 'center' })
+        cy.get(`[data-href="http://${LOCAL_HOST}:${LOCAL_PORT}/job/Folder1/"]`).should('be.visible')
+        cy.get(`[data-href="http://${LOCAL_HOST}:${LOCAL_PORT}/job/Folder1/"]`).click();
+        cy.get('a[href="/job/Folder1/confirm-rename"]').click()
+        cy.get('input[name="newName"]').clear()
+        cy.get('input[name="newName"]').type('Folder*')
+        cy.get('button[name="Submit"]').click()
+        cy.get('div[id="main-panel"]').should('contain', 'is an unsafe character')
+    });
+})
+

@@ -102,4 +102,49 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
 
     });
 
+    it('TC_00.001.10 | Create Freestyle Project using the "New Item" button', () => {
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(projectName);
+        cy.get('div').contains('Freestyle project').click();
+        cy.get('button#ok-button').click();
+        cy.get('button:contains("Save")').click();
+        cy.get('a:contains("Dashboard")').click();
+
+        cy.get('td a').should('contain', projectName);
+    });
+
+    it('TC_00.001.09 | Verify user can modify the default configuration during the creation by adding build trigger', () => {
+
+        const scheduleBuild = 'H * * * *'
+
+        cy.get('a[href$="/newJob"]').click();
+        cy.get('input#name').type(projectName);
+        cy.get('#items li[class$="FreeStyleProject"]').click();
+        cy.get('button[id="ok-button"]').click();
+        cy.get('.jenkins-section input[name="hudson-triggers-TimerTrigger"').check({force:true})
+        cy.get('textarea[checkurl*="TimerTrigger"]').type(scheduleBuild)
+        cy.get('button[name="Submit"]').click();
+
+        cy.get('a').contains("Dashboard").click();
+        cy.get('table[id="projectstatus"] tbody').contains(projectName).click()
+        cy.get(':nth-child(6) > .task-link-wrapper > .task-link').click();
+        cy.get('button[data-section-id="build-triggers"]').click()
+
+        cy.get('.jenkins-section input[name="hudson-triggers-TimerTrigger"')
+            .should('have.attr', 'checked')
+
+        cy.get('textarea[checkurl*="TimerTrigger"]')
+            .should('have.text', scheduleBuild)
+    })
+        
+    it('TC_00.001-11 | Create Freestyle Project by clicking on Create a Job', () => {
+        cy.get('a[href="newJob"]').click();
+        cy.get('[id="name"]').type(projectName);
+        cy.get('[class="hudson_model_FreeStyleProject"]').click();
+        cy.get('[id="ok-button"]').click();
+        cy.get('[name="Submit"]').click();
+
+        cy.get('[id="main-panel"]').should('contain.text', projectName).and('be.visible');
+    });
+
 });
