@@ -1,5 +1,9 @@
 /// <reference types="cypress" />
+
 describe("New Item > Create Pipeline Project", () => {
+
+  let projectName = "New Pipeline"
+
   it("New Item > Create Pipeline Project | Special characters are not allowed in the project name", () => {
     cy.get(".task-link-text").contains("New Item").click({ force: true });
     cy.get("#name.jenkins-input").type("New<>Name");
@@ -7,4 +11,18 @@ describe("New Item > Create Pipeline Project", () => {
       .should("have.text", "» ‘<’ is an unsafe character")
       .and("have.css", "color", "rgb(230, 0, 31)");
   });
+
+  it("TC_00.002.03 | New Item > Create Pipeline Project > Verify redirection to Configure page", () => {
+
+    cy.get('a[href$="/newJob"]').click();
+    cy.get('input#name').type(projectName);
+    cy.get('#items li[class$="WorkflowJob"]').click();
+    cy.get('button[id="ok-button"]').click();
+        
+    cy.url().should('include', `/${projectName}/configure`)
+    
+  })
+
+
+
 });
