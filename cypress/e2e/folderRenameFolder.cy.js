@@ -98,6 +98,25 @@ describe('US_04.001 | Folder > Rename Folder', () => {
     
     });
 
+
+    it('TC_04.001.02 | Rename folder from drop-down menu', () => {
+        cy.get('span').contains('New Item').click()
+        cy.get('input[id="name"]').type('NewFolder')
+        cy.get('.desc').eq(3).click()
+        cy.get('#ok-button').click()
+        cy.get('button[name="Submit"]').click()
+        cy.get('#jenkins-home-link').click()
+        cy.get('a').contains('NewFolder').realHover()
+        cy.get('button[data-href="http://localhost:8080/job/NewFolder/"]').click({force: true})
+        cy.get('a[class="jenkins-dropdown__item "]').contains('Rename').click()
+        cy.get('input[name="newName"]').clear()
+        cy.get('input[name="newName"]').type('RenameFolder')
+        cy.get('button[name="Submit"]').click()
+        cy.get('h1').should('include.text','RenameFolder')
+        cy.url().should('include', '/RenameFolder')
+
+    });
+
     it('TC_04.001.04 |Verify to rename the folder from drop-down menu of the folder element in the breadcrumbs', () => {
         cy.get('span').contains('New Item').click()
         cy.wait(1000)
@@ -118,3 +137,4 @@ describe('US_04.001 | Folder > Rename Folder', () => {
 
     });
 })
+
