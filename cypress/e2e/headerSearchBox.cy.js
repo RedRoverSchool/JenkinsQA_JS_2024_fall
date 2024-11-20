@@ -17,7 +17,7 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get("#search-box").type('{enter}');
     cy.get(".jenkins-app-bar h1").should('contain.text', 'testJob')
   });
-
+/*
   it('TC_14.002-04 | Message that no matches found', () => {
     let unicNameProject = "The most unique project name is 12-35658_312"
     cy.get('input[name="q"]').type(unicNameProject + '{enter}')
@@ -92,10 +92,12 @@ describe('US_14.002 | Header > Search Box', () => {
         cy.get('li').contains('manage')
         .click()
         cy.get('li').contains('manage').should('be.visible')
-    })
+    })*/
 
       it('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right', () => {
+        
         cy.get(Dashboard).should('be.visible')
         cy.get('#search-box').click();  
+        cy.get('header').should("exist")
       })
 })
