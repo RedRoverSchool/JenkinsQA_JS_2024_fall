@@ -1,3 +1,4 @@
+
 /// <reference types="cypress" />
 
 const dashboard = '#breadcrumbBar .model-link'
@@ -101,3 +102,5 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('header').should("exist")
   })
 })
+
+
