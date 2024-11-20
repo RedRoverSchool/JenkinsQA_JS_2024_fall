@@ -167,6 +167,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get('.hudson_model_FreeStyleProject').click();
         cy.get('#ok-button').click();
         cy.get('[name="Submit"]').click();
+      
         cy.get('.job-index-headline').should('have.text', 'New Project Name');
     });
 });
