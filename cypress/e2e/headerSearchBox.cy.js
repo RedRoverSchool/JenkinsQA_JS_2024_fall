@@ -37,7 +37,6 @@ describe('US_14.002 | Header > Search Box', () => {
   });
 
   it('TC_14.002.07 | Verify the search box provides auto-completion', () => {
-
     const autoCompletionItems = ['config', 'configure'];
     
     cy.get('input#search-box').type('con');
@@ -47,15 +46,12 @@ describe('US_14.002 | Header > Search Box', () => {
       .each((item, index) => {
         cy.wrap(item).should('have.text', autoCompletionItems[index]);
       });
-
-  });
+  });    
   
   it('TC_14.002.09 | Verify that the selection of an auto-complete suggestion redirects to the relevant page', () => {
-    
     cy.get('input#search-box').type('lo');
     cy.get('div#search-box-completion li').eq(0).click();
     cy.get('input#search-box').type('{Enter}');
-
     cy.get('div#main-panel h1').should('include.text', 'Log Recorders');
 
   });
@@ -67,15 +63,14 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get("[name='Submit']").click()
     cy.get("#search-box").click();
     cy.get("#search-box").type("MA");
-    
     cy.get(".yui-ac-bd").should('have.text', 'manage')
   })
 
   it('TC_14.002-08-A |Case insensitive search', () => {
-      cy.get('div[class="login page-header__hyperlinks"] a[class="model-link"]').should('be.visible').click()
-      cy.url().should('include', '/user');
-      cy.get('div:nth-child(3) span:nth-child(1) a:nth-child(1)').click()
-      cy.get("label[class='attach-previous ']").should('contain', 'Insensitive search tool').and('exist')
+    cy.get('div[class="login page-header__hyperlinks"] a[class="model-link"]').should('be.visible').click()
+    cy.url().should('include', '/user');
+    cy.get('div:nth-child(3) span:nth-child(1) a:nth-child(1)').click()
+    cy.get("label[class='attach-previous ']").should('contain', 'Insensitive search tool').and('exist')
       cy.get("input[name='insensitiveSearch']")
           .should("exist")
           .uncheck({ force: true }) 
