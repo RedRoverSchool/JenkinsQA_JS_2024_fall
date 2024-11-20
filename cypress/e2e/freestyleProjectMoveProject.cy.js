@@ -55,7 +55,7 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         cy.get('[name="destination"]').select('/Folder2')
         cy.get('button').contains('Move').click()
 
-        cy.get('div[id="main-panel"]').contains('Folder2/Project')
+        cy.get('div[id="main-panel"]').should('contain','Folder2/Project')
     })
  
 })
