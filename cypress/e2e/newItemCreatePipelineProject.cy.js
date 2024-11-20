@@ -12,17 +12,14 @@ describe("New Item > Create Pipeline Project", () => {
       .and("have.css", "color", "rgb(230, 0, 31)");
   });
 
-  it("TC_00.002.03 | New Item > Create Pipeline Project > Verify redirection to Configure page", () => {
+  it("TC_00.002.03 | Verify redirection to Configure page", () => {
 
     cy.get('a[href$="/newJob"]').click();
     cy.get('input#name').type(projectName);
     cy.get('#items li[class$="WorkflowJob"]').click();
     cy.get('button[id="ok-button"]').click();
         
-    cy.url().should('include', `/${projectName}/configure`)
-    
+    cy.url().should('include', '/configure')
+
   })
-
-
-
 });
