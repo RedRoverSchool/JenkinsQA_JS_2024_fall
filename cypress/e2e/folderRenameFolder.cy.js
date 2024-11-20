@@ -72,6 +72,30 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         .then((text) =>{
             expect(text.trim()).to.eq('Test_Folder7+');
         })
+       
     });
 
-});
+
+    it('TC_04.001.09-A | Folder > Rename Folder | Rename folder on the folder page', () => {
+
+        let oldName='Papka';
+        let newName='newNamepapka'
+
+        cy.get('[href="/view/all/newJob"]').click();
+        cy.get('#name').type(oldName); 
+        cy.get('label').contains('Folder').click();
+        cy.get('#ok-button').click();
+        cy.get('[name="Submit"]').click();
+        cy.url().should('include',oldName);
+        cy.get('#main-panel').contains(oldName).should('be.visible');
+        cy.get('[href$="confirm-rename"]').click();
+        cy.get('[checkdependson="newName"]').clear();
+        cy.get('[checkdependson="newName"]').type(newName);
+        cy.get('[name="Submit"]').click();
+
+        cy.url().should('include',newName);
+        cy.get('h1').should('contain.text', 'newName')
+    
+    });
+})
+
