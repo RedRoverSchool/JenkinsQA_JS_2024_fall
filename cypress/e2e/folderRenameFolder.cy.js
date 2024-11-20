@@ -115,9 +115,7 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         cy.get('h1').should('include.text','RenameFolder')
         cy.url().should('include', '/RenameFolder')
 
-    })
-
-});
+    });
 
     it('TC_04.001.04 |Verify to rename the folder from drop-down menu of the folder element in the breadcrumbs', () => {
         cy.get('span').contains('New Item').click()
