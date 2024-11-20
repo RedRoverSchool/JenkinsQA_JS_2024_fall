@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const Dashboard = '#breadcrumbBar .model-link'
+const dashboard = '#breadcrumbBar .model-link'
 
 describe('US_14.002 | Header > Search Box', () => {
   it("Header > Search Box | User can select suggestion to auto-fill and complete the search", () => {
@@ -96,7 +96,7 @@ describe('US_14.002 | Header > Search Box', () => {
 
   it('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right', () => {
 
-    cy.get(Dashboard).should('be.visible')
+    cy.get(dashboard).should('be.visible')
     cy.get('#search-box').click();
     cy.get('header').should("exist")
   })
