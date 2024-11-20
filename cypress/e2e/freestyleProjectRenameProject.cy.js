@@ -82,7 +82,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.get("div p").should("have.text", "A name cannot end with ‘.’");
   });
 
-  it.only("TC_01.002.02 | Rename a project from the Project Page", () => {
+  it("TC_01.002.02 | Rename a project from the Project Page", () => {
     cy.get(newItemBtn).click();
     cy.get(itemNameField).type(project1Name);
     cy.get(freeStyleProjectItem).click();
