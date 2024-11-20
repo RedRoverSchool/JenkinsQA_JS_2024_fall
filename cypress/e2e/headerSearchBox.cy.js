@@ -80,24 +80,24 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('a[href$="/configure"]').click({ force: true });
     cy.get("label[class='attach-previous ']").should('contain', 'Insensitive search tool').and('exist')
     cy.get("input[name='insensitiveSearch']").should("exist")
-    .uncheck({ force: true })
-    .should("not.be.checked")
-    .check({ force: true })
-    .should("be.checked");
+      .uncheck({ force: true })
+      .should("not.be.checked")
+      .check({ force: true })
+      .should("be.checked");
   });
-  
-    it('TC_14.002.01 | Auto-Completion Suggestion Selection', () => {
-        cy.get('input[id="search-box"]').click().clear()
-        .type('man')
-        cy.get('li').contains('manage')
-        .click()
-        cy.get('li').contains('manage').should('be.visible')
-    })
 
-      it('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right', () => {
-        
-        cy.get(Dashboard).should('be.visible')
-        cy.get('#search-box').click();  
-        cy.get('header').should("exist")
-      })
+  it('TC_14.002.01 | Auto-Completion Suggestion Selection', () => {
+    cy.get('input[id="search-box"]').click().clear()
+      .type('man')
+    cy.get('li').contains('manage')
+      .click()
+    cy.get('li').contains('manage').should('be.visible')
+  })
+
+  it('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right', () => {
+
+    cy.get(Dashboard).should('be.visible')
+    cy.get('#search-box').click();
+    cy.get('header').should("exist")
+  })
 })
