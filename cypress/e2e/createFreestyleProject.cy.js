@@ -154,7 +154,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('button#ok-button').click();
 
         cy.get('#main-panel').should('include.text', 'Error')
-                             .should('include.text', 'No name is specified');
+                             .and('include.text', 'No name is specified');
     });
 
 });
