@@ -93,7 +93,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.get(renameBtn).click();
     cy.get(renameField).clear().type(project2Name);
     cy.get(submitBtn).click();
-    cy.url().should("include", `${project2Name}`);
+    cy.url().should("include", project2Name);
     cy.get("#main-panel h1").should("have.text", project2Name);
     cy.get(dashboardBtn).click();
     cy.get(projectStatus).should("have.text", project2Name);
