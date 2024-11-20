@@ -98,7 +98,7 @@ describe('US_04.001 | Folder > Rename Folder', () => {
     
     });
 
-    it('US_04.001 |Verify to rename the folder from drop-down menu of the folder element in the breadcrumbs', () => {
+    it('TC_04.001.04 |Verify to rename the folder from drop-down menu of the folder element in the breadcrumbs', () => {
         cy.get('span').contains('New Item').click()
         cy.wait(1000)
         cy.get('input[name="name"]').clear()
