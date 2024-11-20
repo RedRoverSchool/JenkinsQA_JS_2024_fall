@@ -1,6 +1,9 @@
 /// <reference types="cypress" />
+import searchBoxData from "../fixtures/headerSearchBox.json"
 
 describe('US_14.002 | Header > Search Box', () => {
+  let searchTerm = 'pipeline'
+
   it("Header > Search Box | User can select suggestion to auto-fill and complete the search", () => {
     cy.get('a[href="/view/all/newJob"]').click();
     cy.get('.jenkins-input').type('testJob');
@@ -84,8 +87,24 @@ describe('US_14.002 | Header > Search Box', () => {
       .should("be.checked");
   });
 
-  it('TC_14.002.12 | Verify that Dashboard page in Jenkins has a search box on its top right', () => {
-    cy.get('input#search-box').should('be.visible').and('have.attr', 'placeholder')
+  
+    it('TC_14.002.01 | Auto-Completion Suggestion Selection', () => {
+        cy.get('input[id="search-box"]').click().clear()
+        .type('man')
+        cy.get('li').contains('manage')
+        .click()
+        cy.get('li').contains('manage').should('be.visible')
+    })
+
+  it('TC_14.002.02 | Verify error message appears when no matches found',() => {
+    cy.get('input#search-box').type(`${searchTerm}{enter}`)
+    cy.get('li[style]')
+      .should('not.be.visible')
+    cy.get('#main-panel h1').contains(`${searchBoxData.textMessages.heading} '${searchTerm}'`)
+    cy.get('div.error')
+      .should('have.text', searchBoxData.textMessages.error)
+      .and('have.css', 'color', searchBoxData.cssRequirements.error)
   })
 
 });
+
