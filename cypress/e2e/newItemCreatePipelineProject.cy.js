@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
-describe("New Item > Create Pipeline Project", () => {
+
+describe("US_00.002 | New Item > Create Pipeline Project", () => {
+
 
   let projectName = "New Pipeline"
 
@@ -11,6 +13,14 @@ describe("New Item > Create Pipeline Project", () => {
       .should("have.text", "» ‘<’ is an unsafe character")
       .and("have.css", "color", "rgb(230, 0, 31)");
   });
+
+  it('TC_00.002.04 | Create Pipeline Project with an empty item name field', () => {
+    cy.get('span').contains("New Item").click();
+    cy.get('.label').contains('Pipeline').click();
+
+    cy.get('#itemname-required').should('have.text', '» This field cannot be empty, please enter a valid name')
+      .should('have.css', 'color', 'rgb(230, 0, 31)');
+  })
 
   it("TC_00.002.03 | Verify redirection to Configure page", () => {
 
