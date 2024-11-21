@@ -122,7 +122,7 @@ describe('US_14.002 | Header > Search Box', () => {
     })
   })
 
-  it.only('TC_14.002.12 | Verify that Dashboard page in Jenkins has a search box on its top right', () => {
+  it('TC_14.002.12 | Verify that Dashboard page in Jenkins has a search box on its top right', () => {
     cy.get('.main-search__input').should('be.visible').and('have.attr', 'placeholder');
   })
 
