@@ -31,4 +31,21 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
        cy.get('#main-panel h1').should('have.text', "Welcome to Jenkins!");
 })
+
+    it.only('TC_01.004.06 | Verify user able to delete a project from Project page', () => {
+
+      //Create a project
+      cy.get('span.task-link-text').contains('New Item').click({force:true});
+      cy.get('input[name="name"]').type('Pro3');
+      cy.get('span.label').contains('Freestyle project').click();
+      cy.get('button').contains('OK').click();
+      cy.get('button').contains('Save').click();
+      //Delete the project
+      cy.get('.task .task-link-wrapper a[data-title="Delete Project"] > span:last-of-type').click()
+      cy.get(".jenkins-dialog >div>[data-id='cancel']").contains("Cancel").click({force:true});
+
+      cy.get('#main-panel h1').should('have.text', "Pro3");
+})
+
+
 })
