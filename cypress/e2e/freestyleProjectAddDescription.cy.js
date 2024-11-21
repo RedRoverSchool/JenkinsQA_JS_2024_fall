@@ -24,6 +24,7 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
       .and("have.text", description);
   });
 
+
   it("TC_01.001.02 | Add a Description to an Existing Project", () => {
     cy.get('[name="Submit"]').click();
     cy.get('#breadcrumbs a[href="/"]').click();
@@ -50,4 +51,13 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
       .should("be.visible")
       .and("have.text", newDescription);
   });
+
+  it.only("TC_01.001.05_A | Add description to the new project", () => {
+    cy.get('[name="description"]').type(description);
+    cy.get('[name="Submit"]').click();
+
+    cy.get('[class="jenkins-app-bar__content jenkins-build-caption"]').should('have.text', newItemName);
+    cy.get('[id="description"]').should('be.visible').and('have.text', description);
+  });
+
 });
