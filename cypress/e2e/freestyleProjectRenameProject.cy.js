@@ -130,7 +130,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.get('td > a > span').contains(newNameItem);
   });
 
-  it("TC_01.002-05 | Rename a project name from the Dashboard page", () => {
+  it("TC_01.002-05 | Rename a project name from the Project Page", () => {
     let nameItem = 'RenameProject'
     let newNameItem = 'ProjectRenamed'
   // Preconditions
