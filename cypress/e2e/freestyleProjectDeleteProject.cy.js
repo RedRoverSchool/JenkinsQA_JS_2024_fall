@@ -31,5 +31,19 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
         cy.get('#main-panel h1').should('have.text', "Welcome to Jenkins!");
 
     })
+    
+    it('TC_01.004.08 |Pop up window appears before deletion', () => {
+        
+        cy.get('span').contains('New Item').click()
+        cy.get('input[name="name"]').type('Project')
+        cy.get('span.label').contains('Freestyle project').click()
+        cy.get('button').contains('OK').click()
+        cy.get('button').contains('Save').click()
+        cy.get('.job-index-headline').contains('Project').should('exist')
+        cy.get('span').contains('Delete Project').click() 
+        cy.get('button[data-id="ok"]').click()
 
+        cy.contains('Project').should('not.exist')
+        
+    })
 })

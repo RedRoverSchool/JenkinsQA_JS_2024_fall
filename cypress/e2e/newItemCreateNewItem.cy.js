@@ -194,4 +194,14 @@ describe("US_00.000 | New Item > Create New item", () => {
         
         cy.get('table.jenkins-table.sortable').contains(jobName).should('be.visible')
     })
+
+    it('TC_00.000.14 | Verify the display of validation message if no item name is entered', () => {
+
+        cy.get('span').contains('New Item').click()
+        cy.get('input#name.jenkins-input').type(jobName)
+        cy.get('input#name.jenkins-input').clear()
+
+        cy.get('#itemname-required.input-validation-message').should('have.text', '» This field cannot be empty, please enter a valid name')
+        cy.get('#ok-button').contains('OK').should('be.disabled')
+    })
 })
