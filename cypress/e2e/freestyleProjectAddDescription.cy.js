@@ -56,7 +56,7 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
     cy.get('[name="Submit"]').click();
 
     cy.get('[class="jenkins-app-bar__content jenkins-build-caption"]').should('have.text', newItemName);
-    cy.get('[id="description"]').should('be.visible').and('have.text', description);
+    cy.get('#description').should('be.visible').and('have.text', description);
   });
   
 });
