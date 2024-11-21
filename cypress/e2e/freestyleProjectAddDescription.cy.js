@@ -52,7 +52,7 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
       .and("have.text", newDescription);
   });
 
-  it.only("TC_01.001.05_A | Add description to the new project", () => {
+  it("TC_01.001.05_A | Add description to the new project", () => {
     cy.get('[name="description"]').type(description);
     cy.get('[name="Submit"]').click();
 
