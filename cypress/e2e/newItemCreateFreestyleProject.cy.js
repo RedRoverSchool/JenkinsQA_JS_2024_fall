@@ -160,5 +160,15 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get('#main-panel').should('include.text', 'Error')
                              .and('include.text', 'No name is specified');
     });
-
+    
+    it('TC_00.001.14 | Create Freestyle Project from the Dashboard Menu', function () {
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('#name').type('New Project Name');
+        cy.get('.hudson_model_FreeStyleProject').click();
+        cy.get('#ok-button').click();
+        cy.get('[name="Submit"]').click();
+      
+        cy.get('.job-index-headline').should('have.text', 'New Project Name');
+    });
 });
+
