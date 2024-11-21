@@ -182,4 +182,16 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get('button[data-section-id="pipeline"]').contains('Pipeline')
         cy.get('button[data-section-id="pipeline"]').should('be.visible')
     })
+
+    it('TC_00.000.13 | Verify that after saving, new item is present on dashboard', () => {
+
+        cy.get('span').contains('New Item').click()
+        cy.get('input#name.jenkins-input').type(jobName)
+        cy.get('span.label').contains('Freestyle project').click()
+        cy.get('#ok-button').click()
+        cy.get('button[name="Submit"]').contains('Save').click()
+        cy.get('a#jenkins-home-link').click()
+        
+        cy.get('table.jenkins-table.sortable').contains(jobName).should('be.visible')
+    })
 })
