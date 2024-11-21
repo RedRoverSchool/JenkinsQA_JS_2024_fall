@@ -130,4 +130,32 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.get('td > a > span').contains(newNameItem);
   });
 
+  it("TC_01.002-05 | Rename a project name from the Dashboard page", () => {
+    let nameItem = 'RenameProject'
+    let newNameItem = 'ProjectRenamed'
+  // Preconditions
+    // Create new item
+    cy.get("a[href$='/newJob']").click();
+    cy.get('[name="name"]').type(nameItem);
+    cy.get("li.hudson_model_FreeStyleProject").click();
+    cy.get("button.jenkins-button.jenkins-button--primary").click();
+    cy.get('[name="Submit"]').click();
+    cy.get("a:contains('Dashboard')").click();
+  // Steps
+    cy.get(`a[href$='/${nameItem}/'].jenkins-table__link.model-link.inside`)
+      .click();
+    cy.get('a[href$="/confirm-rename"]').click();
+    // Check URL
+    cy.url().should('include', '/confirm-rename')
+    cy.get('input[name="newName"]').clear().type(newNameItem);
+    cy.get('button[name="Submit"]').click();
+  // Checks block
+    cy.reload();
+    cy.url().should('include', newNameItem)
+    cy.get(`li > a[href$="/${newNameItem}/"]`).contains(newNameItem)
+    cy.get('h1.job-index-headline.page-headline').contains(newNameItem)
+    cy.get("a:contains('Dashboard')").click();
+    cy.get('td > a > span').contains(newNameItem);
+  });
+  
 });
