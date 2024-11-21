@@ -150,4 +150,10 @@ describe("US_00.000 | New Item > Create New item", () => {
 
         cy.get('table.jenkins-table.sortable').contains(jobName).should("exist");
     })
+
+    it('TC_00.000.11 | Verify Error message appearance and its text when item name contains special characters', () => {
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('#name').type('New Project @#$ Name');
+        cy.get('#itemname-invalid').should('have.text', '» ‘@’ is an unsafe character');
+    });
 })
