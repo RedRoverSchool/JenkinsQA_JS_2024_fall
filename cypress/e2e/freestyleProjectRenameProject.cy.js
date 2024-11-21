@@ -130,7 +130,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.get('td > a > span').contains(newNameItem);
   });
 
-  it.only("TC_01.002-05 | Rename a project name from the Project Page", () => {
+  it("TC_01.002-05 | Rename a project name from the Project Page", () => {
     // Preconditions Create new item 
     cy.get("a[href$='/newJob']").click();
     cy.get('[name="name"]').type(project1Name);
@@ -156,3 +156,4 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
   });
   
 });
+
