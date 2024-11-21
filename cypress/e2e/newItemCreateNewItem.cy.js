@@ -170,4 +170,16 @@ describe("US_00.000 | New Item > Create New item", () => {
       
         cy.get('#itemname-invalid').should('have.text', '» ‘@’ is an unsafe character');
     });
+
+    it('TC_00.000.12 | Verify redirection to the configure page for the selected item type after clicking "OK"', () => {
+        
+        cy.get('span').contains('New Item').click()
+        cy.get('input#name.jenkins-input').type(jobName)
+        cy.get('span.label').contains('Pipeline').click()
+        cy.get('#ok-button').click()
+        
+        cy.url().should('include', '/configure')
+        cy.get('button[data-section-id="pipeline"]').contains('Pipeline')
+        cy.get('button[data-section-id="pipeline"]').should('be.visible')
+    })
 })
