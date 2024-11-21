@@ -32,7 +32,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
        cy.get('#main-panel h1').should('have.text', "Welcome to Jenkins!");
 })
 
-    it.only('TC_01.004.06 | Verify user able to delete a project from Project page', () => {
+    it('TC_01.004.06 | Verify user able to delete a project from Project page', () => {
 
       //Create a project
       cy.get('span.task-link-text').contains('New Item').click({force:true});
