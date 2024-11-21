@@ -5,6 +5,7 @@ import searchBoxData from "../fixtures/headerSearchBox.json"
 describe('US_14.002 | Header > Search Box', () => {
   let searchTerm = 'pipeline'
   let newJobFolderName = 'conFolder'
+  const dashboard = '#breadcrumbBar .model-link'
 
   it("Header > Search Box | User can select suggestion to auto-fill and complete the search", () => {
     cy.get('a[href="/view/all/newJob"]').click();
@@ -127,7 +128,7 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('.main-search__input').should('be.visible').and('have.attr', 'placeholder');
   })
 
-});
+
 
 it('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right', () => {
 
@@ -135,5 +136,5 @@ it('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right'
     cy.get('#search-box').click();
     cy.get('header').should("exist")
   })
-})
+});
 
