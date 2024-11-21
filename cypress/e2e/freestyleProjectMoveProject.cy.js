@@ -58,7 +58,7 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         cy.get('div[id="main-panel"]').should('contain','Folder2/Project')
     });
 
-    it('TC_06.005-03 | Move Freestyle Project to Folder', () => {
+    it('TC_01.006.05 | Move project from Dashboard to Folder', () => {
         cy.get('a[href="/view/all/newJob"]').click();
         cy.get('#name').type('New Project Name');
         cy.get('.hudson_model_FreeStyleProject').click();
