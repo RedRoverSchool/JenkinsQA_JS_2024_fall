@@ -1,9 +1,11 @@
 
 /// <reference types="cypress" />
-
-const dashboard = '#breadcrumbBar .model-link'
+import searchBoxData from "../fixtures/headerSearchBox.json"
 
 describe('US_14.002 | Header > Search Box', () => {
+  let searchTerm = 'pipeline'
+  let newJobFolderName = 'conFolder'
+
   it("Header > Search Box | User can select suggestion to auto-fill and complete the search", () => {
     cy.get('a[href="/view/all/newJob"]').click();
     cy.get('.jenkins-input').type('testJob');
@@ -95,12 +97,43 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('li').contains('manage').should('be.visible')
   })
 
-  it('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right', () => {
+  it('TC_14.002.02 | Verify error message appears when no matches found', () => {
+    cy.get('input#search-box').type(`${searchTerm}{enter}`)
+    cy.get('li[style]')
+      .should('not.be.visible')
+    cy.get('#main-panel h1').contains(`${searchBoxData.textMessages.heading} '${searchTerm}'`)
+    cy.get('div.error')
+      .should('have.text', searchBoxData.textMessages.error)
+      .and('have.css', 'color', searchBoxData.cssRequirements.error)
+  })
+
+  it('TC_14.002.13 | Header > Search Box  | Verify auto-fill suggestions contain the search term', () => {
+    let searchterm = 'con'
+    // create a new organization folder
+    cy.get('a[href*="newJob"].content-block__link').click()
+    cy.get('input#name').type(newJobFolderName)
+    cy.get('li[class*="OrganizationFolder"]').click()
+    cy.get('button#ok-button').click()
+    cy.get('button[formnovalidate="formNoValidate"]').click()
+    cy.get('li:first-child a.model-link').click()
+
+    cy.get('input#search-box').type(searchterm)
+    cy.get('li[style]:not([style="display: none;"])').each(($el) => {
+      cy.wrap($el).invoke('text').should('contain', searchterm)
+    })
+  })
+
+  it('TC_14.002.12 | Verify that Dashboard page in Jenkins has a search box on its top right', () => {
+    cy.get('.main-search__input').should('be.visible').and('have.attr', 'placeholder');
+  })
+
+});
+
+it('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right', () => {
 
     cy.get(dashboard).should('be.visible')
     cy.get('#search-box').click();
     cy.get('header').should("exist")
   })
 })
-
 
