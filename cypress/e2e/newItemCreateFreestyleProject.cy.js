@@ -1,12 +1,20 @@
 /// <reference types="cypress" />
 
-const projectName = 'New Freestyle Project';
-const projectDescription = 'New Freestyle Project Description';
-const folderName = 'New Folder';
+import { faker } from '@faker-js/faker';
+
+const folderName = faker.commerce.product();
+const projectName = faker.commerce.productName();
+const projectDescription = faker.commerce.productDescription();
   
-describe('US_00.001 | New item > Create Freestyle Project', () => {
+describe('US_00.001 | New item > Create Freestyle Project', function () {
+
+    beforeEach(function () {
+        cy.fixture('messages').then((messages) => {
+            this.message = messages;
+        });
+    });
     
-    it('TC_00.001.03 | Create a new Freestyle Project using the "New Item" button from the Dashboard', () => {
+    it('TC_00.001.03 | Create a new Freestyle Project using the "New Item" button from the Dashboard', function () {
         cy.get(':nth-child(1) > .task-link-wrapper > .task-link').first().click();
         cy.get('.jenkins-input').type('Sandra');
         cy.get('.label').first().click();
@@ -16,7 +24,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('.model-link').should('contain', 'Sandra');
     });
     
-    it('TC_00.001.02 | Verify a new freestyle project can be created from the Dahsboard page', () => {
+    it('TC_00.001.02 | Verify a new freestyle project can be created from the Dahsboard page', function () {
 
         cy.get('a[href$="/newJob"]').click();
         cy.get('input#name').type(projectName);
@@ -28,18 +36,16 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
     
     });
 
-    it('TC_00.001.04 | Verify a friendly reminder appeared when attempting to create a new Freestyle Project without a name', () => {
-        
-        const emptyFieldReminder = '» This field cannot be empty, please enter a valid name'
+    it('TC_00.001.04 | Verify a friendly reminder appeared when attempting to create a new Freestyle Project without a name', function () {
 
         cy.get('a[href$="/newJob"]').click();
         cy.get('#items li[class$="FreeStyleProject"]').click();
         
-        cy.get('div[class$="validation-message"]').should('have.text', emptyFieldReminder);
+        cy.get('div[class$="validation-message"]').should('have.text', this.message.newItem.emptyNameFieldReminder);
 
     });
 
-    it('TC_00.001.05 | Verify a description can be added when creating a new Freestyle Project', () => {
+    it('TC_00.001.05 | Verify a description can be added when creating a new Freestyle Project', function () {
         
         cy.get('a[href$="/newJob"]').click();
         cy.get('input#name').type(projectName);
@@ -52,7 +58,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
 
     });
 
-    it('TC_00.001.06 | Verify a new Freestyle Project can be created from a new Folder', () => {
+    it('TC_00.001.06 | Verify a new Freestyle Project can be created from a new Folder', function () {
         
         cy.get('a[href$="/newJob"]').click();
         cy.get('input#name').type(folderName);
@@ -70,7 +76,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
 
     });
 
-    it('TC_00.001-08 | Friendly messages are shown', () =>{
+    it('TC_00.001-08 | Friendly messages are shown', function () {
         cy.get('a[href="/view/all/newJob"]').click();
         cy.get('.hudson_model_FreeStyleProject').click();
 
@@ -78,7 +84,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('#ok-button').should('be.disabled');
     });
   
-    it('TC_00.001.07 | Verify that duplicate names are not accepted during project creation', () => {
+    it('TC_00.001.07 | Verify that duplicate names are not accepted during project creation', function () {
         
         const duplicateNameError = `» A job already exists with the name ‘${projectName}’`
         
@@ -102,7 +108,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
 
     });
 
-    it('TC_00.001.10 | Create Freestyle Project using the "New Item" button', () => {
+    it('TC_00.001.10 | Create Freestyle Project using the "New Item" button', function () {
         cy.get('a:contains("New Item")').click();
         cy.get('input#name').type(projectName);
         cy.get('div').contains('Freestyle project').click();
@@ -113,7 +119,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('td a').should('contain', projectName);
     });
 
-    it('TC_00.001.09 | Verify user can modify the default configuration during the creation by adding build trigger', () => {
+    it('TC_00.001.09 | Verify user can modify the default configuration during the creation by adding build trigger', function () {
 
         const scheduleBuild = 'H * * * *'
 
@@ -137,7 +143,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
             .should('have.text', scheduleBuild)
     })
         
-    it('TC_00.001-11 | Create Freestyle Project by clicking on Create a Job', () => {
+    it('TC_00.001-11 | Create Freestyle Project by clicking on Create a Job', function () {
         cy.get('a[href="newJob"]').click();
         cy.get('[id="name"]').type(projectName);
         cy.get('[class="hudson_model_FreeStyleProject"]').click();
@@ -147,7 +153,7 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('[id="main-panel"]').should('contain.text', projectName).and('be.visible');
     });
 
-    it('TC_00.001.12 | Verify that space projects name is not accepted during project creation', () => {
+    it('TC_00.001.12 | Verify that space projects name is not accepted during project creation', function () {
         cy.get('a:contains("New Item")').click();
         cy.get('input#name').type(' ');
         cy.get('div').contains('Freestyle project').click();
@@ -156,5 +162,30 @@ describe('US_00.001 | New item > Create Freestyle Project', () => {
         cy.get('#main-panel').should('include.text', 'Error')
                              .and('include.text', 'No name is specified');
     });
+    
+    it('TC_00.001.14 | Create Freestyle Project from the Dashboard Menu', function () {
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('#name').type('New Project Name');
+        cy.get('.hudson_model_FreeStyleProject').click();
+        cy.get('#ok-button').click();
+        cy.get('[name="Submit"]').click();
+      
+        cy.get('.job-index-headline').should('have.text', 'New Project Name');
+    });
 
+    it('TC_00.001.13 | Verify that duplicate names are not allowed during project creation', function () {
+        
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(projectName);
+        cy.get('div').contains('Freestyle project').click();
+        cy.get('button#ok-button').click();
+        cy.get('a:contains("Dashboard")').click();
+
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(projectName);
+
+        cy.get('#itemname-invalid').should('contain.text', `» A job already exists with the name ‘${projectName}’`);
+        cy.get('button#ok-button').should('be.disabled');
+    });
 });
+

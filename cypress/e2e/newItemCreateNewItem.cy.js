@@ -150,4 +150,58 @@ describe("US_00.000 | New Item > Create New item", () => {
 
         cy.get('table.jenkins-table.sortable').contains(jobName).should("exist");
     })
+
+    it('TC_00.000.10 | Verify that to create a new item, user should choose "an item type" first', () => {
+
+        cy.get('span').contains('New Item').click()
+        cy.get('input#name.jenkins-input').type(jobName)
+        cy.get('#ok-button').contains('OK').should('be.disabled')
+        cy.get('span').contains('Freestyle project').click()
+        cy.get('#ok-button').contains('OK').should('be.enabled')
+        cy.get('#ok-button').click()
+        cy.get('a#jenkins-home-link').click()
+
+        cy.get('table.jenkins-table.sortable').contains(jobName).should('be.visible')
+    })
+
+    it('TC_00.000.11 | Verify Error message appearance and its text when item name contains special characters', () => {
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('#name').type('New Project @#$ Name');
+      
+        cy.get('#itemname-invalid').should('have.text', '» ‘@’ is an unsafe character');
+    });
+
+    it('TC_00.000.12 | Verify redirection to the configure page for the selected item type after clicking "OK"', () => {
+        
+        cy.get('span').contains('New Item').click()
+        cy.get('input#name.jenkins-input').type(jobName)
+        cy.get('span.label').contains('Pipeline').click()
+        cy.get('#ok-button').click()
+        
+        cy.url().should('include', '/configure')
+        cy.get('button[data-section-id="pipeline"]').contains('Pipeline')
+        cy.get('button[data-section-id="pipeline"]').should('be.visible')
+    })
+
+    it('TC_00.000.13 | Verify that after saving, new item is present on dashboard', () => {
+
+        cy.get('span').contains('New Item').click()
+        cy.get('input#name.jenkins-input').type(jobName)
+        cy.get('span.label').contains('Freestyle project').click()
+        cy.get('#ok-button').click()
+        cy.get('button[name="Submit"]').contains('Save').click()
+        cy.get('a#jenkins-home-link').click()
+        
+        cy.get('table.jenkins-table.sortable').contains(jobName).should('be.visible')
+    })
+
+    it('TC_00.000.14 | Verify the display of validation message if no item name is entered', () => {
+
+        cy.get('span').contains('New Item').click()
+        cy.get('input#name.jenkins-input').type(jobName)
+        cy.get('input#name.jenkins-input').clear()
+
+        cy.get('#itemname-required.input-validation-message').should('have.text', '» This field cannot be empty, please enter a valid name')
+        cy.get('#ok-button').contains('OK').should('be.disabled')
+    })
 })
