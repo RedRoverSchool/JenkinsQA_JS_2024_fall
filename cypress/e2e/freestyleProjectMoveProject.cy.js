@@ -56,7 +56,29 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         cy.get('button').contains('Move').click()
 
         cy.get('div[id="main-panel"]').should('contain','Folder2/Project')
-    })
- 
+    });
+
+    it('TC_06.005-03 | Move Freestyle Project to Folder', () => {
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('#name').type('New Project Name');
+        cy.get('.hudson_model_FreeStyleProject').click();
+        cy.get('#ok-button').click();
+        cy.get('[name="Submit"]').click();
+        cy.get('#jenkins-home-link').click();
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('#name').type('New Folder Name');
+        cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click();
+        cy.get('#ok-button').click();
+        cy.get('[name="Submit"]').click();
+        cy.get('#jenkins-home-link').click();
+        cy.get('button[data-href*="Project"]').click({force: true});
+        cy.get('a[href*="move"]').click();
+        cy.get('select[name="destination"]').select('/New Folder Name');
+        cy.get('[name="Submit"]').click();
+        cy.get('#jenkins-home-link').click();
+        cy.get('span').contains('New Folder Name').click();
+
+        cy.get('.jenkins-table__link > span').should('have.text','New Project Name')
+    });
 })
  
