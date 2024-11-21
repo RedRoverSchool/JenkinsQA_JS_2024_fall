@@ -1,6 +1,11 @@
 /// <reference types="cypress" />
 
+
 describe("US_00.002 | New Item > Create Pipeline Project", () => {
+
+
+  let projectName = "New Pipeline"
+
 
   it("New Item > Create Pipeline Project | Special characters are not allowed in the project name", () => {
     cy.get(".task-link-text").contains("New Item").click({ force: true });
@@ -17,4 +22,17 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
     cy.get('#itemname-required').should('have.text', '» This field cannot be empty, please enter a valid name')
       .should('have.css', 'color', 'rgb(230, 0, 31)');
   })
+
+
+  it("TC_00.002.03 | Verify redirection to Configure page", () => {
+
+    cy.get('a[href$="/newJob"]').click();
+    cy.get('input#name').type(projectName);
+    cy.get('#items li[class$="WorkflowJob"]').click();
+    cy.get('button[id="ok-button"]').click();
+        
+    cy.url().should('include', '/configure')
+
+  })
+
 });
