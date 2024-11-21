@@ -82,21 +82,21 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('a[href$="/configure"]').click({ force: true });
     cy.get("label[class='attach-previous ']").should('contain', 'Insensitive search tool').and('exist')
     cy.get("input[name='insensitiveSearch']").should("exist")
-    .uncheck({ force: true })
-    .should("not.be.checked")
-    .check({ force: true })
-    .should("be.checked");
+      .uncheck({ force: true })
+      .should("not.be.checked")
+      .check({ force: true })
+      .should("be.checked");
   });
-  
-    it('TC_14.002.01 | Auto-Completion Suggestion Selection', () => {
-        cy.get('input[id="search-box"]').click().clear()
-        .type('man')
-        cy.get('li').contains('manage')
-        .click()
-        cy.get('li').contains('manage').should('be.visible')
-    })
 
-  it('TC_14.002.02 | Verify error message appears when no matches found',() => {
+  it('TC_14.002.01 | Auto-Completion Suggestion Selection', () => {
+    cy.get('input[id="search-box"]').click().clear()
+      .type('man')
+    cy.get('li').contains('manage')
+      .click()
+    cy.get('li').contains('manage').should('be.visible')
+  })
+
+  it('TC_14.002.02 | Verify error message appears when no matches found', () => {
     cy.get('input#search-box').type(`${searchTerm}{enter}`)
     cy.get('li[style]')
       .should('not.be.visible')
@@ -106,7 +106,7 @@ describe('US_14.002 | Header > Search Box', () => {
       .and('have.css', 'color', searchBoxData.cssRequirements.error)
   })
 
-  it('TC_14.002.13 | Header > Search Box  | Verify auto-fill suggestions contain the search term',() => {
+  it('TC_14.002.13 | Header > Search Box  | Verify auto-fill suggestions contain the search term', () => {
     let searchterm = 'con'
     // create a new organization folder
     cy.get('a[href*="newJob"].content-block__link').click()
@@ -116,10 +116,14 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('button[formnovalidate="formNoValidate"]').click()
     cy.get('li:first-child a.model-link').click()
 
-    cy.get('input#search-box').type(searchterm )
+    cy.get('input#search-box').type(searchterm)
     cy.get('li[style]:not([style="display: none;"])').each(($el) => {
-      cy.wrap($el).invoke('text').should('contain', searchterm )
+      cy.wrap($el).invoke('text').should('contain', searchterm)
     })
+  })
+
+  it.only('TC_14.002.12 | Verify that Dashboard page in Jenkins has a search box on its top right', () => {
+    cy.get('.main-search__input').should('be.visible').and('have.attr', 'placeholder');
   })
 
 });
