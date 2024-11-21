@@ -32,7 +32,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
 
     })
     
-    it.only('TC_01.004.08 |Pop up window appears before deletion', () => {
+    it('TC_01.004.08 |Pop up window appears before deletion', () => {
         
         cy.get('span').contains('New Item').click()
         cy.get('input[name="name"]').type('Project')
@@ -42,7 +42,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
         cy.get('.job-index-headline').contains('Project').should('exist')
         cy.get('span').contains('Delete Project').click() 
         cy.get('button[data-id="ok"]').click()
-        
+
         cy.contains('Project').should('not.exist')
         
     })
