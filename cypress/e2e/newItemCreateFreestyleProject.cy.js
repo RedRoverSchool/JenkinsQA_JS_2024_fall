@@ -1,14 +1,16 @@
 /// <reference types="cypress" />
 
-const projectName = 'New Freestyle Project';
-const projectDescription = 'New Freestyle Project Description';
-const folderName = 'New Folder';
+import { faker } from '@faker-js/faker';
+
+const folderName = faker.commerce.product();
+const projectName = faker.commerce.productName();
+const projectDescription = faker.commerce.productDescription();
   
 describe('US_00.001 | New item > Create Freestyle Project', function () {
 
     beforeEach(function () {
         cy.fixture('messages').then((messages) => {
-            this.messages = messages;
+            this.message = messages;
         });
     });
     
@@ -39,7 +41,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get('a[href$="/newJob"]').click();
         cy.get('#items li[class$="FreeStyleProject"]').click();
         
-        cy.get('div[class$="validation-message"]').should('have.text', this.messages.newItem.emptyNameFieldReminder);
+        cy.get('div[class$="validation-message"]').should('have.text', this.message.newItem.emptyNameFieldReminder);
 
     });
 
