@@ -129,4 +129,5 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
     
         cy.get('td a[href="job/New%20project/"]').should("be.visible");
       }); 
+
 })
