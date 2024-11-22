@@ -137,7 +137,6 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         const selectedFolder = "Folder " + randomFolderNumber
         cy.get('span').contains(projectName).click()
         cy.get('span').contains('Move').click()
-        // cy.get('[class*=setting-input]').click()
         cy.get('select[name="destination"]').select(`/${selectedFolder}`)
         cy.get('[name="Submit"]').click();
 
