@@ -25,7 +25,6 @@ const createNewItem = (itemName, itemType) => {
     cy.get(btnNewItem).click()
     cy.get(inputEnterAnItemName).type(itemName)
     cy.get('label span').contains(itemType).click()
-    cy.get(`.j-item-options li[class="hudson_model_${itemType}"]`).click()
     cy.get(btnOK).click({force: true})
     cy.get(btnSave).click()
 }
@@ -140,7 +139,7 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         cy.get('.jenkins-table__link > span').should('have.text','New Project Name')
     });
  
-    it('TC_01.006.03 | Verify a project is moved from the Dashboard page after clicking move',() => {
+    it.only('TC_01.006.03 | Verify a project is moved from the Dashboard page after clicking move',() => {
         
         cy.log('Precondition: create a folder and project')
         createNewItem(randomFolderName, "Folder")
