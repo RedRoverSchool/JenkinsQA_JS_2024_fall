@@ -187,5 +187,16 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get('#itemname-invalid').should('contain.text', `» A job already exists with the name ‘${projectName}’`);
         cy.get('button#ok-button').should('be.disabled');
     });
+
+    it('TC_00.001.16 | Verify that user can create a new Freestyle project', function(){
+
+        cy.get('a[href="/view/all/newJob"]').click()
+        cy.get('#name').type("New Freestyle Project")
+        cy.get('.label').contains('Freestyle project').click()
+        cy.get('#ok-button').click()
+        cy.get('[name="Submit"]').click()
+
+        cy.get('.job-index-headline').should('have.text', 'New Freestyle Project')
+    }) 
 });
 
