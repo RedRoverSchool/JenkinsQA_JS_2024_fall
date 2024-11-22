@@ -7,7 +7,7 @@ const jobFreeStyleProject = ".hudson_model_FreeStyleProject"
 
 describe("US_00.000 | New Item > Create New item", () => {
     const btnCreateNewItem = 'a[href="/view/all/newJob"]';
-    const randomItemName = faker.lorem.words();  
+    const randomItemName = faker.lorem.words();
     const btnOK = '#ok-button';
     const btnSave = 'button[name="Submit"]';
     const pageHeadline = 'h1.page-headline';
@@ -58,6 +58,7 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get(".desc").eq(0).click();
         cy.get("#ok-button").click();
         cy.get("a#jenkins-home-link").click();
+
 
         cy.get("table.jenkins-table.sortable").contains(jobName).should("exist");
     });
@@ -224,5 +225,23 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get(btnSave).click();
 
         cy.get(pageHeadline).contains(randomItemName).should('be.visible');
+
+        it('TC_00.000.16 | User can see new "item name" on dashboard after "Save button" is clicked', () => {
+            cy.get('a.task-link[href="/view/all/newJob"]').click();
+            cy.get('#name').type('New project')
+            cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
+            cy.get('#ok-button').should('have.text', 'OK').click()
+            cy.get('.jenkins-submit-button')
+                .contains('Save')
+                .should('be.visible')
+                .click()
+            cy.get('h1:has(svg[tooltip="Folder"])').should('be.visible')
+            cy.get('ol#breadcrumbs li a.model-link')
+                .contains('Dashboard')
+                .should('be.visible')
+                .click()
+            cy.get('a[href="job/New%20project/"]').should('be.visible')
+
+        })
     })
 })
