@@ -46,4 +46,26 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
         cy.contains('Project').should('not.exist')
         
     })
+
+    it('TC_01.004.07 | Verify confirmation appears before deletion', () => {
+        let projectName = 'New project';
+        cy.log('Preconditions');
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(projectName);
+        cy.get('div').contains('Freestyle project').click();
+        cy.get('button#ok-button').click();
+        cy.get('button:contains("Save")').click();
+        cy.get('a:contains("Dashboard")').click();
+
+        cy.log('Test body');
+        cy.get('a span').contains(projectName).realHover();
+        cy.get(`button[data-href$="${projectName.split(' ')[1]}/"]`).click();
+        cy.get('.jenkins-dropdown__item ').contains('Delete Project').click();
+        cy.get('dialog.jenkins-dialog').should('exist')
+                                       .and('contain.text', `Delete the Project ‘${projectName}’?`);
+        cy.get("button[data-id='ok']").should('exist')
+                                      .and('not.be.disabled');
+        cy.get("button[data-id='cancel']").should('exist')
+                                          .and('not.be.disabled');                              
+    })                                 
 })
