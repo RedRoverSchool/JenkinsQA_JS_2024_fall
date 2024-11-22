@@ -61,7 +61,7 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
     const LOCAL_PORT = Cypress.env('local.port');
     const LOCAL_HOST = Cypress.env('local.host');
 
-    it('≈',() => {
+    it('TC_01.006.02 |Choose from a list of available folders',() => {
         cy.get('span').contains('New Item').click()
         cy.get('#name').type('Project')
         cy.get('span.label').contains('Freestyle project').click()
