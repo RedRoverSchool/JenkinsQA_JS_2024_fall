@@ -133,18 +133,18 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('header').should("exist")
     cy.get('#search-box').should("exist")
   })
-});
 
-/// <reference types="cypress" />
+  it('TC_14.002-01-A | Dashboard page in Jenkins has a search box within its header', () => {
+    const header = '#page-header'
+    const searchBox = '#search-box'
 
-describe('US_14.002 | Header > Search Box', () => {
+    cy.get(header)
+      .should('exist')
 
-  it('TC_14.002-01-A | Header > Search Box | Dashboard page in Jenkins has a search box on its top right', () => {
-    cy.get('#search-box').then($searchBar => {
-      const rect = $searchBar[0].getBoundingClientRect();
-      const windowWidth = Cypress.config('viewportWidth');
-      expect(rect.top).to.be.closeTo(0, 10);
-      expect(windowWidth - rect.right).to.be.closeTo(0, 347);
-    });
+      .within(() => {
+        cy.get(searchBox)
+          .should('exist')
+          .and('be.visible');
+      });
   });
 });
