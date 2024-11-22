@@ -139,5 +139,28 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
         cy.get(folderNameOnPanel).contains(oldName).should('not.exist')
         
     });
+  
+    it("TC_01.004.11 |Verify user is able to cancel project deleting", () => {
+        const newItemLink = cy.get(".task-link-text").contains("New Item");
+        const jenkinsMainPage = cy.get('img[alt="Jenkins"]');
+        const newProjName = "New project";
+    
+        newItemLink.click({ force: true });
+        cy.get("input#name").type(newProjName);
+        cy.get(".label").contains("Freestyle project").click();
+        cy.get("button#ok-button").click();
+        cy.get('button[name="Submit"]').click();
+    
+        jenkinsMainPage.click();
+        cy.get('td a[href="job/New%20project/"]').trigger("mouseover");
+        cy.get("#main-panel button.jenkins-menu-dropdown-chevron").click({
+          force: true,
+        });
+        cy.get('[href="/job/New%20project/doDelete"]').click({ force: true });
+        cy.get('button[data-id="cancel"]').should("be.visible");
+        cy.get('button[data-id="cancel"]').click();
+    
+        cy.get('td a[href="job/New%20project/"]').should("be.visible");
+    }); 
 
 })
