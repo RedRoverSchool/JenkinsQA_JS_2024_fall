@@ -25,7 +25,6 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
                 .and('include','NewFolder')
  
     })
-  AS/TC_01.006.04
     it('TC_01.006.04 | FreestyleProject > Move project | from Dashboard', () => {
         cy.get('span.task-link-text').eq(0).click({force:true})
         cy.get('input[id="name"]').click().type('New Folder')
