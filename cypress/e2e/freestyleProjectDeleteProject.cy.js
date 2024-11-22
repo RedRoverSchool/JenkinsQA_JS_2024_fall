@@ -1,6 +1,21 @@
 /// <reference types="cypress"/>
+import { faker } from '@faker-js/faker';
+
+const btnNewItem = 'a[href="/view/all/newJob"]'
+const jobFreeStyleProject = ".hudson_model_FreeStyleProject"
 
 describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
+    const inputField = 'input#name.jenkins-input';
+    const randomItemName = faker.lorem.words();  
+    const btnOK = '#ok-button';
+    const btnSave = 'button[name="Submit"]';
+    const btnYes = 'button.jenkins-button.jenkins-button--primary ';
+    const jenkinsLogo = 'a#jenkins-home-link';
+    const dropdownChevron = '.jenkins-table__link > .jenkins-menu-dropdown-chevron';
+    const dropdownItem = '.jenkins-dropdown__item ';
+    const dashboardPage = 'div#main-panel';
+    const welcomeToJenkins = '.empty-state-block h1';
+
     it('TC_00.001.04 A|FreestyleProject > Delete Project from the dashboard', () => {
         cy.get('span').contains('Create a job').click();
         cy.get('input[name="name"]').type('New Freestyle project');
@@ -47,7 +62,51 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
         
     })
 
+    it('TC_01.004.07 | Verify confirmation appears before deletion', () => {
+        let projectName = 'New project';
+        cy.log('Preconditions');
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(projectName);
+        cy.get('div').contains('Freestyle project').click();
+        cy.get('button#ok-button').click();
+        cy.get('button:contains("Save")').click();
+        cy.get('a:contains("Dashboard")').click();
 
+        cy.log('Test body');
+        cy.get('a span').contains(projectName).realHover();
+        cy.get(`button[data-href$="${projectName.split(' ')[1]}/"]`).click();
+        cy.get('.jenkins-dropdown__item ').contains('Delete Project').click();
+        cy.get('dialog.jenkins-dialog').should('exist')
+                                       .and('contain.text', `Delete the Project ‘${projectName}’?`);
+        cy.get("button[data-id='ok']").should('exist')
+                                      .and('not.be.disabled');
+        cy.get("button[data-id='cancel']").should('exist')
+                                          .and('not.be.disabled');                              
+    })
+    
+    it('TC_01.004.10 | Verify Freestyle Project is deleted from Dashboard page', () => {
+
+        cy.log('Creating Freestyle project')
+        cy.get(btnNewItem).click()
+        cy.get(inputField).type(randomItemName)
+        cy.get(jobFreeStyleProject).click()
+        cy.get(btnOK).click()
+        cy.get(btnSave).click()
+        cy.get(jenkinsLogo).click()
+
+        cy.log('Deleting Freestyle project')
+        cy.contains(randomItemName).realHover()
+        cy.get(dropdownChevron).click()
+        cy.get(dropdownItem).each(($els) => {
+            let eText = $els.text().trim()
+            if (eText == 'Delete Project') { cy.wrap($els).click() }
+        })
+        cy.get(btnYes).click()
+
+        cy.get(dashboardPage).contains(randomItemName).should('not.exist')
+        cy.get(welcomeToJenkins).should('be.visible')
+    })
+  
     it('TC_01.004.03 | Delete a project from the Dashboard page', () => {
 
         let oldName = 'OurPapka';
@@ -80,4 +139,5 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
         cy.get(folderNameOnPanel).contains(oldName).should('not.exist')
         
     });
+
 })

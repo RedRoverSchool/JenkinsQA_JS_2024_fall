@@ -1,10 +1,16 @@
 /// <reference types="cypress" />
+import { faker } from '@faker-js/faker';
 
 const btnNewItem = ":nth-child(1) > .task-link-wrapper > .task-link"
 const btnDashboard = "li.jenkins-breadcrumbs__list-item a.model-link"
 const jobFreeStyleProject = ".hudson_model_FreeStyleProject"
 
 describe("US_00.000 | New Item > Create New item", () => {
+    const btnCreateNewItem = 'a[href="/view/all/newJob"]';
+    const randomItemName = faker.lorem.words();
+    const btnOK = '#ok-button';
+    const btnSave = 'button[name="Submit"]';
+    const pageHeadline = 'h1.page-headline';
     const jobName = "Item_1";
     const sidebarJobName = "Item_2";
     const existingJobName = 'Item_1';
@@ -52,6 +58,7 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get(".desc").eq(0).click();
         cy.get("#ok-button").click();
         cy.get("a#jenkins-home-link").click();
+
 
         cy.get("table.jenkins-table.sortable").contains(jobName).should("exist");
     });
@@ -208,5 +215,33 @@ describe("US_00.000 | New Item > Create New item", () => {
 
         cy.get('#itemname-required.input-validation-message').should('have.text', '» This field cannot be empty, please enter a valid name')
         cy.get('#ok-button').contains('OK').should('be.disabled')
+    })
+
+    it('TC_00.000.15 | Verify item name is displayed on the page after "Save" button is clicked', () => {
+        cy.get(btnCreateNewItem).click();
+        cy.get('#name').type(randomItemName);
+        cy.get(jobFreeStyleProject).click();
+        cy.get(btnOK).click();
+        cy.get(btnSave).click();
+
+        cy.get(pageHeadline).contains(randomItemName).should('be.visible');
+
+        it('TC_00.000.16 | User can see new "item name" on dashboard after "Save button" is clicked', () => {
+            cy.get('a.task-link[href="/view/all/newJob"]').click();
+            cy.get('#name').type('New project')
+            cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
+            cy.get('#ok-button').should('have.text', 'OK').click()
+            cy.get('.jenkins-submit-button')
+                .contains('Save')
+                .should('be.visible')
+                .click()
+            cy.get('h1:has(svg[tooltip="Folder"])').should('be.visible')
+            cy.get('ol#breadcrumbs li a.model-link')
+                .contains('Dashboard')
+                .should('be.visible')
+                .click()
+            cy.get('a[href="job/New%20project/"]').should('be.visible')
+
+        })
     })
 })
