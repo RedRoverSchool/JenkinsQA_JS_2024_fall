@@ -1,5 +1,7 @@
 /// <reference types="cypress"/>
 
+const itemName = 'First test'
+
 const newItemBtn = '[href="/view/all/newJob"]';
 const itemNameField = ".jenkins-input";
 const freeStyleProjectItem = ".hudson_model_FreeStyleProject";
@@ -155,5 +157,39 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.get('td > a > span').should('contain',project2Name);
   });
   
+it('TC-01.002.06| Rename a project name from the Dashboard page', () => {
+  
+      cy.get('.task-link-wrapper').contains('New Item').click()
+      cy.get('div.add-item-name').contains('Enter an item name')
+      cy.get('input[id="name"]').clear()
+      cy.get('input[id="name"]').type(`${itemName}`)
+      cy.get('span.label').eq(0).click()
+      cy.get('button[id="ok-button"]')
+      .click()
+      cy.get('button[name="Submit"]')
+      .click()
+      cy.get('a.model-link').contains('Dashboard').click() 
+  
+      cy.get('a[href="job/First%20test/"]').should('be.visible')
+      cy.get('button.jenkins-menu-dropdown-chevron').eq(2).click({ force: true })
+      cy.get('a.jenkins-dropdown__item')
+          .contains('Rename') 
+          .should('be.visible') 
+          .invoke('text')
+          .then((text) => {
+              cy.log(`Text found: "${text}"`)
+              const trimmedText = text.trim()
+              expect(trimmedText).to.equal('Rename')
+          });
+
+      cy.get('a.jenkins-dropdown__item').contains('Rename').click()
+      cy.get('h1').should('have.text', 'Rename Project First test')
+      cy.get('input.jenkins-input').should('have.value', 'First test')
+      .click().clear()
+      .type('New First test')
+      cy.get('button.jenkins-submit-button')
+      .click()
+      cy.get('h1.job-index-headline').should('have.text', 'New First test')
+  })
 });
 
