@@ -162,6 +162,5 @@ describe.skip('US_14.002 | Header > Search Box', () => {
         cy.url().should('contain', build.slice(1))
       })
     });
-  })
+  });
 });
-

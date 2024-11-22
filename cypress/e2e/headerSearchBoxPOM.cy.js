@@ -3,6 +3,7 @@
 import headerData from "../fixtures/headerData.json";
 import messages from "../fixtures/messages.json";
 import {project_name} from "../fixtures/pomFixtures/header.json";
+import {leftSideBar, endPoint} from "../fixtures/dashboardPage.json"
 
 import Header from "../pageObjects/Header";
 import JobPage from "../pageObjects/JobPage";
@@ -180,5 +181,18 @@ describe('US_14.002 | Header > Search Box', () => {
       })
     });
   })
+
+  beforeEach(function () {
+    cy.get("#side-panel .task").as("sideBarLink");
+  });
+
+  leftSideBar.forEach((pageName, el) => {
+    it.only(`TC_14.002.17 | Verify that ${pageName} page in Jenkins has a search box on its top right`, () => {
+      cy.get("@sideBarLink").eq(el).click();
+      cy.url().should("contain", endPoint[el]);
+
+      cy.get('[id="search-box"]').should("be.visible");
+    });
+  });
 });
 
