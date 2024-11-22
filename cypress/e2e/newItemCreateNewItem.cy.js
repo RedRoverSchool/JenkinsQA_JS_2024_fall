@@ -223,6 +223,6 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get(btnOK).click();
         cy.get(btnSave).click();
 
-        cy.get(pageHeadline).contains(randomItemName).should('be.visible')
+        cy.get(pageHeadline).contains(randomItemName).should('be.visible');
     })
 })
