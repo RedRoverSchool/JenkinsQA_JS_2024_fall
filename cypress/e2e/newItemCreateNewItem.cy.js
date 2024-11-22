@@ -1,6 +1,16 @@
 /// <reference types="cypress" />
+import { faker } from '@faker-js/faker';
+
+const btnNewItem = ":nth-child(1) > .task-link-wrapper > .task-link"
+const btnDashboard = "li.jenkins-breadcrumbs__list-item a.model-link"
+const jobFreeStyleProject = ".hudson_model_FreeStyleProject"
 
 describe("US_00.000 | New Item > Create New item", () => {
+    const btnCreateNewItem = 'a[href="/view/all/newJob"]';
+    const randomItemName = faker.lorem.words();
+    const btnOK = '#ok-button';
+    const btnSave = 'button[name="Submit"]';
+    const pageHeadline = 'h1.page-headline';
     const jobName = "Item_1";
     const sidebarJobName = "Item_2";
     const existingJobName = 'Item_1';
@@ -9,24 +19,25 @@ describe("US_00.000 | New Item > Create New item", () => {
     const LOCAL_PORT = Cypress.env("local.port");
     const LOCAL_HOST = Cypress.env("local.host");
 
-    it('TC_00.000-01|New Item > Create New item | Create new item from "Create a job" button|Invalid data', () => {
+
+    it('TC_00.000.01| Create new item from "Create a job" button| Invalid data', () => {
         cy.get("a[href='newJob']").click();
         cy.url().should("include", "/newJob");
-        cy.get('input[name="name"]').type("test2");
-        cy.get(".hudson_model_FreeStyleProject").click();
+        cy.get('input[name="name"]').type(jobName);
+        cy.get(jobFreeStyleProject).click();
         cy.get("#ok-button").click();
         cy.get(".jenkins-submit-button").click();
-        cy.url().should("include", "/test2");
-        cy.get("#main-panel").should("contain", "test2").and("exist");
-        cy.get("li.jenkins-breadcrumbs__list-item a.model-link").first().click();
-        cy.get(":nth-child(1) > .task-link-wrapper > .task-link").click();
-        cy.get('input[name="name"]').type("test2");
+        cy.url().should("include", jobName);
+        cy.get("#main-panel").should("contain", jobName).and("exist");
+        cy.get(btnDashboard).first().click();
+        cy.get(btnNewItem).click();
+        cy.get('input[name="name"]').type(existingJobName);
         cy.get("#itemname-invalid").should(
             "have.class",
             "input-validation-message"
         );
         cy.get("#itemname-invalid").should("be.visible");
-        cy.contains(/already exists with the name ‘test2’/);
+        cy.contains(/A job already exists with the name /);
         cy.get('input[name="name"]').type("@@@@");
         cy.get("#itemname-invalid").should(
             "have.class",
@@ -47,6 +58,7 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get(".desc").eq(0).click();
         cy.get("#ok-button").click();
         cy.get("a#jenkins-home-link").click();
+
 
         cy.get("table.jenkins-table.sortable").contains(jobName).should("exist");
     });
@@ -205,21 +217,31 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get('#ok-button').contains('OK').should('be.disabled')
     })
 
-    it('TC_00.000.16 | User can see new "item name" on dashboard after "Save button" is clicked', () => {
-        cy.get('a.task-link[href="/view/all/newJob"]').click();
-        cy.get('#name').type('New project')
-        cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
-        cy.get('#ok-button').should('have.text', 'OK').click()
-        cy.get('.jenkins-submit-button')
-            .contains('Save')
-            .should('be.visible')
-            .click()
-        cy.get('h1:has(svg[tooltip="Folder"])').should('be.visible')
-        cy.get('ol#breadcrumbs li a.model-link')
-            .contains('Dashboard')
-            .should('be.visible')
-            .click()
-        cy.get('a[href="job/New%20project/"]').should('be.visible')
+    it('TC_00.000.15 | Verify item name is displayed on the page after "Save" button is clicked', () => {
+        cy.get(btnCreateNewItem).click();
+        cy.get('#name').type(randomItemName);
+        cy.get(jobFreeStyleProject).click();
+        cy.get(btnOK).click();
+        cy.get(btnSave).click();
 
+        cy.get(pageHeadline).contains(randomItemName).should('be.visible');
+
+        it('TC_00.000.16 | User can see new "item name" on dashboard after "Save button" is clicked', () => {
+            cy.get('a.task-link[href="/view/all/newJob"]').click();
+            cy.get('#name').type('New project')
+            cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
+            cy.get('#ok-button').should('have.text', 'OK').click()
+            cy.get('.jenkins-submit-button')
+                .contains('Save')
+                .should('be.visible')
+                .click()
+            cy.get('h1:has(svg[tooltip="Folder"])').should('be.visible')
+            cy.get('ol#breadcrumbs li a.model-link')
+                .contains('Dashboard')
+                .should('be.visible')
+                .click()
+            cy.get('a[href="job/New%20project/"]').should('be.visible')
+
+        })
     })
 })
