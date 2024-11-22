@@ -56,7 +56,33 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
  
         cy.url().should('include', 'NewProject')
                 .and('include','NewFolder')
- 
+    })
+
+    it('TC_01.006.04 | FreestyleProject > Move project | from Dashboard', () => {
+        cy.get('span.task-link-text').eq(0).click({force:true})
+        cy.get('input[id="name"]').click().type('New Folder')
+        cy.get('li.com_cloudbees_hudson_plugins_folder_Folder').click({force: true})
+        cy.get('button').contains('OK').click()
+        cy.get('button').contains('Save').click()
+        cy.visit('http://localhost:8080/')
+        cy.get('span.task-link-text').eq(0).click({force:true})
+        cy.get('input[id="name"]').click().type('New Job')
+        cy.get('li.hudson_model_FreeStyleProject').click({force: true})
+        cy.get('button').contains('OK').click()
+        cy.get('button').contains('Save').click()
+
+        cy.visit('http://localhost:8080/')
+        cy.get('button.jenkins-menu-dropdown-chevron').eq(3).click({force: true})
+        cy.get('a.jenkins-dropdown__item').contains('Move').invoke('text').then((Text) => {
+            const trimtxt=Text.trim()
+            expect(trimtxt).to.equal('Move')
+
+        }).wait(1000)
+        cy.get('a.jenkins-dropdown__item').contains('Move').click()
+        cy.get('select.setting-input').select(1)
+        cy.get('button').contains('Move').click()
+        cy.visit('http://localhost:8080/job/New%20Folder/').contains('New Job')
+
     })
 
     const LOCAL_PORT = Cypress.env('local.port');
@@ -89,7 +115,30 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         cy.get('button').contains('Move').click()
 
         cy.get('div[id="main-panel"]').should('contain','Folder2/Project')
-    })
+    });
+
+    it('TC_01.006.05 | Move project from Dashboard to Folder', () => {
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('#name').type('New Project Name');
+        cy.get('.hudson_model_FreeStyleProject').click();
+        cy.get('#ok-button').click();
+        cy.get('[name="Submit"]').click();
+        cy.get('#jenkins-home-link').click();
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('#name').type('New Folder Name');
+        cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click();
+        cy.get('#ok-button').click();
+        cy.get('[name="Submit"]').click();
+        cy.get('#jenkins-home-link').click();
+        cy.get('button[data-href*="Project"]').click({force: true});
+        cy.get('a[href*="move"]').click();
+        cy.get('select[name="destination"]').select('/New Folder Name');
+        cy.get('[name="Submit"]').click();
+        cy.get('#jenkins-home-link').click();
+        cy.get('span').contains('New Folder Name').click();
+
+        cy.get('.jenkins-table__link > span').should('have.text','New Project Name')
+    });
  
     it('TC_01.006.03 | Verify a project is moved from the Dashboard page after clicking move',() => {
         
