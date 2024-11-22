@@ -1,14 +1,16 @@
 /// <reference types="cypress" />
 
-const projectName = 'New Freestyle Project';
-const projectDescription = 'New Freestyle Project Description';
-const folderName = 'New Folder';
+import { faker } from '@faker-js/faker';
+
+const folderName = faker.commerce.product();
+const projectName = faker.commerce.productName();
+const projectDescription = faker.commerce.productDescription();
   
 describe('US_00.001 | New item > Create Freestyle Project', function () {
 
     beforeEach(function () {
         cy.fixture('messages').then((messages) => {
-            this.messages = messages;
+            this.message = messages;
         });
     });
     
@@ -39,7 +41,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get('a[href$="/newJob"]').click();
         cy.get('#items li[class$="FreeStyleProject"]').click();
         
-        cy.get('div[class$="validation-message"]').should('have.text', this.messages.newItem.emptyNameFieldReminder);
+        cy.get('div[class$="validation-message"]').should('have.text', this.message.newItem.emptyNameFieldReminder);
 
     });
 
@@ -169,6 +171,21 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get('[name="Submit"]').click();
       
         cy.get('.job-index-headline').should('have.text', 'New Project Name');
+    });
+
+    it('TC_00.001.13 | Verify that duplicate names are not allowed during project creation', function () {
+        
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(projectName);
+        cy.get('div').contains('Freestyle project').click();
+        cy.get('button#ok-button').click();
+        cy.get('a:contains("Dashboard")').click();
+
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(projectName);
+
+        cy.get('#itemname-invalid').should('contain.text', `» A job already exists with the name ‘${projectName}’`);
+        cy.get('button#ok-button').should('be.disabled');
     });
 });
 
