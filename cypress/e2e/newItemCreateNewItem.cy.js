@@ -1,10 +1,16 @@
 /// <reference types="cypress" />
+import { faker } from '@faker-js/faker';
 
 const btnNewItem = ":nth-child(1) > .task-link-wrapper > .task-link"
 const btnDashboard = "li.jenkins-breadcrumbs__list-item a.model-link"
 const jobFreeStyleProject = ".hudson_model_FreeStyleProject"
 
 describe("US_00.000 | New Item > Create New item", () => {
+    const btnCreateNewItem = 'a[href="/view/all/newJob"]';
+    const randomItemName = faker.lorem.words();  
+    const btnOK = '#ok-button';
+    const btnSave = 'button[name="Submit"]';
+    const pageHeadline = 'h1.page-headline';
     const jobName = "Item_1";
     const sidebarJobName = "Item_2";
     const existingJobName = 'Item_1';
@@ -208,5 +214,15 @@ describe("US_00.000 | New Item > Create New item", () => {
 
         cy.get('#itemname-required.input-validation-message').should('have.text', '» This field cannot be empty, please enter a valid name')
         cy.get('#ok-button').contains('OK').should('be.disabled')
+    })
+
+    it('TC_00.000.15 | Verify item name is displayed on the page after "Save" button is clicked', () => {
+        cy.get(btnCreateNewItem).click();
+        cy.get('#name').type(randomItemName);
+        cy.get(jobFreeStyleProject).click();
+        cy.get(btnOK).click();
+        cy.get(btnSave).click();
+
+        cy.get(pageHeadline).contains(randomItemName).should('be.visible')
     })
 })
