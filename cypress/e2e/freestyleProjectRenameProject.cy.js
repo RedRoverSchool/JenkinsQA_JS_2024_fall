@@ -192,7 +192,7 @@ it('TC-01.002.06| Rename a project name from the Dashboard page', () => {
       cy.get('h1.job-index-headline').should('have.text', 'New First test')
   })
 
-  it.only('TC_01.002.07 | Verify that duplicate names are not accepted when renaming a project from Project Page', () => {
+  it('TC_01.002.07 | Verify that duplicate names are not accepted when renaming a project from Project Page', () => {
     cy.get('.task-link-wrapper').contains('New Item').click()
     cy.get('div.add-item-name').contains('Enter an item name')
     cy.get('input[id="name"]').clear()
