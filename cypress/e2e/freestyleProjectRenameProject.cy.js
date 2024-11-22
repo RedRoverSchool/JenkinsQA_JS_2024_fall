@@ -191,5 +191,28 @@ it('TC-01.002.06| Rename a project name from the Dashboard page', () => {
       .click()
       cy.get('h1.job-index-headline').should('have.text', 'New First test')
   })
+
+  it.only('TC_01.002.07 | Verify that duplicate names are not accepted when renaming a project from Project Page', () => {
+    cy.get('.task-link-wrapper').contains('New Item').click()
+    cy.get('div.add-item-name').contains('Enter an item name')
+    cy.get('input[id="name"]').clear()
+    cy.get('input[id="name"]').type(`${itemName}`)
+    cy.get('span.label').eq(0).click()
+    cy.get('button[id="ok-button"]')
+    .click()
+    cy.get('button[name="Submit"]')
+    .click()
+    cy.get('a.model-link').contains('Dashboard').click()
+
+    cy.get('a[href="job/First%20test/"]').should('be.visible').eq(0).click()
+    cy.get('span.task-link-text').eq(5).click({ force: true })
+    cy.get('h1').should('have.text', 'Rename Project First test')
+    cy.get('input.jenkins-input').should('have.value', 'First test')
+    cy.get('button.jenkins-submit-button')
+    .click()
+
+    cy.get('h1').should('have.text', 'Error')
+    cy.get('p').should('have.text', 'The new name is the same as the current name.')
+})
 });
 
