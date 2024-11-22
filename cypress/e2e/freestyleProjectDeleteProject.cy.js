@@ -161,6 +161,6 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
         cy.get('button[data-id="cancel"]').click();
     
         cy.get('td a[href="job/New%20project/"]').should("be.visible");
-      }); 
+    }); 
 
 })
