@@ -113,7 +113,7 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         cy.get('.jenkins-table__link > span').should('have.text','New Project Name')
     });
     it('TC_01.006.06 | Choose from a list of existing folders', () => {
-            // Pre-condition: Create a Freestyle project and 5 folders with unique names
+          
             context('should create 5 folders and verify they exist', () => { 
             cy.get('span').contains('New Item').click();
             cy.get('#name').type(projectName);
@@ -121,7 +121,7 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
             cy.get('#ok-button').click({ force: true });
             cy.get('button').contains('Save').click();
             cy.get('#jenkins-home-link').click();
-            const baseFolderName = 'Folder'; // Base name for folders
+            const baseFolderName = 'Folder';
             for (let i = 1; i <= 5; i++) {
                 const uniqueFolderName = `${baseFolderName} ${i}`;
                 cy.get('span').contains('New Item').click();
