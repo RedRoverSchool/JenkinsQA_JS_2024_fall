@@ -124,6 +124,13 @@ describe('US_14.002 | Header > Search Box', () => {
     })
   })
 
+  it('TC_14.002.14 | Upon selecting a suggestion, the user is redirected to the relevant destination page', () => {
+    cy.get('#search-box').type('con')
+    cy.contains('configure').click()
+    .type('{enter}')
+    cy.url().should('include', '/configure')
+  })
+
   it('TC_14.002.12 | Verify that Dashboard page in Jenkins has a search box on its top right', () => {
     cy.get('.main-search__input').should('be.visible').and('have.attr', 'placeholder');
   })
