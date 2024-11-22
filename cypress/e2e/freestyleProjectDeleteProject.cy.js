@@ -52,32 +52,32 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
 
         let oldName = 'OurPapka';
         const locateNewItemlink = '[href="/view/all/newJob"]';
-        const newItemInputfield = '#name';
+        const newItemInputField = '#name';
         const labelFolder= 'label';
         const okButton = '#ok-button'; 
         const saveButton = '[name="Submit"]';
         const dashboardButton = '.model-link';
-        const folderNameonPanel = 'span';
+        const folderNameOnPanel = 'span';
         const checkMark = `[data-href="http://localhost:8080/job/${oldName}/"]`;
         const deleteFolderElement = `[href="/job/${oldName}/doDelete"]`;
-        const yeSButton = '[data-id="ok"]'
+        const yesButton = '[data-id="ok"]';
 
-            cy.get(locateNewItemlink).click();
-            cy.get(newItemInputfield).type(oldName); 
-            cy.get(labelFolder).contains('Folder').click();
-            cy.get(okButton).click();
-            cy.get(saveButton).click();
-            cy.url().should('include',oldName);
+        cy.get(locateNewItemlink).click();
+        cy.get(newItemInputField).type(oldName); 
+        cy.get(labelFolder).contains('Folder').click();
+        cy.get(okButton).click();
+        cy.get(saveButton).click();
 
-            cy.get('#main-panel').contains(oldName).should('be.visible');
+        cy.url().should('include',oldName);
+        cy.get('#main-panel').contains(oldName).should('be.visible');
             
-            cy.get(dashboardButton).contains('Dashboard').click();
-            cy.get(folderNameonPanel).contains(oldName).realHover();
-            cy.get(checkMark).click();
-            cy.get(deleteFolderElement).click();
-            cy.get(yeSButton).click();
+        cy.get(dashboardButton).contains('Dashboard').click();
+        cy.get(folderNameOnPanel).contains(oldName).realHover();
+        cy.get(checkMark).click();
+        cy.get(deleteFolderElement).click();
+        cy.get(yesButton).click();
 
-            cy.get(folderNameonPanel).contains(oldName).should('not.exist')
+        cy.get(folderNameOnPanel).contains(oldName).should('not.exist')
         
     });
 })
