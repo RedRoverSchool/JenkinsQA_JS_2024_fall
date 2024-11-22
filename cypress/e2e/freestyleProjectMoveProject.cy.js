@@ -1,6 +1,10 @@
 
 ///<reference types = 'cypress'/>
 
+import { faker } from '@faker-js/faker';
+
+const projectName = faker.company.name()
+
 describe ('US_01.006 | FreestyleProject > Move project', () => {
 
     it('TC_01.006.01-A | FreestyleProject>Move project from the Project Page',() => {
@@ -57,7 +61,7 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
     const LOCAL_PORT = Cypress.env('local.port');
     const LOCAL_HOST = Cypress.env('local.host');
 
-    it('TC_01.006.02 |Choose from a list of available folders',() => {
+    it('≈',() => {
         cy.get('span').contains('New Item').click()
         cy.get('#name').type('Project')
         cy.get('span.label').contains('Freestyle project').click()
@@ -108,6 +112,37 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
 
         cy.get('.jenkins-table__link > span').should('have.text','New Project Name')
     });
+    it('TC_01.006.06 | Choose from a list of existing folders', () => {
+            // Pre-condition: Create a Freestyle project and 5 folders with unique names
+            context('should create 5 folders and verify they exist', () => { 
+            cy.get('span').contains('New Item').click();
+            cy.get('#name').type(projectName);
+            cy.get('span.label').contains('Freestyle project').click();
+            cy.get('#ok-button').click({ force: true });
+            cy.get('button').contains('Save').click();
+            cy.get('#jenkins-home-link').click();
+            const baseFolderName = 'Folder'; // Base name for folders
+            for (let i = 1; i <= 5; i++) {
+                const uniqueFolderName = `${baseFolderName} ${i}`;
+                cy.get('span').contains('New Item').click();
+                cy.get('#name').type(uniqueFolderName);
+                cy.get('span.label').contains('Folder').click();
+                cy.get('#ok-button').click({ force: true });
+                cy.get('#jenkins-home-link').click();
+                cy.contains(uniqueFolderName).should('exist');
+            }
+        })
 
+        const randomFolderNumber = faker.number.int({ min: 1, max: 5 }) 
+        const selectedFolder = "Folder " + randomFolderNumber
+        cy.get('span').contains(projectName).click()
+        cy.get('span').contains('Move').click()
+        // cy.get('[class*=setting-input]').click()
+        cy.get('select[name="destination"]').select(`/${selectedFolder}`)
+        cy.get('[name="Submit"]').click();
+
+        cy.get('#main-panel').should('contain', `Full project name: ${selectedFolder}/${projectName}`)
+    });
+    
 })
- 
+
