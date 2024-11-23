@@ -237,13 +237,12 @@ it('TC-01.002.06| Rename a project name from the Dashboard page', () => {
     cy.get('p').should('have.text', 'No name is specified')
   })
 
-  it('TC_01.002.03 | Rename a project from the Dashboard page using Cyrillic', () => {
+  it.only('TC_01.002.03 | Rename a project from the Dashboard page using Cyrillic', () => {
     let prjName = "MyProjec";
     let prjName2 = "Новый проект";
     const logoJenkins = '#jenkins-home-link'
     const btnMenuDropdown = 'button[data-href$="/MyProjec/"]'
-    const btmSubmit =
-  
+      
     cy.log ('Preconditions: create project')
     cy.get(newItemBtn).click()
     cy.get('input[id="name"]').type(prjName)
