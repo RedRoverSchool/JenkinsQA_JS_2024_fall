@@ -142,14 +142,13 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
     it('TC_01.006.03 | Verify a project is moved from the Dashboard page after clicking move',() => {
         
         const expectedName = randomProjectName.replaceAll(" ", "%20")
-        
+
         cy.log('Precondition: create a folder and project')
         createNewItem(randomFolderName, "Folder")
         createNewItem(randomProjectName, "Freestyle project")
         
         cy.log('Steps')
         cy.get(breadcrumbDashboard).click()
-    
         cy.get(`a[href*="job/${expectedName}"]`).realHover()
         cy.get(`a[href*="job/${expectedName}"] .jenkins-menu-dropdown-chevron`).click()
         cy.get(btnItemDropdownMove).click()
