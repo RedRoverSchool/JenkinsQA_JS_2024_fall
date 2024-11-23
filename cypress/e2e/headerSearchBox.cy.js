@@ -133,5 +133,22 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('header').should("exist")
     cy.get('#search-box').should("exist")
   })
+
+  it.only('TC_14.002.03| Verify that when user can search for projects', () => {
+    cy.get('span').contains('Create a job').click()
+    cy.get('input[name="name"]').type('New Freestyle project')
+    cy.get('span.label').contains('Freestyle project').click()
+    cy.get('button').contains("OK").click()
+    cy.get('button').contains("Save").click()
+    cy.get('a').contains("Dashboard").click()
+    cy.get('span').contains('New Freestyle project').should('exist')
+    cy.get('#search-box').type('ne')
+    cy.get('li').contains('New Freestyle project').should('exist')
+    cy.get('li')
+      .contains('New Freestyle project')
+      .click()
+      .type('{enter}')
+     cy.get('#main-panel h1').should('have.text', 'New Freestyle project')
+  })
 });
 
