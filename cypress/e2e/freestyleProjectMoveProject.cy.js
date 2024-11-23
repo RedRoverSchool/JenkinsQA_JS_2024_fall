@@ -139,7 +139,9 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         cy.get('.jenkins-table__link > span').should('have.text','New Project Name')
     });
  
-    it.only('TC_01.006.03 | Verify a project is moved from the Dashboard page after clicking move',() => {
+    it('TC_01.006.03 | Verify a project is moved from the Dashboard page after clicking move',() => {
+        
+        const expectedName = randomProjectName.replaceAll(" ", "%20")
         
         cy.log('Precondition: create a folder and project')
         createNewItem(randomFolderName, "Folder")
@@ -147,7 +149,7 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         
         cy.log('Steps')
         cy.get(breadcrumbDashboard).click()
-        const expectedName = randomProjectName.replaceAll(" ", "%20")
+    
         cy.get(`a[href*="job/${expectedName}"]`).realHover()
         cy.get(`a[href*="job/${expectedName}"] .jenkins-menu-dropdown-chevron`).click()
         cy.get(btnItemDropdownMove).click()
