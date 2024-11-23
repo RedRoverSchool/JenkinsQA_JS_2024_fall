@@ -133,5 +133,18 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('header').should("exist")
     cy.get('#search-box').should("exist")
   })
-});
 
+  it('TC_14.002-01-A | Dashboard page in Jenkins has a search box within its header', () => {
+    const header = '#page-header'
+    const searchBox = '#search-box'
+
+    cy.get(header)
+      .should('exist')
+
+      .within(() => {
+        cy.get(searchBox)
+          .should('exist')
+          .and('be.visible');
+      });
+  });
+});
