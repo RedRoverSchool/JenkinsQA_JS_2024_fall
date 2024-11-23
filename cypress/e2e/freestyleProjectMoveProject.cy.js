@@ -1,6 +1,7 @@
 ///<reference types = 'cypress'/>
-import { faker } from "@faker-js/faker"
+import { faker } from '@faker-js/faker';
 
+const projectName = faker.company.name()
 const btnNewItem = 'a[href="/view/all/newJob"]'
 const inputEnterAnItemName = '#name'
 const btnOK = '#ok-button'
@@ -138,7 +139,38 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
 
         cy.get('.jenkins-table__link > span').should('have.text','New Project Name')
     });
- 
+
+    it('TC_01.006.06 | Choose from a list of existing folders', () => {
+        context('should create 5 folders and verify they exist', () => { 
+        cy.get('span').contains('New Item').click();
+        cy.get('#name').type(projectName);
+        cy.get('span.label').contains('Freestyle project').click();
+        cy.get('#ok-button').click({ force: true });
+        cy.get('button').contains('Save').click();
+        cy.get('#jenkins-home-link').click();
+        const baseFolderName = 'Folder';
+        for (let i = 1; i <= 5; i++) {
+                const uniqueFolderName = `${baseFolderName} ${i}`;
+                cy.get('span').contains('New Item').click();
+                cy.get('#name').type(uniqueFolderName);
+                cy.get('span.label').contains('Folder').click();
+                cy.get('#ok-button').click({ force: true });
+                cy.get('#jenkins-home-link').click();
+                cy.contains(uniqueFolderName).should('exist');
+            }
+        })
+
+        const randomFolderNumber = faker.number.int({ min: 1, max: 5 }) ;
+        const selectedFolder = "Folder " + randomFolderNumber
+        cy.get('span').contains(projectName).click();
+        cy.get('span').contains('Move').click();
+        cy.get('select[name="destination"]').select(`/${selectedFolder}`);
+        cy.get('[name="Submit"]').click();
+
+        cy.get('#main-panel').should('contain', `Full project name: ${selectedFolder}/${projectName}`)
+    });   
+});
+
     it('TC_01.006.03 | Verify a project is moved from the Dashboard page after clicking move',() => {
         
         const expectedName = randomProjectName.replaceAll(" ", "%20")
@@ -158,5 +190,6 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
 
         getExistedItem(randomProjectName).should('not.exist')
     })
-})
+
+
  
