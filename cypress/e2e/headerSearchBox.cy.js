@@ -135,7 +135,7 @@ describe('US_14.002 | Header > Search Box', () => {
   })
 
   it('TC_14.002.16 | Finds a build by its number', () => {
-    //create first build
+    cy.log('create first build')
     cy.contains('.task-link', 'New Item').click()
     cy.get('input#name').type(newJobFolderName)
     cy.get('li[class*="FreeStyleProject"]').click()
@@ -143,15 +143,14 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('button[name="Submit"]').click()
     cy.contains(`a[href*="/job/${newJobFolderName}/build"]`, 'Build Now').click()
     cy.get('#breadcrumbs li:first-child').click()
-    //create second build
+    cy.log('create second build')
     cy.get(`td:last-child a[href*="job/${newJobFolderName}/build"]`).click()
-    //cy.get('input#search-box').type(newJobFolderName + ' ' + searchBuildNumber)
     cy.get(`td:nth-child(3) a[href="job/${newJobFolderName}/"]`).click()
-    // get all builds
+    cy.log('get all builds') 
     cy.get('a.build-link.display-name').then(($els)=>{
       return Cypress.$.makeArray($els).map($el => $el.innerText)
     }).as('arrayAllBuilds')
-    //search by build number
+    cy.log('search by build number')
     cy.get('@arrayAllBuilds').then(($array) => {
       $array.forEach(build => {
         cy.get('input#search-box').type(`${newJobFolderName} ${build}`)
