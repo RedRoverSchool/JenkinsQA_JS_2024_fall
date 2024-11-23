@@ -195,4 +195,18 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
     });
 
+    it("TC_01.004.05-A | FreestyleProject > Delete Project | Cancel deletion", () => {
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('.jenkins-input').type('testDeleteProject');
+        cy.get('.label').contains('Freestyle project').click();
+        cy.get('#ok-button').click();
+        cy.get('textarea[name="description"]').type('...some description...')
+        cy.get('button[formnovalidate="formNoValidate"]').click();
+        cy.get('a[href="/"]').first().click();
+        cy.get('#projectstatus').contains('testDeleteProject').click();
+        cy.get('a[data-title="Delete Project"]').click();
+        cy.get('button[data-id="cancel"]').click();
+        cy.get('a[href="/"]').first().click();
+        cy.get('.jenkins-table__link span').should('have.text','testDeleteProject')
+      });
 })
