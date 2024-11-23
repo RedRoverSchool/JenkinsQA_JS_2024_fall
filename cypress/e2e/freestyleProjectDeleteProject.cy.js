@@ -209,4 +209,25 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         cy.get('a[href="/"]').first().click();
         cy.get('.jenkins-table__link span').should('have.text','testDeleteProject')
       });
+
+    it('TC_01.004.14-A | Verify Freestyle Project is deleted from Project page', () => {
+
+        cy.log('Creating Freestyle project')
+        cy.get(btnNewItem).click()
+        cy.get(inputField).type(randomItemName)
+        cy.get(jobFreeStyleProject).click()
+        cy.get(btnOK).click()
+        cy.get(btnSave).click()
+        cy.get(jenkinsLogo).click()
+
+        cy.log('Deleting Freestyle project')
+        cy.contains(randomItemName).trigger('mouseover')
+            .click()
+        cy.get(projectNameHeadline).should('be.visible').and('have.text', randomItemName)
+        cy.get(btnDeleteProjectInsideProject).click()
+        cy.get(btnYes).click()
+
+        cy.get(dashboardPage).contains(randomItemName).should('not.exist')
+        cy.get(welcomeToJenkins).should('be.visible')
+    })
 })
