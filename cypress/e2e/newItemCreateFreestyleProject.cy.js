@@ -199,7 +199,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get('.job-index-headline').should('have.text', 'New Freestyle Project')
     }) 
 
-    it.only('TC_00.001.17 | Verify that user cannot create a new project without entering a name', function () {
+    it('TC_00.001.17 | Verify that user cannot create a new project without entering a name', function () {
         
         cy.get('a[href="/view/all/newJob"]').click();
         cy.get('.label').contains('Freestyle project').click();
