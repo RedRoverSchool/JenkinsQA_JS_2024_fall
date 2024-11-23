@@ -1,9 +1,38 @@
-
 ///<reference types = 'cypress'/>
-
 import { faker } from '@faker-js/faker';
 
 const projectName = faker.company.name()
+const btnNewItem = 'a[href="/view/all/newJob"]'
+const inputEnterAnItemName = '#name'
+const btnOK = '#ok-button'
+const btnSave = 'button[name="Submit"]'
+const btnMove = 'button[name="Submit"]'
+const breadcrumbDashboard = '#breadcrumbs > li:nth-child(1) > a'
+const btnItemDropdownMove = 'a[href*="move"]'
+const selectDropdown = '.select'
+const randomFolderName = faker.commerce.productName()
+const randomProjectName = faker.commerce.productName()
+
+/**
+ * Method to create a new item : 
+ * createNewItem(itemName, itemType) 
+ * @param {*give any new item name} itemName 
+ * @param {*choose item type option} itemType
+ * @options of item type 
+ * 'Freestyle project', 'Pipeline', 'Multi-configuration project', 'Folder', 'Multibranch Pipeline','Organization Folder'
+ */
+const createNewItem = (itemName, itemType) => {
+    cy.get(breadcrumbDashboard).click()
+    cy.get(btnNewItem).click()
+    cy.get(inputEnterAnItemName).type(itemName)
+    cy.get('label span').contains(itemType).click()
+    cy.get(btnOK).click({force: true})
+    cy.get(btnSave).click()
+}
+
+const getExistedItem = (name) => {
+    return cy.get(`a[href*="job/${name}"]`)
+}
 
 describe ('US_01.006 | FreestyleProject > Move project', () => {
 
@@ -27,8 +56,8 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
  
         cy.url().should('include', 'NewProject')
                 .and('include','NewFolder')
- 
     })
+
     it('TC_01.006.04 | FreestyleProject > Move project | from Dashboard', () => {
         cy.get('span.task-link-text').eq(0).click({force:true})
         cy.get('input[id="name"]').click().type('New Folder')
@@ -55,8 +84,6 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         cy.visit('http://localhost:8080/job/New%20Folder/').contains('New Job')
 
     })
- 
-
 
     const LOCAL_PORT = Cypress.env('local.port');
     const LOCAL_HOST = Cypress.env('local.host');
@@ -112,6 +139,7 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
 
         cy.get('.jenkins-table__link > span').should('have.text','New Project Name')
     });
+
     it('TC_01.006.06 | Choose from a list of existing folders', () => {
         context('should create 5 folders and verify they exist', () => { 
         cy.get('span').contains('New Item').click();
@@ -142,3 +170,26 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         cy.get('#main-panel').should('contain', `Full project name: ${selectedFolder}/${projectName}`)
     });   
 });
+
+    it('TC_01.006.03 | Verify a project is moved from the Dashboard page after clicking move',() => {
+        
+        const expectedName = randomProjectName.replaceAll(" ", "%20")
+
+        cy.log('Precondition: create a folder and project')
+        createNewItem(randomFolderName, "Folder")
+        createNewItem(randomProjectName, "Freestyle project")
+        
+        cy.log('Steps')
+        cy.get(breadcrumbDashboard).click()
+        cy.get(`a[href*="job/${expectedName}"]`).realHover()
+        cy.get(`a[href*="job/${expectedName}"] .jenkins-menu-dropdown-chevron`).click()
+        cy.get(btnItemDropdownMove).click()
+        cy.get(selectDropdown).select(`/${randomFolderName}`)
+        cy.get(btnMove).click()
+        cy.get(breadcrumbDashboard).click()
+
+        getExistedItem(randomProjectName).should('not.exist')
+    })
+
+
+ 
