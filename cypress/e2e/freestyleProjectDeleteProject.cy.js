@@ -1,21 +1,34 @@
 /// <reference types="cypress"/>
+
 import { faker } from '@faker-js/faker';
 
-const btnNewItem = 'a[href="/view/all/newJob"]'
-const jobFreeStyleProject = ".hudson_model_FreeStyleProject"
+const randomItemName = faker.lorem.words(); 
 
-describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
-    const inputField = 'input#name.jenkins-input';
-    const randomItemName = faker.lorem.words();  
-    const btnOK = '#ok-button';
-    const btnSave = 'button[name="Submit"]';
-    const btnYes = 'button.jenkins-button.jenkins-button--primary ';
-    const jenkinsLogo = 'a#jenkins-home-link';
-    const dropdownChevron = '.jenkins-table__link > .jenkins-menu-dropdown-chevron';
-    const dropdownItem = '.jenkins-dropdown__item ';
-    const dashboardPage = 'div#main-panel';
-    const welcomeToJenkins = '.empty-state-block h1';
+const btnNewItem = 'a[href$="/newJob"]';
+const jobFreeStyleProject = '[class$=FreeStyleProject]';
+const inputField = 'input#name';
+const btnOK = '#ok-button';
+const btnSave = 'button[name="Submit"]';
+const projectNameHeadline = '#main-panel h1'
+const btnDeleteProjectInsideProject = 'a[data-title="Delete Project"]'
+const confirmationMessageDialog = '.jenkins-dialog';
+const confirmationMessageTitle = '.jenkins-dialog__title';
+const confirmationMessageQuestion = '.jenkins-dialog__contents';
+const btnYes = 'button[data-id="ok"] ';
+const jenkinsLogo = 'a#jenkins-home-link';
+const dropdownChevron = '.jenkins-table__link > .jenkins-menu-dropdown-chevron';
+const dropdownItem = '.jenkins-dropdown__item ';
+const dashboardPage = 'div#main-panel';
+const welcomeToJenkins = '.empty-state-block h1';
 
+describe('US_01.004 | FreestyleProject > Delete Project', () => {
+
+    beforeEach(function () {
+        cy.fixture('deleteProject').then((deleteProject) => {
+            this.deleteProject = deleteProject;
+        });
+    });
+    
     it('TC_00.001.04 A|FreestyleProject > Delete Project from the dashboard', () => {
         cy.get('span').contains('Create a job').click();
         cy.get('input[name="name"]').type('New Freestyle project');
@@ -162,5 +175,24 @@ describe('US_01.004 | FreestyleProject > Delete Project', ()=>{
     
         cy.get('td a[href="job/New%20project/"]').should("be.visible");
     }); 
+
+    it('TC_01.004.12 | Verify confirmation message appears after attempting to delete a project', function () {
+        
+        cy.log('Creating Freestyle Project');
+        cy.get(btnNewItem).click();
+        cy.get(inputField).type(randomItemName);
+        cy.get(jobFreeStyleProject).click();
+        cy.get(btnOK).click();
+        cy.get(btnSave).click();
+        cy.get(projectNameHeadline).should('be.visible').and('have.text', randomItemName);
+
+        cy.log('Deleting Freestyle Project');
+        cy.get(btnDeleteProjectInsideProject).click();
+
+        cy.get(confirmationMessageDialog).should('be.visible');
+        cy.get(confirmationMessageTitle).should('have.text', this.deleteProject.confirmationMessage.title);
+        cy.get(confirmationMessageQuestion).should('have.text', `${this.deleteProject.confirmationMessage.question} ‘${randomItemName}’?`);
+
+    });
 
 })
