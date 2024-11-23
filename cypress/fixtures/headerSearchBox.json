@@ -1,0 +1,9 @@
+{
+    "textMessages" : {
+        "heading": "Search for",
+        "error": "Nothing seems to match."
+    },
+    "cssRequirements" : {
+        "error": "rgb(230, 0, 31)"
+    }
+}
