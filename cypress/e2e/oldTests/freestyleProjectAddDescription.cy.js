@@ -17,7 +17,11 @@ describe.skip("US_01.001 | FreestyleProject > Add description", () => {
   const description = '[id="description"]';
   const descriptionField = '[name="description"].jenkins-input   '
   const editDescription = '[href="editDescription"]';
+<<<<<<< HEAD
   const projectNameHeadline = '#main-panel h1';
+=======
+  const descriptionInput = '[name="description"]';
+>>>>>>> 4dcfc9a (TC_01.001.06-A | FreestyleProject > Add description for a new project)
 
   beforeEach(() => {
     cy.get(newItemBtn).click();
@@ -74,6 +78,13 @@ describe.skip("US_01.001 | FreestyleProject > Add description", () => {
     cy.get("#description")
       .should("be.visible")
       .and("have.text", projectDescription);
+  });
+  
+  it.only('TC_01.001.06 | FreestyleProject > Add description | project creation', () => {
+    cy.get(descriptionInput).type('Some description');
+    cy.get(submitBtn).click();
+    cy.get(editDescription).should('be.visible');
+    cy.get(description).should('be.visible');
   });
 
   it('TC_01.001.07-A | It is possible to add description on project update', () => {
