@@ -236,5 +236,48 @@ it('TC-01.002.06| Rename a project name from the Dashboard page', () => {
     cy.get('h1').should('have.text', 'Error')
     cy.get('p').should('have.text', 'No name is specified')
   })
+
+  it('TC_01.002.03 | Rename a project from the Dashboard page using Cyrillic', () => {
+    let prjName = "MyProjec";
+    let prjName2 = "Новый проект";
+    const logoJenkins = '#jenkins-home-link'
+    const btnMenuDropdown = 'button[data-href$="/MyProjec/"]'
+      
+    cy.log ('Preconditions: create project')
+    cy.get(newItemBtn).click()
+    cy.get('input[id="name"]').type(prjName)
+    cy.get(freeStyleProjectItem).click()
+    cy.get(okBtn).click()
+    cy.get(submitBtn).click()
+    cy.get(logoJenkins).click()
+  
+    cy.log ('Steps')
+    cy.get('span').contains(prjName).realHover()
+    cy.get(btnMenuDropdown).click({force: true})
+    cy.get(renameBtn).click()
+    cy.get(renameField).clear().type(prjName2)
+    cy.get(submitBtn).click()
+    
+    cy.get('h1').should('include.text', prjName2)
+    cy.get('.model-link').should('contain', prjName2)
+  });
+
+  it('TC_01.002.09 | Verify that user can rename Freestyle Project from Dashboard page', () =>{
+
+    cy.get('a[href="/view/all/newJob"]').click();
+    cy.get("#name").type('Test_1');
+    cy.get(".label").contains("Freestyle project").click();
+    cy.get("#ok-button").click();
+    cy.get('[name="Submit"]').click();
+    cy.get('.model-link').contains('Dashboard').click();
+    cy.get('.jenkins-table__link').should('contain', 'Test_1')
+
+    cy.get('.jenkins-menu-dropdown-chevron').eq(2).click({ force: true });
+    cy.get('.jenkins-dropdown__item ').eq(5).click();
+    cy.get('.jenkins-input').clear().type('Test_2')
+    cy.get('.jenkins-submit-button').click()
+
+    cy.get('.job-index-headline').should('contain', 'Test_2')
+  })
 });
 

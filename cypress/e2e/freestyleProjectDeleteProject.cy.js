@@ -15,6 +15,7 @@ const confirmationMessageDialog = '.jenkins-dialog';
 const confirmationMessageTitle = '.jenkins-dialog__title';
 const confirmationMessageQuestion = '.jenkins-dialog__contents';
 const btnYes = 'button[data-id="ok"] ';
+const btnCancel = 'button[data-id="cancel"]';
 const jenkinsLogo = 'a#jenkins-home-link';
 const dropdownChevron = '.jenkins-table__link > .jenkins-menu-dropdown-chevron';
 const dropdownItem = '.jenkins-dropdown__item ';
@@ -229,5 +230,58 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
         cy.get(dashboardPage).contains(randomItemName).should('not.exist')
         cy.get(welcomeToJenkins).should('be.visible')
+    })
+
+    it('TC_01.004.15-A | Verify user cancels Project deletion', () => {
+
+        cy.log('Creating Freestyle project')
+        cy.get(btnNewItem).click()
+        cy.get(inputField).type(randomItemName)
+        cy.get(jobFreeStyleProject).click()
+        cy.get(btnOK).click()
+        cy.get(btnSave).click()
+        cy.get(jenkinsLogo).click()
+
+        cy.log('Attempting to delete Freestyle project');
+        cy.contains(randomItemName).trigger('mouseover')
+        cy.get(dropdownChevron).click({force: true})
+        cy.contains('Delete Project').click()
+
+        cy.log('Cancelling deletion')
+        cy.get(btnCancel).click()
+
+        cy.log('Verifying Freestyle Project is still present on Dashboard');
+        cy.get(dashboardPage).contains(randomItemName).should('exist').and('be.visible')
+    })
+
+    it('TC_01.004.16 | Verify that user can delete Freestyle Project from the Dashboard page', () => {
+
+        const name = "New Freestyle Project";
+        const addNewItem = 'a[href="/view/all/newJob"]';
+        const nameField = '#name';
+        const itemType = '.label';
+        const okBtn = '#ok-button';
+        const submitBtn = '[name="Submit"]';
+        const navBtn = '.model-link';
+        const tableName = '.jenkins-table__link';
+        const dropDownMenu = '.jenkins-menu-dropdown-chevron';
+        const dropDownItem = '.jenkins-dropdown__item ';
+        const okDelBtn = '[data-id="ok"]';
+        const dashboardPage = '#main-panel';
+
+
+        cy.get(addNewItem).click();
+        cy.get(nameField).type(name);
+        cy.get(itemType).contains('Freestyle project').click();
+        cy.get(okBtn).click();
+        cy.get(submitBtn).click();
+        cy.get(navBtn).contains('Dashboard').click();
+        cy.get(tableName).should('contain', name);
+
+        cy.get(dropDownMenu).eq(2).click({ force: true });
+        cy.get(dropDownItem).eq(4).click();
+        cy.get(okDelBtn).click();
+
+        cy.get(dashboardPage).contains(name).should('not.exist');
     })
 })

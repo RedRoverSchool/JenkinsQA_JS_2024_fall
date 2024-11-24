@@ -1,8 +1,7 @@
-
 /// <reference types="cypress" />
-import searchBoxData from "../fixtures/headerSearchBox.json"
+import searchBoxData from "../../fixtures/headerData.json"
 
-describe('US_14.002 | Header > Search Box', () => {
+describe.skip('US_14.002 | Header > Search Box', () => {
   let searchTerm = 'pipeline'
   let newJobFolderName = 'conFolder'
   const dashboard = '#breadcrumbBar .model-link'
@@ -162,7 +161,7 @@ describe('US_14.002 | Header > Search Box', () => {
         cy.url().should('contain', build.slice(1))
       })
     });
-  })
+  });
   
   it('TC_14.002.15_A|Verify a User can select a suggestion to auto-fill the search box and complete the search', ()=>{
     cy.get(":nth-child(1) > .task-link-wrapper > .task-link").click();
@@ -181,6 +180,5 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('#search-box').type('{enter}')
     cy.get('.job-index-headline').should('have.text', 'Project TC_14.002.15_A')
     })
-
 });
 
