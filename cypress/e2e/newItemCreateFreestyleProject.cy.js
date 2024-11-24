@@ -210,7 +210,6 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
     
     it('TC_00.001.19 | New freestyle project is created if user enter projects name, choose project type and save it', () => {
 
-       //let newFreestyleProject = 'ProFreest';
         const locateNewItemlink = '[href="/view/all/newJob"]';
         const newItemInputField = '#name';
         const labelFreestyleProject= 'label';
@@ -226,8 +225,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
 
         cy.url().should('include', folderName);
         cy.get(nameProjOnPage).contains(folderName).should('be.visible');
-            
-        
+              
     });
 });
 
