@@ -1,20 +1,24 @@
-
 /// <reference types="cypress" />
-import searchBoxData from "../fixtures/headerSearchBox.json"
-import Header from "../pageObjects/Header"
-import {project_name} from "../fixtures/pomFixtures/header.json"
+
+import headerData from "../fixtures/headerData.json";
+import messages from "../fixtures/messages.json";
+import {project_name} from "../fixtures/pomFixtures/header.json";
+
+import Header from "../pageObjects/Header";
 import JobPage from "../pageObjects/JobPage";
-
-
+import SearchResuls from "../pageObjects/SearchResultsPage";
 
 describe('US_14.002 | Header > Search Box', () => {
+
+  const header = new Header();
+  const jobPage = new JobPage();
+  const searchResults = new SearchResuls();
+
   let searchTerm = 'pipeline'
   let newJobFolderName = 'conFolder'
   const dashboard = '#breadcrumbBar .model-link'
-  const header = new Header()
-  const jobPage = new JobPage()
 
-  it.only("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
+  it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
     cy.get('a[href="/view/all/newJob"]').click();
     cy.get('.jenkins-input').type(project_name);
     cy.get('.label').contains('Freestyle project').click();
@@ -83,8 +87,11 @@ describe('US_14.002 | Header > Search Box', () => {
   })
 
   it('TC_14.002.10 | Verify that the warning message is displayed when no matches are found', () => {
-    cy.get('input#search-box').type('no matches{Enter}');
-    cy.get('.error').should('have.text', 'Nothing seems to match.');
+
+    header.search(headerData.input.noMatches);
+
+    searchResults.getNoMatchesErrorMessage()
+                 .should('have.text', messages.search.noMatchesError);
 
   });
 
@@ -112,10 +119,10 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('input#search-box').type(`${searchTerm}{enter}`)
     cy.get('li[style]')
       .should('not.be.visible')
-    cy.get('#main-panel h1').contains(`${searchBoxData.textMessages.heading} '${searchTerm}'`)
+    cy.get('#main-panel h1').contains(`${headerData.textMessages.heading} '${searchTerm}'`)
     cy.get('div.error')
-      .should('have.text', searchBoxData.textMessages.error)
-      .and('have.css', 'color', searchBoxData.cssRequirements.error)
+      .should('have.text', headerData.textMessages.error)
+      .and('have.css', 'color', headerData.cssRequirements.error)
   })
 
   it('TC_14.002.13 | Header > Search Box  | Verify auto-fill suggestions contain the search term', () => {

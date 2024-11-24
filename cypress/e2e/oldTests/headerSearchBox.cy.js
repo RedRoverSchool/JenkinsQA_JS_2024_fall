@@ -1,6 +1,6 @@
 
 /// <reference types="cypress" />
-import searchBoxData from "../../fixtures/headerSearchBox.json"
+import searchBoxData from "../../fixtures/headerData.json"
 
 describe.skip('US_14.002 | Header > Search Box', () => {
   let searchTerm = 'pipeline'

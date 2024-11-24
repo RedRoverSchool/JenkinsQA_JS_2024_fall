@@ -1,27 +1,32 @@
 /// <reference types="cypress" />
-import JobPage from "./JobPage"
-class Header{
 
-    getSearchField = ()=> cy.get("#search-box")
-    getSearchOption = () =>  cy.get("#search-box-completion li")
+import JobPage from "./JobPage";
 
-    typeSearchTerm(term)
-    {
-       this.getSearchField().type(term)
-       return this
-    }
+class Header {
 
-    clickSearchOption()
-    {
-        this.getSearchOption().first().click()
-        return this
-    }
+    getSearchField = () => cy.get("#search-box");
+    getSearchOption = () => cy.get("#search-box-completion li");
 
-    searchTerm ()
-    {
-        this.getSearchField().type('{enter}')
-        return new JobPage()
-    }
+    typeSearchTerm(term) {
+        this.getSearchField().type(term);
+        return this;
+    };
 
-}
-export default Header
+    clickSearchOption() {
+        this.getSearchOption().first().click();
+        return this;
+    };
+
+    searchTerm() {
+        this.getSearchField().type('{enter}');
+        return new JobPage();
+    };
+
+    search(input) {
+        this.getSearchField().type(`${input}{enter}`);
+        return new JobPage();
+    };
+
+};
+
+export default Header;

@@ -1,9 +1,14 @@
 {
-    "textMessages" : {
+    "textMessages": {
         "heading": "Search for",
         "error": "Nothing seems to match."
     },
-    "cssRequirements" : {
+
+    "cssRequirements": {
         "error": "rgb(230, 0, 31)"
+    },
+
+    "input": {
+        "noMatches": "no matches"
     }
 }
