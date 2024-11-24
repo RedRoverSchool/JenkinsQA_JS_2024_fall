@@ -8,7 +8,10 @@
         "error": "rgb(230, 0, 31)"
     },
 
-    "input": {
-        "noMatches": "no matches"
+    "search": {
+        "input": {
+            "noMatches": "no matches"
+        }
     }
+    
 }

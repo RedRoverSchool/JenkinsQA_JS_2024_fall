@@ -88,7 +88,7 @@ describe('US_14.002 | Header > Search Box', () => {
 
   it('TC_14.002.10 | Verify that the warning message is displayed when no matches are found', () => {
 
-    header.search(headerData.input.noMatches);
+    header.search(headerData.search.input.noMatches);
 
     searchResults.getNoMatchesErrorMessage()
                  .should('have.text', messages.search.noMatchesError);
