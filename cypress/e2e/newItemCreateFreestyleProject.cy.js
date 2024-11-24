@@ -206,6 +206,26 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         
         cy.get('#itemname-required').should('have.text', '» This field cannot be empty, please enter a valid name');
         cy.get('#ok-button').should('be.disabled');
-    });    
+    });  
+    
+    it('TC_00.001.19 | New freestyle project is created if user enter projects name, choose project type and save it', () => {
+
+        const locateNewItemlink = '[href="/view/all/newJob"]';
+        const newItemInputField = '#name';
+        const labelFreestyleProject= 'label';
+        const btnOk = '#ok-button'; 
+        const btnSave = '[name="Submit"]';
+        const nameProjOnPage = '[class="job-index-headline page-headline"]';
+
+        cy.get(locateNewItemlink).click();
+        cy.get(newItemInputField).type(folderName); 
+        cy.get(labelFreestyleProject).contains('Freestyle project').click();
+        cy.get(btnOk).click();
+        cy.get(btnSave).click();
+
+        cy.url().should('include', folderName);
+        cy.get(nameProjOnPage).contains(folderName).should('be.visible');
+              
+    });
 });
 
