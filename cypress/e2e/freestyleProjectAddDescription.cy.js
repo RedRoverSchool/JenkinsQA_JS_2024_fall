@@ -14,7 +14,9 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
   const submitBtn = "[name='Submit']";
   const dashboardBtn = '#breadcrumbs a[href="/"]';
   const description = '[id="description"]';
+  const descriptionField = '[name="description"].jenkins-input   '
   const editDescription = '[href="editDescription"]';
+  const projectNameHeadline = '#main-panel h1';
 
   beforeEach(() => {
     cy.get(newItemBtn).click();
@@ -72,4 +74,16 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
       .should("be.visible")
       .and("have.text", projectDescription);
   });
+
+  it('TC_01.001.08-A | Verify the description is added when creating the project', () => {
+
+    cy.log('Adding description and saving the project')
+    cy.get(descriptionField)
+      .type(projectDescription)
+    cy.get(submitBtn).click()
+
+    cy.log('Verifying the Freestyle Project was saved together with its description');
+    cy.get(projectNameHeadline).should('be.visible').and('exist')
+    cy.get(description).should('be.visible').and('contain.text', projectDescription)
+  })
 });
