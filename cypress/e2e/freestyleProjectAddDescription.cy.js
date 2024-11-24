@@ -12,6 +12,7 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
   const freeStyleProjectItem = ".hudson_model_FreeStyleProject";
   const okBtn = "#ok-button";
   const submitBtn = "[name='Submit']";
+  const descriptionTextAreaField = "textarea[name='description']"
   const dashboardBtn = '#breadcrumbs a[href="/"]';
   const description = '[id="description"]';
   const editDescription = '[href="editDescription"]';
@@ -71,5 +72,16 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
     cy.get("#description")
       .should("be.visible")
       .and("have.text", projectDescription);
+  });
+
+  it('TC_01.001.07-A | It is possible to add description on project update', () => {
+    cy.get(descriptionTextAreaField).type(projectDescription)
+    cy.get(submitBtn).click();
+    cy.get('h1.page-headline').should('have.text', projectName);
+    cy.get('[href$="/configure"]').click();
+    cy.url().should('include', '/configure');
+    cy.get(descriptionTextAreaField).clear().type(projectNewDescription);
+    cy.get(submitBtn).click();
+    cy.get(description).should("have.text", projectNewDescription);    
   });
 });
