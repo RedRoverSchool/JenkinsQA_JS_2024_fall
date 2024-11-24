@@ -259,7 +259,25 @@ it('TC-01.002.06| Rename a project name from the Dashboard page', () => {
     cy.get(submitBtn).click()
     
     cy.get('h1').should('include.text', prjName2)
-    cy.get('.model-link').should('contain', prjName2)   
+    cy.get('.model-link').should('contain', prjName2)
+  });
+
+  it('TC_01.002.09 | Verify that user can rename Freestyle Project from Dashboard page', () =>{
+
+    cy.get('a[href="/view/all/newJob"]').click();
+    cy.get("#name").type('Test_1');
+    cy.get(".label").contains("Freestyle project").click();
+    cy.get("#ok-button").click();
+    cy.get('[name="Submit"]').click();
+    cy.get('.model-link').contains('Dashboard').click();
+    cy.get('.jenkins-table__link').should('contain', 'Test_1')
+
+    cy.get('.jenkins-menu-dropdown-chevron').eq(2).click({ force: true });
+    cy.get('.jenkins-dropdown__item ').eq(5).click();
+    cy.get('.jenkins-input').clear().type('Test_2')
+    cy.get('.jenkins-submit-button').click()
+
+    cy.get('.job-index-headline').should('contain', 'Test_2')
   })
 });
 
