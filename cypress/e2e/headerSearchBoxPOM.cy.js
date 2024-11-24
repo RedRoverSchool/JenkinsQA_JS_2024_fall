@@ -8,36 +8,44 @@ import {leftSideBar, endPoint} from "../fixtures/dashboardPage.json"
 import Header from "../pageObjects/Header";
 import JobPage from "../pageObjects/JobPage";
 import SearchResuls from "../pageObjects/SearchResultsPage";
+import DashboardPage from "../pageObjects/DashboardPage";
+import NewJobPage from "../pageObjects/NewJobPage";
+import ProjectConfigure from "../pageObjects/ProjectConfigurePage";
 
 describe('US_14.002 | Header > Search Box', () => {
 
+
   const header = new Header();
   const jobPage = new JobPage();
+  const home = new DashboardPage()
+  const newJobPage = new NewJobPage()
   const searchResults = new SearchResuls();
 
   let searchTerm = 'pipeline'
   let newJobFolderName = 'conFolder'
   const dashboard = '#breadcrumbBar .model-link'
 
-  it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
-    cy.get('a[href="/view/all/newJob"]').click();
-    cy.get('.jenkins-input').type(project_name);
-    cy.get('.label').contains('Freestyle project').click();
-    cy.get('#ok-button').click();
-    cy.get('textarea[name="description"]').type('...some description...')
-    cy.get('button[formnovalidate="formNoValidate"]').click();
-    cy.get('a[href="/"]').first().click();
-    cy.get("#search-box").click();
+  beforeEach(function () {
+    cy.get("#side-panel .task").as("sideBarLink");
+  });
 
-   header
+  it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
+    home.addNewProj()
+        .addNewProjName(project_name)
+        .pickFreeStlPrj()
+        .okBtnClick()
+        .addNewProjDescription()
+        .clickSaveBtn()
+
+  header
    .typeSearchTerm(project_name)
    .clickSearchOption()
    .searchTerm()
-
-    jobPage.getHeadlineIndex().should('contain.text', project_name)
+    .getHeadlineIndex()
+    .should('contain.text', project_name)
   });
 
-  it('TC_14.002-04 | Message that no matches found', () => {
+  it.skip('TC_14.002-04 | Message that no matches found', () => {
     let unicNameProject = "The most unique project name is 12-35658_312"
     cy.get('input[name="q"]').type(unicNameProject + '{enter}')
     cy.url().should('includes', '/search/')
@@ -49,7 +57,7 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('div#main-panel > div.error').contains("Nothing seems to match.")
   })
 
-  it('TC_14.002-06-A | If there are multiple matches, the result page displays all matches', () => {
+  it.skip('TC_14.002-06-A | If there are multiple matches, the result page displays all matches', () => {
     cy.get('#search-box').clear().type('conf{enter}');
     cy.url().should('include', '/search');
     cy.get('.yui-ac-content').its('length').should('be.greaterThan', 0);
@@ -57,7 +65,7 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('#item_configure').should('contain.text', 'configure');
   });
 
-  it('TC_14.002.07 | Verify the search box provides auto-completion', () => {
+  it.skip('TC_14.002.07 | Verify the search box provides auto-completion', () => {
     const autoCompletionItems = ['config', 'configure'];
 
     cy.get('input#search-box').type('con');
@@ -69,7 +77,7 @@ describe('US_14.002 | Header > Search Box', () => {
       });
   });
 
-  it('TC_14.002.09 | Verify that the selection of an auto-complete suggestion redirects to the relevant page', () => {
+  it.skip('TC_14.002.09 | Verify that the selection of an auto-complete suggestion redirects to the relevant page', () => {
     cy.get('input#search-box').type('lo');
     cy.get('div#search-box-completion li').eq(0).click();
     cy.get('input#search-box').type('{Enter}');
@@ -77,7 +85,7 @@ describe('US_14.002 | Header > Search Box', () => {
 
   });
 
-  it("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
+  it.skip("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
     cy.get("*.hidden-sm").contains('admin').click();
     cy.get(".task-link-text").contains('Configure').click({ force: true });
     cy.get("[name='insensitiveSearch']").check({ force: true });
@@ -87,7 +95,7 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get(".yui-ac-bd").should('have.text', 'manage')
   })
 
-  it('TC_14.002.10 | Verify that the warning message is displayed when no matches are found', () => {
+  it.skip('TC_14.002.10 | Verify that the warning message is displayed when no matches are found', () => {
 
     header.search(headerData.search.input.noMatches);
 
@@ -96,7 +104,7 @@ describe('US_14.002 | Header > Search Box', () => {
 
   });
 
-  it('TC_14.002-08-A |Case insensitive search', () => {
+  it.skip('TC_14.002-08-A |Case insensitive search', () => {
     cy.get('.login .model-link').should('be.visible').click()
     cy.url().should('include', '/user');
     cy.get('a[href$="/configure"]').click({ force: true });
@@ -108,7 +116,7 @@ describe('US_14.002 | Header > Search Box', () => {
       .should("be.checked");
   });
 
-  it('TC_14.002.01 | Auto-Completion Suggestion Selection', () => {
+  it.skip('TC_14.002.01 | Auto-Completion Suggestion Selection', () => {
     cy.get('input[id="search-box"]').click().clear()
       .type('man')
     cy.get('li').contains('manage')
@@ -116,7 +124,7 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('li').contains('manage').should('be.visible')
   })
 
-  it('TC_14.002.02 | Verify error message appears when no matches found', () => {
+  it.skip('TC_14.002.02 | Verify error message appears when no matches found', () => {
     cy.get('input#search-box').type(`${searchTerm}{enter}`)
     cy.get('li[style]')
       .should('not.be.visible')
@@ -126,7 +134,7 @@ describe('US_14.002 | Header > Search Box', () => {
       .and('have.css', 'color', headerData.cssRequirements.error)
   })
 
-  it('TC_14.002.13 | Header > Search Box  | Verify auto-fill suggestions contain the search term', () => {
+  it.skip('TC_14.002.13 | Header > Search Box  | Verify auto-fill suggestions contain the search term', () => {
     let searchterm = 'con'
     // create a new organization folder
     cy.get('a[href*="newJob"].content-block__link').click()
@@ -142,17 +150,17 @@ describe('US_14.002 | Header > Search Box', () => {
     })
   })
 
-  it('TC_14.002.12 | Verify that Dashboard page in Jenkins has a search box on its top right', () => {
+  it.skip('TC_14.002.12 | Verify that Dashboard page in Jenkins has a search box on its top right', () => {
     cy.get('.main-search__input').should('be.visible').and('have.attr', 'placeholder');
   })
 
-  it('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right', () => {
+  it.skip('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right', () => {
     cy.get(dashboard).should('be.visible')
     cy.get('header').should("exist")
     cy.get('#search-box').should("exist")
   })
 
-  it('TC_14.002.16 | Finds a build by its number', () => {
+  it.skip('TC_14.002.16 | Finds a build by its number', () => {
     cy.log('create first build')
     cy.contains('.task-link', 'New Item').click()
     cy.get('input#name').type(newJobFolderName)
@@ -182,12 +190,10 @@ describe('US_14.002 | Header > Search Box', () => {
     });
   })
 
-  beforeEach(function () {
-    cy.get("#side-panel .task").as("sideBarLink");
-  });
+ 
 
   leftSideBar.forEach((pageName, el) => {
-    it.only(`TC_14.002.17 | Verify that ${pageName} page in Jenkins has a search box on its top right`, () => {
+    it(`TC_14.002.17 | Verify that ${pageName} page in Jenkins has a search box on its top right`, function() {
       cy.get("@sideBarLink").eq(el).click();
       cy.url().should("contain", endPoint[el]);
 
