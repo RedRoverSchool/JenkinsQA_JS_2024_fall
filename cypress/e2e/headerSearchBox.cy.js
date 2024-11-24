@@ -6,6 +6,7 @@ describe('US_14.002 | Header > Search Box', () => {
   let searchTerm = 'pipeline'
   let newJobFolderName = 'conFolder'
   const dashboard = '#breadcrumbBar .model-link'
+  let projectName = 'New Freestyle Project'
 
   it("Header > Search Box | User can select suggestion to auto-fill and complete the search", () => {
     cy.get('a[href="/view/all/newJob"]').click();
@@ -134,21 +135,20 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get('#search-box').should("exist")
   })
 
-  it.only('TC_14.002.03| Verify that when user can search for projects', () => {
+  it('TC_14.002.03| Verify that when user can search for projects', () => {
     cy.get('span').contains('Create a job').click()
-    cy.get('input[name="name"]').type('New Freestyle project')
+    cy.get('input[name="name"]').type(projectName)
     cy.get('span.label').contains('Freestyle project').click()
     cy.get('button').contains("OK").click()
     cy.get('button').contains("Save").click()
     cy.get('a').contains("Dashboard").click()
-    cy.get('span').contains('New Freestyle project').should('exist')
+    cy.get('span').contains(projectName).should('exist')
     cy.get('#search-box').type('ne')
-    cy.get('li').contains('New Freestyle project').should('exist')
-    cy.get('li')
-      .contains('New Freestyle project')
+    cy.get('li').contains(projectName).should('exist')
+    cy.get('li').contains(projectName)
       .click()
       .type('{enter}')
-     cy.get('#main-panel h1').should('have.text', 'New Freestyle project')
+     cy.get('#main-panel h1').should('have.text', projectName)
   })
 });
 
