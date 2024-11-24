@@ -253,4 +253,35 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         cy.log('Verifying Freestyle Project is still present on Dashboard');
         cy.get(dashboardPage).contains(randomItemName).should('exist').and('be.visible')
     })
+
+    it('TC_01.004.16 | Verify that user can delete Freestyle Project from the Dashboard page', () => {
+
+        const name = "New Freestyle Project";
+        const addNewItem = 'a[href="/view/all/newJob"]';
+        const nameField = '#name';
+        const itemType = '.label';
+        const okBtn = '#ok-button';
+        const submitBtn = '[name="Submit"]';
+        const navBtn = '.model-link';
+        const tableName = '.jenkins-table__link';
+        const dropDownMenu = '.jenkins-menu-dropdown-chevron';
+        const dropDownItem = '.jenkins-dropdown__item ';
+        const okDelBtn = '[data-id="ok"]';
+        const dashboardPage = '#main-panel';
+
+
+        cy.get(addNewItem).click();
+        cy.get(nameField).type(name);
+        cy.get(itemType).contains('Freestyle project').click();
+        cy.get(okBtn).click();
+        cy.get(submitBtn).click();
+        cy.get(navBtn).contains('Dashboard').click();
+        cy.get(tableName).should('contain', name);
+
+        cy.get(dropDownMenu).eq(2).click({ force: true });
+        cy.get(dropDownItem).eq(4).click();
+        cy.get(okDelBtn).click();
+
+        cy.get(dashboardPage).contains(name).should('not.exist');
+    })
 })
