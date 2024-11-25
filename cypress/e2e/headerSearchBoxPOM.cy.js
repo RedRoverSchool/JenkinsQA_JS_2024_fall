@@ -193,7 +193,7 @@ describe('US_14.002 | Header > Search Box', () => {
  
 
   leftSideBar.forEach((pageName, el) => {
-    it(`TC_14.002.17 | Verify that ${pageName} page in Jenkins has a search box on its top right`, function() {
+    it(`TC_14.002.17 | Verify that ${pageName} page in Jenkins has a search box on its top right`, () => {
       cy.get("@sideBarLink").eq(el).click();
       cy.url().should("contain", endPoint[el]);
 
