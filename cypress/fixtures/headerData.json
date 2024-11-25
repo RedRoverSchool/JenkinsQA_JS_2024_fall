@@ -7,10 +7,15 @@
     "cssRequirements": {
         "error": "rgb(230, 0, 31)"
     },
-
+    
     "search": {
         "input": {
-            "noMatches": "no matches"
-        }
+            "noMatches": "no matches",
+            "matchForCon": "con"
+        },
+        "autoCompletionItems": [
+            "config",
+            "configure"
+        ]
     }
 }
