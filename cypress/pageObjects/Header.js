@@ -3,7 +3,7 @@
 import JobPage from "./JobPage";
 import SearchResultsPage from "./SearchResultsPage";
 
- class Header {
+class Header {
 
     getSearchField = () => cy.get("#search-box");
     getSearchOption = () => cy.get("#search-box-completion li");
