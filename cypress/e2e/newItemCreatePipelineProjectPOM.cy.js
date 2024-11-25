@@ -25,7 +25,7 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
   let projectName = "New Pipeline"
 
 
-  it.only("TC_00.002.01 | Special characters are not allowed in the project name", () => {
+  it("TC_00.002.01 | Special characters are not allowed in the project name", () => {
     dashboardPage
       .clickNewItemMenuLink()
       .typeNewItemName(projectNameInvalid)
