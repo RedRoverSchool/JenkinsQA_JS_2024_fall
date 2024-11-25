@@ -15,6 +15,11 @@ class NewJobPage
         this.getFreeStlPrjType().click()
         return this
     }
-    
+    okBtnClick()
+    {
+        this.getOKBtn().click()
+        return new ProjectConfigure()
+    }
+
 }
 export default NewJobPage
