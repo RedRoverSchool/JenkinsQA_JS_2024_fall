@@ -50,11 +50,11 @@ describe('US_14.002 | Header > Search Box', () => {
   })
 
   it('TC_14.002-06-A | Multiple matches are displayed on the result page', () => {
-  header.enterSearchTerm('conf');
-  header.verifyResultsExist();
-  header.verifyConfigItemContains('config');
-  header.verifyConfigureItemContains('configure');
-});
+    header.search('conf');
+
+    searchResults.getConfigItem().should('contain.text', 'config');
+    searchResults.getConfigureItem().should('contain.text', 'configure');
+  });
 
   it('TC_14.002.07 | Verify the search box provides auto-completion', () => {
     const autoCompletionItems = ['config', 'configure'];
@@ -186,7 +186,7 @@ describe('US_14.002 | Header > Search Box', () => {
   });
 
   leftSideBar.forEach((pageName, el) => {
-    it.only(`TC_14.002.17 | Verify that ${pageName} page in Jenkins has a search box on its top right`, () => {
+    it(`TC_14.002.17 | Verify that ${pageName} page in Jenkins has a search box on its top right`, () => {
       cy.get("@sideBarLink").eq(el).click();
       cy.url().should("contain", endPoint[el]);
 
