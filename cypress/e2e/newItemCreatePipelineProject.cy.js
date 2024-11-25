@@ -8,7 +8,8 @@ const btnOK = '[id="ok-button"]';
 const inputItemName = '[name="name"]';
 const pipelineType = '.org_jenkinsci_plugins_workflow_job_WorkflowJob';
 const dashboardLink = 'a[href="/"]';
-const mainPanel = '[id="main-panel"]';
+const projectNamePlace = `[id='job_${projectNameFaker}']`;
+const tableOfProjects= '[id="projectstatus"]';
 
 describe("US_00.002 | New Item > Create Pipeline Project", () => {
 
@@ -70,6 +71,7 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
     cy.get(btnSave).click();
     cy.get(dashboardLink).contains("Dashboard").click();
 
-    cy.get(mainPanel).should('contain.text', projectNameFaker).and('be.visible');
+    cy.get(projectNamePlace).should('contain.text', projectNameFaker).and('be.visible');
+    cy.get(tableOfProjects).should('contain.text', projectNameFaker).and('be.visible');
   });
 });
