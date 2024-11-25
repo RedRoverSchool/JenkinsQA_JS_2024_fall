@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import allKeys from "../fixtures/pomFixtures/newJobPage.json"
-import {newItemNameInvalidMessage} from "../fixtures/messages.json"
+import {newItem} from "../fixtures/messages.json"
 
 const {projectNameInvalid, errorMessageColor} = allKeys;
 const projectNameFaker = faker.commerce.productName();
@@ -25,12 +25,12 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
   let projectName = "New Pipeline"
 
 
-  it("TC_00.002.01 | Special characters are not allowed in the project name", () => {
+  it.only("TC_00.002.01 | Special characters are not allowed in the project name", () => {
     dashboardPage
       .clickNewItemMenuLink()
       .typeNewItemName(projectNameInvalid)
     newJobPage.getItemNameInvalidErrorMessage()
-      .should("have.text", newItemNameInvalidMessage)
+      .should("have.text", newItem.newItemNameInvalidMessage)
       .and("have.css", "color", errorMessageColor);
   });
 
