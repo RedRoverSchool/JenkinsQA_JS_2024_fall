@@ -65,15 +65,15 @@ describe('US_14.002 | Header > Search Box', () => {
   });
 
   it('TC_14.002.07 | Verify the search box provides auto-completion', () => {
-    const autoCompletionItems = ['config', 'configure'];
 
-    cy.get('input#search-box').type('con');
-    cy.get('div#search-box-completion li')
-      .filter(':visible')
-      .should('have.length', autoCompletionItems.length)
-      .each((item, index) => {
-        cy.wrap(item).should('have.text', autoCompletionItems[index]);
-      });
+    header.typeSearchTerm(headerData.search.input.matchForCon);
+    
+    header.getSearchAutoCompletionBox()
+          .filter(':visible')
+          .should('have.length', headerData.search.autoCompletionItems.length)
+          .each((item, index) => {
+            cy.wrap(item).should('have.text', headerData.search.autoCompletionItems[index]);
+          });
   });
 
   it('TC_14.002.09 | Verify that the selection of an auto-complete suggestion redirects to the relevant page', () => {
