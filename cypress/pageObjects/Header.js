@@ -5,7 +5,6 @@ import SearchResultsPage from "./SearchResultsPage";
 class Header {
 
     getSearchField = () => cy.get("#search-box");
-    getSearchOption = () => cy.get("#search-box-completion li");
     getSearchAutoCompletionBox = () => cy.get('div#search-box-completion li');
 
     typeSearchTerm(term) {
@@ -13,8 +12,8 @@ class Header {
         return this;
     };
 
-    clickSearchOption() {
-        this.getSearchOption().first().click();
+    clickFirstOptionFromACBox() {
+        this.getSearchAutoCompletionBox().first().click();
         return this;
     };
 

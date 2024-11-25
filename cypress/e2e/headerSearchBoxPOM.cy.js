@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import headerData from "../fixtures/headerData.json";
+import searchResultsData from "../fixtures/searchResultsData.json"
 import messages from "../fixtures/messages.json";
 import {project_name} from "../fixtures/pomFixtures/header.json";
 import {leftSideBar, endPoint} from "../fixtures/dashboardPage.json"
@@ -39,7 +40,7 @@ describe('US_14.002 | Header > Search Box', () => {
 
     header
       .typeSearchTerm(project_name)
-      .clickSearchOption()
+      .clickFirstOptionFromACBox()
       .searchTerm()
       .getHeadlineIndex()
       .should('contain.text', project_name)
@@ -77,10 +78,13 @@ describe('US_14.002 | Header > Search Box', () => {
   });
 
   it('TC_14.002.09 | Verify that the selection of an auto-complete suggestion redirects to the relevant page', () => {
-    cy.get('input#search-box').type('lo');
-    cy.get('div#search-box-completion li').eq(0).click();
-    cy.get('input#search-box').type('{Enter}');
-    cy.get('div#main-panel h1').should('include.text', 'Log Recorders');
+
+    header.typeSearchTerm(headerData.search.input.matchForLo)
+          .clickFirstOptionFromACBox()
+          .searchTerm();
+
+    searchResults.getTitle()
+                 .should('include.text', searchResultsData.title.logRecorders);
 
   });
 
