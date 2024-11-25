@@ -27,4 +27,5 @@ describe('US_04.002|Folder > Move Folder to Folder', () => {
         cy.get('.jenkins-submit-button').click();
         cy.get('li:nth-child(5) a').should('have.attr', 'href', `/job/${folder1Name}/job/${folder2Name}/`);
   })
+  
 })
