@@ -8,4 +8,8 @@ describe('US_13.003 | User > Configuration', ()=>{
         cy.get('[name="Submit"]').click()
         cy.get('#description').should('have.text', "My new description")
     })
+
+    it.only('TC_13.003.03 | Rename user', () => {
+        cy.get('[href^="/user"]').click()
+    })
 })
