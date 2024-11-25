@@ -1,6 +1,10 @@
 /// <reference types="cypress" />
 import { faker } from "@faker-js/faker";
+import DashboardPage from "../pageObjects/DashboardPage";
+import NewJobPage from "../pageObjects/NewJobPage";
+import allKeys from "../fixtures/pomFixtures/newJobPage.json"
 
+const {project_name_invalid, new_item_name_invalid_message, error_message_color} = allKeys;
 const projectNameFaker = faker.commerce.productName();
 const btnNewItem = 'a[href$="/newJob"]';
 const btnSave = '.jenkins-submit-button'; 
@@ -11,6 +15,9 @@ const dashboardLink = 'a[href="/"]';
 const projectNamePlace = `[id='job_${projectNameFaker}']`;
 const tableOfProjects= '[id="projectstatus"]';
 
+const dashboardPage = new DashboardPage();
+const newJobPage = new NewJobPage();
+
 describe("US_00.002 | New Item > Create Pipeline Project", () => {
 
 
@@ -18,11 +25,12 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
 
 
   it("TC_00.002.01 | Special characters are not allowed in the project name", () => {
-    cy.get(".task-link-text").contains("New Item").click({ force: true });
-    cy.get("#name.jenkins-input").type("New<>Name");
-    cy.get("#itemname-invalid")
-      .should("have.text", "» ‘<’ is an unsafe character")
-      .and("have.css", "color", "rgb(230, 0, 31)");
+    dashboardPage
+      .clickNewItemMenuLink()
+      .typeNewItemName(project_name_invalid)
+    newJobPage.getItemNameInvalidErrorMessage()
+      .should("have.text", new_item_name_invalid_message)
+      .and("have.css", "color", error_message_color);
   });
 
   it('TC_00.002.04 | Create Pipeline Project with an empty item name field', () => {
