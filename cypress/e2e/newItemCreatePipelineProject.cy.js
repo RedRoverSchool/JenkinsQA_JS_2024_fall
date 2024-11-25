@@ -1,5 +1,15 @@
 /// <reference types="cypress" />
+import { faker } from "@faker-js/faker";
 
+const projectNameFaker = faker.commerce.productName();
+const btnNewItem = 'a[href$="/newJob"]';
+const btnSave = '.jenkins-submit-button'; 
+const btnOK = '[id="ok-button"]';
+const inputItemName = '[name="name"]';
+const pipelineType = '.org_jenkinsci_plugins_workflow_job_WorkflowJob';
+const dashboardLink = 'a[href="/"]';
+const projectNamePlace = `[id='job_${projectNameFaker}']`;
+const tableOfProjects= '[id="projectstatus"]';
 
 describe("US_00.002 | New Item > Create Pipeline Project", () => {
 
@@ -53,4 +63,15 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
     cy.get('#ok-button').should('be.disabled');
 })
 
+  it('TC_00.002.14 | Create Pipeline Project', () => {
+    cy.get(btnNewItem).click();
+    cy.get(inputItemName).type(projectNameFaker);
+    cy.get(pipelineType).click();
+    cy.get(btnOK).click();
+    cy.get(btnSave).click();
+    cy.get(dashboardLink).contains("Dashboard").click();
+
+    cy.get(projectNamePlace).should('contain.text', projectNameFaker).and('be.visible');
+    cy.get(tableOfProjects).should('contain.text', projectNameFaker).and('be.visible');
+  });
 });
