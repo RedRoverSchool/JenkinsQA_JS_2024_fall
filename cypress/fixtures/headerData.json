@@ -11,7 +11,8 @@
     "search": {
         "input": {
             "noMatches": "no matches",
-            "matchForCon": "con"
+            "matchForCon": "con",
+            "matchForLo": "lo"
         },
         "autoCompletionItems": [
             "config",
