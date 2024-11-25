@@ -1,14 +1,16 @@
 /// <reference types="cypress" />
 
-const projectName = 'New Freestyle Project';
-const projectDescription = 'New Freestyle Project Description';
-const folderName = 'New Folder';
+import { faker } from '@faker-js/faker';
+
+const folderName = faker.commerce.product();
+const projectName = faker.commerce.productName();
+const projectDescription = faker.commerce.productDescription();
   
 describe('US_00.001 | New item > Create Freestyle Project', function () {
 
     beforeEach(function () {
         cy.fixture('messages').then((messages) => {
-            this.messages = messages;
+            this.message = messages;
         });
     });
     
@@ -39,7 +41,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get('a[href$="/newJob"]').click();
         cy.get('#items li[class$="FreeStyleProject"]').click();
         
-        cy.get('div[class$="validation-message"]').should('have.text', this.messages.newItem.emptyNameFieldReminder);
+        cy.get('div[class$="validation-message"]').should('have.text', this.message.newItem.emptyNameFieldReminder);
 
     });
 
@@ -160,5 +162,70 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get('#main-panel').should('include.text', 'Error')
                              .and('include.text', 'No name is specified');
     });
+    
+    it('TC_00.001.14 | Create Freestyle Project from the Dashboard Menu', function () {
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('#name').type('New Project Name');
+        cy.get('.hudson_model_FreeStyleProject').click();
+        cy.get('#ok-button').click();
+        cy.get('[name="Submit"]').click();
+      
+        cy.get('.job-index-headline').should('have.text', 'New Project Name');
+    });
 
+    it('TC_00.001.13 | Verify that duplicate names are not allowed during project creation', function () {
+        
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(projectName);
+        cy.get('div').contains('Freestyle project').click();
+        cy.get('button#ok-button').click();
+        cy.get('a:contains("Dashboard")').click();
+
+        cy.get('a:contains("New Item")').click();
+        cy.get('input#name').type(projectName);
+
+        cy.get('#itemname-invalid').should('contain.text', `» A job already exists with the name ‘${projectName}’`);
+        cy.get('button#ok-button').should('be.disabled');
+    });
+
+    it('TC_00.001.16 | Verify that user can create a new Freestyle project', function(){
+
+        cy.get('a[href="/view/all/newJob"]').click()
+        cy.get('#name').type("New Freestyle Project")
+        cy.get('.label').contains('Freestyle project').click()
+        cy.get('#ok-button').click()
+        cy.get('[name="Submit"]').click()
+
+        cy.get('.job-index-headline').should('have.text', 'New Freestyle Project')
+    }) 
+
+    it('TC_00.001.17 | Verify that user cannot create a new project without entering a name', function () {
+        
+        cy.get('a[href="/view/all/newJob"]').click();
+        cy.get('.label').contains('Freestyle project').click();
+        
+        cy.get('#itemname-required').should('have.text', '» This field cannot be empty, please enter a valid name');
+        cy.get('#ok-button').should('be.disabled');
+    });  
+    
+    it('TC_00.001.19 | New freestyle project is created if user enter projects name, choose project type and save it', () => {
+
+        const locateNewItemlink = '[href="/view/all/newJob"]';
+        const newItemInputField = '#name';
+        const labelFreestyleProject= 'label';
+        const btnOk = '#ok-button'; 
+        const btnSave = '[name="Submit"]';
+        const nameProjOnPage = '[class="job-index-headline page-headline"]';
+
+        cy.get(locateNewItemlink).click();
+        cy.get(newItemInputField).type(folderName); 
+        cy.get(labelFreestyleProject).contains('Freestyle project').click();
+        cy.get(btnOk).click();
+        cy.get(btnSave).click();
+
+        cy.url().should('include', folderName);
+        cy.get(nameProjOnPage).contains(folderName).should('be.visible');
+              
+    });
 });
+
