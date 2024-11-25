@@ -8,4 +8,14 @@ describe('US_13.003 | User > Configuration', ()=>{
         cy.get('[name="Submit"]').click()
         cy.get('#description').should('have.text', "My new description")
     })
+
+    it('TC_13.003.02 | Update Profile Description via Config Menu', () => {
+        cy.get('#page-header .jenkins-menu-dropdown-chevron').realHover().click();
+        cy.get('[href="/user/admin/configure"]').click();
+        cy.get(".jenkins-input").eq("1").clear();
+        cy.get(".jenkins-input").eq("1").type("my new description for testing");
+        cy.get('[name="Submit"]').click()
+        cy.get('h1 span.icon-lg').should('be.visible');
+        cy.get('#description').should('contains', /new description/);
+    })
 })
