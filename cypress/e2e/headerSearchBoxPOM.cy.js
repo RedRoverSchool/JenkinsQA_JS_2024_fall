@@ -8,33 +8,41 @@ import {leftSideBar, endPoint} from "../fixtures/dashboardPage.json"
 import Header from "../pageObjects/Header";
 import JobPage from "../pageObjects/JobPage";
 import SearchResuls from "../pageObjects/SearchResultsPage";
+import DashboardPage from "../pageObjects/DashboardPage";
+import NewJobPage from "../pageObjects/NewJobPage";
+import ProjectConfigure from "../pageObjects/ProjectConfigurePage";
 
 describe('US_14.002 | Header > Search Box', () => {
 
+
   const header = new Header();
   const jobPage = new JobPage();
+  const home = new DashboardPage()
+  const newJobPage = new NewJobPage()
   const searchResults = new SearchResuls();
 
   let searchTerm = 'pipeline'
   let newJobFolderName = 'conFolder'
   const dashboard = '#breadcrumbBar .model-link'
 
-  it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
-    cy.get('a[href="/view/all/newJob"]').click();
-    cy.get('.jenkins-input').type(project_name);
-    cy.get('.label').contains('Freestyle project').click();
-    cy.get('#ok-button').click();
-    cy.get('textarea[name="description"]').type('...some description...')
-    cy.get('button[formnovalidate="formNoValidate"]').click();
-    cy.get('a[href="/"]').first().click();
-    cy.get("#search-box").click();
+  beforeEach(function () {
+    cy.get("#side-panel .task").as("sideBarLink");
+  });
 
-   header
+  it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
+    home.addNewProj()
+        .addNewProjName(project_name)
+        .pickFreeStlPrj()
+        .okBtnClick()
+        .addNewProjDescription()
+        .clickSaveBtn()
+
+  header
    .typeSearchTerm(project_name)
    .clickSearchOption()
    .searchTerm()
-
-    jobPage.getHeadlineIndex().should('contain.text', project_name)
+    .getHeadlineIndex()
+    .should('contain.text', project_name)
   });
 
   it('TC_14.002-04 | Message that no matches found', () => {
@@ -181,9 +189,7 @@ describe('US_14.002 | Header > Search Box', () => {
     });
   })
 
-  beforeEach(function () {
-    cy.get("#side-panel .task").as("sideBarLink");
-  });
+ 
 
   leftSideBar.forEach((pageName, el) => {
     it(`TC_14.002.17 | Verify that ${pageName} page in Jenkins has a search box on its top right`, () => {
