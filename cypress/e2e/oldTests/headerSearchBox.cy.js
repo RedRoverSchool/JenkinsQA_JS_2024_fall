@@ -5,6 +5,7 @@ describe.skip('US_14.002 | Header > Search Box', () => {
   let searchTerm = 'pipeline'
   let newJobFolderName = 'conFolder'
   const dashboard = '#breadcrumbBar .model-link'
+  const projectName = 'New Freestyle project'
 
   it("Header > Search Box | User can select suggestion to auto-fill and complete the search", () => {
     cy.get('a[href="/view/all/newJob"]').click();
@@ -162,6 +163,22 @@ describe.skip('US_14.002 | Header > Search Box', () => {
       })
     });
   });
+
+  it('TC_14.002.03| Verify that when user can search for projects', () => {
+    cy.get('span').contains('Create a job').click()
+    cy.get('input[name="name"]').type(projectName)
+    cy.get('span.label').contains('Freestyle project').click()
+    cy.get('button').contains("OK").click()
+    cy.get('button').contains("Save").click()
+    cy.get('a').contains("Dashboard").click()
+    cy.get('span').contains(projectName).should('exist')
+    cy.get('#search-box').type('ne')
+    cy.get('li').contains(projectName).should('exist')
+    cy.get('li').contains(projectName)
+      .click()
+      .type('{enter}')
+     cy.get('#main-panel h1').should('have.text', projectName)
+  })
   
   it('TC_14.002.15_A|Verify a User can select a suggestion to auto-fill the search box and complete the search', ()=>{
     cy.get(":nth-child(1) > .task-link-wrapper > .task-link").click();

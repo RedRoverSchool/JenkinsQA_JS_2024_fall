@@ -12,6 +12,7 @@ const btnItemDropdownMove = 'a[href*="move"]'
 const selectDropdown = '.select'
 const randomFolderName = faker.commerce.productName()
 const randomProjectName = faker.commerce.productName()
+const mainPageLogo = 'img[alt="Jenkins"]'
 
 /**
  * Method to create a new item : 
@@ -33,6 +34,9 @@ const createNewItem = (itemName, itemType) => {
 const getExistedItem = (name) => {
     return cy.get(`a[href*="job/${name}"]`)
 }
+const returnOnMainPage = () => {
+  return cy.get(mainPageLogo).click();
+};
 
 describe ('US_01.006 | FreestyleProject > Move project', () => {
 
@@ -220,6 +224,34 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         cy.get('p[class="jenkins-jobs-list__item__label"]').contains(`${randomFolderName}`).click({force:true})
         cy.get('span').contains(`${randomProjectName}`).should('not.exist')  
     })
+
+    it("TC_01.006.07 Verify user is able to move a project from the Project Page", () => {
+      createNewItem(randomFolderName, "Folder");
+      createNewItem(randomProjectName, "Freestyle project");
+      returnOnMainPage();
+
+      cy.get("td a.jenkins-table__link")
+        .contains(randomProjectName)
+        .click()
+        .get(".task-link-text")
+        .contains("Move")
+        .click({ force: true })
+        .get(selectDropdown)
+        .select(`/${randomFolderName}`)
+        .get(btnMove)
+        .click();
+
+      returnOnMainPage();
+
+      cy.get("td a.jenkins-table__link").contains(randomFolderName).click();
+
+      cy.get("#main-panel h1").should("contain.text", randomFolderName);
+
+      cy.get("td a.jenkins-table__link")
+        .contains(randomProjectName)
+        .should("be.visible");
+    });
+
 });
 
 
