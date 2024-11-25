@@ -1,14 +1,19 @@
 /// <reference types="cypress" />
-
-import NewJobPage from "./NewJobPage";
+import NewJobPage from "./NewJobPage"
 
 class DashboardPage {
 
-    getNewItemMenuLink = () => cy.get('a[href="/view/all/newJob"]');
-    
+    getNewItemLink = ()=>  cy.get('a[href="/view/all/newJob"]')
+
     clickNewItemMenuLink() {
-        this.getNewItemMenuLink().click({ force: true });
+        this.getNewItemLink().click({ force: true });
         return new NewJobPage();
     }
-}; 
-export default DashboardPage;
+
+    addNewProj()
+    {
+        this.getNewItemLink().click()
+        return new NewJobPage()
+    }
+}
+export default DashboardPage
