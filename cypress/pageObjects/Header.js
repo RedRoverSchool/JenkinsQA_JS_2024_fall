@@ -1,19 +1,18 @@
 /// <reference types="cypress" />
 
-import JobPage from "./JobPage";
 import SearchResultsPage from "./SearchResultsPage";
 
 class Header {
 
     getSearchField = () => cy.get("#search-box");
     getSearchOption = () => cy.get("#search-box-completion li");
-    getSearchResultsContainer = () => cy.get('.yui-ac-content');
+    getSearchAutoCompletionBox = () => cy.get('div#search-box-completion li');
 
     typeSearchTerm(term) {
         this.getSearchField().type(term);
         return this;
     };
-    
+
     clickSearchOption() {
         this.getSearchOption().first().click();
         return this;
@@ -21,12 +20,13 @@ class Header {
 
     searchTerm() {
         this.getSearchField().type('{enter}');
-        return new JobPage();
+        return new SearchResultsPage();
     };
 
     search(input) {
         this.getSearchField().type(`${input}{enter}`);
-        return new JobPage();
+        return new SearchResultsPage();
     };
-}; 
+};
+
 export default Header;
