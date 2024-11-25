@@ -12,6 +12,7 @@ import SearchResuls from "../pageObjects/SearchResultsPage";
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import ProjectConfigure from "../pageObjects/ProjectConfigurePage";
+import UserConfigurePage from "../pageObjects/UserConfigurePage";
 
 describe('US_14.002 | Header > Search Box', () => {
 
@@ -21,6 +22,7 @@ describe('US_14.002 | Header > Search Box', () => {
   const home = new DashboardPage()
   const newJobPage = new NewJobPage()
   const searchResults = new SearchResuls();
+  const userConfigurePage = new UserConfigurePage()
 
   let searchTerm = 'pipeline'
   let newJobFolderName = 'conFolder'
@@ -108,15 +110,12 @@ describe('US_14.002 | Header > Search Box', () => {
   });
 
   it('TC_14.002-08-A |Case insensitive search', () => {
-    cy.get('.login .model-link').should('be.visible').click()
-    cy.url().should('include', '/user');
-    cy.get('a[href$="/configure"]').click({ force: true });
-    cy.get("label[class='attach-previous ']").should('contain', 'Insensitive search tool').and('exist')
-    cy.get("input[name='insensitiveSearch']").should("exist")
-      .uncheck({ force: true })
-      .should("not.be.checked")
-      .check({ force: true })
-      .should("be.checked");
+    header.clickUserDopdownlink();
+    header.clickUserConfigureItem();
+
+    userConfigurePage.getInsensitiveSearch().should('contain', 'Insensitive search tool');
+    userConfigurePage.getInsensitiveCheckBox()
+      .should('exist').and('be.checked');
   });
 
   it('TC_14.002.01 | Auto-Completion Suggestion Selection', () => {
