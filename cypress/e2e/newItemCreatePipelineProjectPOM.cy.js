@@ -3,8 +3,9 @@ import { faker } from "@faker-js/faker";
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import allKeys from "../fixtures/pomFixtures/newJobPage.json"
+import {newItemNameInvalidMessage} from "../fixtures/messages.json"
 
-const {project_name_invalid, new_item_name_invalid_message, error_message_color} = allKeys;
+const {projectNameInvalid, errorMessageColor} = allKeys;
 const projectNameFaker = faker.commerce.productName();
 const btnNewItem = 'a[href$="/newJob"]';
 const btnSave = '.jenkins-submit-button'; 
@@ -27,10 +28,10 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
   it("TC_00.002.01 | Special characters are not allowed in the project name", () => {
     dashboardPage
       .clickNewItemMenuLink()
-      .typeNewItemName(project_name_invalid)
+      .typeNewItemName(projectNameInvalid)
     newJobPage.getItemNameInvalidErrorMessage()
-      .should("have.text", new_item_name_invalid_message)
-      .and("have.css", "color", error_message_color);
+      .should("have.text", newItemNameInvalidMessage)
+      .and("have.css", "color", errorMessageColor);
   });
 
   it('TC_00.002.04 | Create Pipeline Project with an empty item name field', () => {

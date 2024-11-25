@@ -2,12 +2,12 @@
 
 class NewJobPage
 {
-   getItemNameTextField = () => cy.get("#name.jenkins-input")
+   getItemNameInputField = () => cy.get("#name.jenkins-input")
    getItemNameInvalidErrorMessage = () => cy.get("#itemname-invalid")
 
-   
+
    typeNewItemName(name) {
-      this.getItemNameTextField().type(name);
+      this.getItemNameInputField().type(name);
       return this;
    };
 

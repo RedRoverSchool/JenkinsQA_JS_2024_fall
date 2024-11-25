@@ -1,5 +1,4 @@
 {
-    "project_name_invalid": "New<>Name",
-    "new_item_name_invalid_message": "» ‘<’ is an unsafe character",
-    "error_message_color": "rgb(230, 0, 31)"
+    "projectNameInvalid": "New<>Name",
+    "errorMessageColor": "rgb(230, 0, 31)"
 }
