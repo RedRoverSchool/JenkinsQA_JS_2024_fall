@@ -1,12 +1,17 @@
+/// <reference types="cypress" />
 import { th } from "@faker-js/faker"
 import NewJobPage from "./NewJobPage"
 import LoginPage from "./LoginPage"
 
-class DashboardPage
-{
+class DashboardPage {
+
     getNewItemLink = ()=>  cy.get('a[href="/view/all/newJob"]')
     getLogOutButton = () => cy.get('a[href="/logout"]')
 
+    clickNewItemMenuLink() {
+        this.getNewItemLink().click({ force: true });
+        return new NewJobPage();
+    }
 
     addNewProj() {
         this.getNewItemLink().click()
@@ -23,6 +28,5 @@ class DashboardPage
           return (cookies.find((cookie) => cookie.name.includes(cookieName))).value;
         });
     }
-
 }
 export default DashboardPage

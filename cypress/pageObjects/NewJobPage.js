@@ -4,19 +4,17 @@ class NewJobPage
     getPrjNameField = ()=>  cy.get('.jenkins-input')
     getFreeStlPrjType = () =>  cy.get('.label').contains('Freestyle project')
     getOKBtn = () =>  cy.get('#ok-button')
+    getItemNameInvalidErrorMessage = () => cy.get("#itemname-invalid")
 
 
-    addNewProjName(prjName)
-    {
+    addNewProjName(prjName) {
         this.getPrjNameField().type(prjName)
         return this
     }
-    pickFreeStlPrj()
-    {
+    pickFreeStlPrj() {
         this.getFreeStlPrjType().click()
         return this
     }
-
     okBtnClick()
     {
         this.getOKBtn().click()
