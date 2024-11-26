@@ -10,7 +10,7 @@ class DashboardPage {
         return new NewJobPage();
     }
 
-    addNewProj()
+    addNewProject()
     {
         this.getNewItemLink().click()
         return new NewJobPage()

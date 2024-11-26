@@ -1,10 +1,11 @@
 /// <reference types="cypress" />
 
 import headerData from "../fixtures/headerData.json";
-import searchResultsData from "../fixtures/searchResultsData.json"
+import searchResultsData from "../fixtures/searchResultsData.json";
 import messages from "../fixtures/messages.json";
-import {project_name} from "../fixtures/pomFixtures/header.json";
-import {leftSideBar, endPoint} from "../fixtures/dashboardPage.json"
+import newJobPageData from "../fixtures/pomFixtures/newJobPageData.json";
+import configurePageData from "../fixtures/pomFixtures/configurePageData.json"
+import {leftSideBar, endPoint} from "../fixtures/dashboardPage.json";
 
 import Header from "../pageObjects/Header";
 import JobPage from "../pageObjects/JobPage";
@@ -16,10 +17,9 @@ import UserConfigurePage from "../pageObjects/UserConfigurePage";
 
 describe('US_14.002 | Header > Search Box', () => {
 
-
   const header = new Header();
   const jobPage = new JobPage();
-  const home = new DashboardPage()
+  const dashboardPage = new DashboardPage()
   const newJobPage = new NewJobPage()
   const searchResults = new SearchResuls();
   const userConfigurePage = new UserConfigurePage()
@@ -32,19 +32,20 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get("#side-panel .task").as("sideBarLink");
   });
 
-  it.skip("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
-    home.addNewProj()
-      .addNewProjName(project_name)
-      .pickFreeStlPrj()
-      .okBtnClick()
-      .addNewProjDescription()
-      .clickSaveBtn()
+  it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
+    dashboardPage.addNewProject()
+                 .addNewProjectName(newJobPageData.projectName)
+                 .selectFreestyleProject()
+                 .clickOKButton()
+                 .addProjectDescription(configurePageData.projectDescription)
+                 .clickSaveButton();
 
-  header
-   .typeSearchTerm(project_name)
-   .clickSearchOption()
-   .searchTerm()
-  .getTextFromHeadlineIndex().should('eq', project_name)
+    header.typeSearchTerm(newJobPageData.projectName)
+          .clickFirstOptionFromACBox()
+          .searchTerm();
+
+    jobPage.getHeadlineIndex()
+           .should('have.text', newJobPageData.projectName);
   });
 
   it('TC_14.002-04 | Message that no matches found', () => {
