@@ -8,25 +8,29 @@ class NewJobPage {
   getItemNameInvalidErrorMessage = () => cy.get("#itemname-invalid");
   getOrgFolderPrjType = () => cy.get(".jenkins_branch_OrganizationFolder");
 
-  addNewProjName(prjName) {
-    this.getPrjNameField().type(prjName);
-    return this;
-  }
-  pickFreeStlPrj() {
-    this.getFreeStlPrjType().click();
-    return this;
-  }
-  okBtnClick() {
-    this.getOKBtn().click();
-    return new ProjectConfigure();
-  }
-  okBtnClickForOrgFolder() {
-    this.getOKBtn().click();
-    return new OrgFolderConfugure();
-  }
-  pickOrgFolder() {
-    this.getOrgFolderPrjType().click();
-    return this;
-  }
+
+  addNewProjectName(prjName) {
+        this.getPrjNameField().type(prjName)
+        return this
+    }
+    selectFreestyleProject() {
+        this.getFreeStlPrjType().click()
+        return this
+    }
+    clickOKButton() {
+        this.getOKBtn().click()
+        return new ProjectConfigure()
+    }
+  
+    okBtnClickForOrgFolder() {
+     this.getOKBtn().click();
+     return new OrgFolderConfugure();
+    }
+
+    pickOrgFolder() {
+     this.getOrgFolderPrjType().click();
+     return this;
+    }
+
 }
 export default NewJobPage;

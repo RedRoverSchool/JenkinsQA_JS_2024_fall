@@ -3,17 +3,26 @@ import NewJobPage from "./NewJobPage";
 import OrgFolderStatus from "./OrgFolderStatus";
 
 class DashboardPage {
-  getNewItemLink = () => cy.get('a[href="/view/all/newJob"]');
+  getNewItemLink = ()=>  cy.get('a[href="/view/all/newJob"]');
+  getCreateJobBtn = () =>  cy.get('a[href="newJob"]').contains("Create a job");
+  getMainPanel = () => cy.get('div#main-panel');
+  getJobTable = () => cy.get("table.jenkins-table.sortable");
 
   clickNewItemMenuLink() {
-    this.getNewItemLink().click({ force: true });
-    return new NewJobPage();
-  }
+        this.getNewItemLink().click({ force: true });
+        return new NewJobPage();
+    }
 
-  addNewProj() {
+  addNewProject() {
     this.getNewItemLink().click();
     return new NewJobPage();
   }
+  
+  clickCreateJobBtn()
+    {
+        this.getCreateJobBtn().click()
+        return new NewJobPage()
+    }
 
   clickYourOrgFolderOnDashboardard = (encodedProjectName) => {
     cy.get(`td a[href$="${encodedProjectName}/"]`).click();
@@ -26,5 +35,6 @@ class DashboardPage {
       displayName
     );
   };
+
 }
 export default DashboardPage;
