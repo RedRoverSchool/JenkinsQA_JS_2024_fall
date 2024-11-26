@@ -70,9 +70,9 @@ describe("US_00.000 | New Item > Create New item", () => {
         dashboardPage.clickCreateJobBtn();
     })
         newJobPage
-            .addNewProjName(randomItemName)
-            .pickFreeStlPrj()
-            .okBtnClick();
+            .addNewProjectName(randomItemName)
+            .selectFreestyleProject()
+            .clickOKButton();
         header
             .clickJenkinsLogo();
         dashboardPage    
