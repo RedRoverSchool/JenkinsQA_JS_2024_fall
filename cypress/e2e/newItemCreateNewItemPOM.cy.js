@@ -32,7 +32,7 @@ describe("US_00.000 | New Item > Create New item", () => {
     const LOCAL_HOST = Cypress.env("local.host");
 
 
-    it.only('TC_00.000.01| Create new item from "Create a job" button| Invalid data', () => {
+    it('TC_00.000.01| Create new item from "Create a job" button| Invalid data', () => {
         dashboardPage.clickCreateJobBtn()
 
         newJobPage.addUnsaveNameItem(wrongJobName)
