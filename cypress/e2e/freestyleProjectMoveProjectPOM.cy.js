@@ -164,7 +164,6 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         projectConfigurePage.clickSaveButton()
         header.clickJenkinsLogo()
       
-
         for (let i = 1; i <= 5; i++) {
                 const uniqueFolderName = `${newJobPageData.folderName} ${i}`;
                 dashboardPage.clickNewItemMenuLink();
