@@ -76,6 +76,18 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
       .and("have.text", projectDescription);
   });
 
+id/TC-01.001.-04-A/freestyleProject/AddingDescription
+  it('TC_01.001-04-A|Adding the description to an existing Project',()=>{
+    cy.contains('Dashboard').click()
+    cy.get('span').contains(newItemName).click()
+    cy.get('[href="editDescription"]').click()
+    cy.get('.jenkins-input   ').type(description)
+    cy.get('[align="right"] > .jenkins-button').click()
+    cy.get('#description').should('be.visible')
+    .and('have.text', description)
+  })
+});
+
   it('TC_01.001.07-A | It is possible to add description on project update', () => {
     cy.get(descriptionTextAreaField).type(projectDescription)
     cy.get(submitBtn).click();
@@ -99,3 +111,4 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
     cy.get(description).should('be.visible').and('contain.text', projectDescription)
   })
 });
+ main
