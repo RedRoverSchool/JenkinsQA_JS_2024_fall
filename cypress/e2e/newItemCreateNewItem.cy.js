@@ -243,7 +243,6 @@ describe("US_00.000 | New Item > Create New item", () => {
             .click()
         cy.get('a[href="job/New%20project/"]').should('be.visible')
     })
-
     it('TC_00.000.17 | User can create a new item from the "Create a job" button on the homepage as a Folder', () => {
         cy.get('a[href="newJob"]').click();
         cy.get('#name').type(jobName);
