@@ -43,14 +43,13 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
   });
 
   it("TC_01.001.02 | Add a Description to an Existing Project", () => {
-    cy.get(submitBtn).click();
-    cy.get(dashboardBtn).click();
-    cy.get(".model-link.inside").click();
-    cy.get(editDescription).click();
-    cy.get('textarea[name="description"]').type(projectDescription);
-    cy.get(submitBtn).click();
-
-    cy.get(description)
+    projectConfigure.clickSaveButton();
+    jobPage.clickDashboardBreadcrumbsLink();
+    dashboardPage.clickJobTitleLink();
+    jobPage.clickAddDescriptionButton();
+    jobPage.getProjectDescription().type(projectDescription);
+    jobPage.clickSubmitButton();
+    jobPage.getProjectDescription()
       .should("be.visible")
       .and("have.text", projectDescription);
   });
