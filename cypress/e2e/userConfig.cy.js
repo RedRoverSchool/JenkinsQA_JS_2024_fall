@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
-describe('US_13.003 | User > Configuration', ()=>{
+describe('US_13.003 | User > Config', ()=>{
     it('TC_13.003.01 | Edit the profile description from the account settings page by clicking on your username' , ()=>{
-        cy.get('[href ="/user/admin"]').click()
+        cy.get('[href^="/user"]').click()
         cy.get('#description-link').click()
         cy.get(".jenkins-input").clear()
         .type("My new description")
@@ -11,7 +11,7 @@ describe('US_13.003 | User > Configuration', ()=>{
 
     it('TC_13.003.02 | Update Profile Description via Config Menu', () => {
         cy.get('#page-header .jenkins-menu-dropdown-chevron').realHover().click();
-        cy.get('[href="/user/admin/configure"]').click();
+        cy.get('[href$="configure"]').click();
         cy.get(".jenkins-input").eq("1").clear();
         cy.get(".jenkins-input").eq("1").type("my new description for testing");
         cy.get('[name="Submit"]').click()
