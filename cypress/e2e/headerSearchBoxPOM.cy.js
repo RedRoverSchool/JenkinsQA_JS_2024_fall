@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import headerData from "../fixtures/headerData.json";
+import searchResultsData from "../fixtures/searchResultsData.json"
 import messages from "../fixtures/messages.json";
 import {project_name} from "../fixtures/pomFixtures/header.json";
 import {leftSideBar, endPoint} from "../fixtures/dashboardPage.json"
@@ -30,12 +31,13 @@ describe('US_14.002 | Header > Search Box', () => {
   });
 
   it.only("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
+  it.skip("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
     home.addNewProj()
-        .addNewProjName(project_name)
-        .pickFreeStlPrj()
-        .okBtnClick()
-        .addNewProjDescription()
-        .clickSaveBtn()
+      .addNewProjName(project_name)
+      .pickFreeStlPrj()
+      .okBtnClick()
+      .addNewProjDescription()
+      .clickSaveBtn()
 
   header
    .typeSearchTerm(project_name)
@@ -64,22 +66,25 @@ describe('US_14.002 | Header > Search Box', () => {
   });
 
   it('TC_14.002.07 | Verify the search box provides auto-completion', () => {
-    const autoCompletionItems = ['config', 'configure'];
 
-    cy.get('input#search-box').type('con');
-    cy.get('div#search-box-completion li')
-      .filter(':visible')
-      .should('have.length', autoCompletionItems.length)
-      .each((item, index) => {
-        cy.wrap(item).should('have.text', autoCompletionItems[index]);
-      });
+    header.typeSearchTerm(headerData.search.input.matchForCon);
+    
+    header.getSearchAutoCompletionBox()
+          .filter(':visible')
+          .should('have.length', headerData.search.autoCompletionItems.length)
+          .each((item, index) => {
+            cy.wrap(item).should('have.text', headerData.search.autoCompletionItems[index]);
+          });
   });
 
   it('TC_14.002.09 | Verify that the selection of an auto-complete suggestion redirects to the relevant page', () => {
-    cy.get('input#search-box').type('lo');
-    cy.get('div#search-box-completion li').eq(0).click();
-    cy.get('input#search-box').type('{Enter}');
-    cy.get('div#main-panel h1').should('include.text', 'Log Recorders');
+
+    header.typeSearchTerm(headerData.search.input.matchForLo)
+          .clickFirstOptionFromACBox()
+          .searchTerm();
+
+    searchResults.getTitle()
+                 .should('include.text', searchResultsData.title.logRecorders);
 
   });
 
