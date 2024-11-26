@@ -8,9 +8,9 @@ class ProjectConfigure
 
 
 
-    addNewProjDescription()
+    addNewProjDescription(projectDescription)
     {
-        this.getPrjDescriptionField().type('...some description...')
+        this.getPrjDescriptionField().type(projectDescription)
         return this
     }
 
