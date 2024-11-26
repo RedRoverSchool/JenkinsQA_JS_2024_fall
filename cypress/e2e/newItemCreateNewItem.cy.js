@@ -225,23 +225,34 @@ describe("US_00.000 | New Item > Create New item", () => {
         cy.get(btnSave).click();
 
         cy.get(pageHeadline).contains(randomItemName).should('be.visible');
+    })
 
-        it('TC_00.000.16 | User can see new "item name" on dashboard after "Save button" is clicked', () => {
-            cy.get('a.task-link[href="/view/all/newJob"]').click();
-            cy.get('#name').type('New project')
-            cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
-            cy.get('#ok-button').should('have.text', 'OK').click()
-            cy.get('.jenkins-submit-button')
-                .contains('Save')
-                .should('be.visible')
-                .click()
-            cy.get('h1:has(svg[tooltip="Folder"])').should('be.visible')
-            cy.get('ol#breadcrumbs li a.model-link')
-                .contains('Dashboard')
-                .should('be.visible')
-                .click()
-            cy.get('a[href="job/New%20project/"]').should('be.visible')
+    it('TC_00.000.16 | User can see new "item name" on dashboard after "Save button" is clicked', () => {
+        cy.get('a.task-link[href="/view/all/newJob"]').click();
+        cy.get('#name').type('New project')
+        cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
+        cy.get('#ok-button').should('have.text', 'OK').click()
+        cy.get('.jenkins-submit-button')
+            .contains('Save')
+            .should('be.visible')
+            .click()
+        cy.get('h1:has(svg[tooltip="Folder"])').should('be.visible')
+        cy.get('ol#breadcrumbs li a.model-link')
+            .contains('Dashboard')
+            .should('be.visible')
+            .click()
+        cy.get('a[href="job/New%20project/"]').should('be.visible')
+    })
 
-        })
+    it('TC_00.000.17 | User can create a new item from the "Create a job" button on the homepage as a Folder', () => {
+        cy.get('a[href="newJob"]').click();
+        cy.get('#name').type(jobName);
+        cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click();
+        cy.get('#ok-button').click();
+        cy.get('[class="jenkins-input validated  "]').type(newJobName);
+        cy.get('[name="_.description"]');
+        cy.get('[name="Submit"]').click();
+
+        cy.get('div h1').should('be.visible');
     })
 })
