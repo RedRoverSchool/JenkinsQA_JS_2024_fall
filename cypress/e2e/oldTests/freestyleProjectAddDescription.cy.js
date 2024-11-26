@@ -98,4 +98,12 @@ describe.skip("US_01.001 | FreestyleProject > Add description", () => {
     cy.get(projectNameHeadline).should('be.visible').and('exist')
     cy.get(description).should('be.visible').and('contain.text', projectDescription)
   })
+
+  it('TC_01.001.09 | Description is shown on project page', () => {
+
+    cy.get(descriptionTextAreaField).type(projectDescription)
+    cy.get(submitBtn).click()
+
+    cy.get(description).should('contain.text', projectDescription);
+  })
 });
