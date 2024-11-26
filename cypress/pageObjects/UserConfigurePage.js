@@ -7,7 +7,7 @@ class UserConfigurePage {
 
     checkCheckBox() 
     {
-        this.getInsensitiveSearchCheckBox().check()
+        this.getInsensitiveSearchCheckBox().check({force: true})
         return this
     }
 

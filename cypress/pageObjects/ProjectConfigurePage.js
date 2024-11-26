@@ -8,14 +8,13 @@ class ProjectConfigure
 
 
 
-    addNewProjDescription(projectDescription)
+    addProjectDescription(projectDescription)
     {
         this.getPrjDescriptionField().type(projectDescription)
         return this
     }
 
-    clickSaveBtn()
-    {
+    clickSaveButton() {
         this.getSaveBtn().click()
         return new JobPage
     }
