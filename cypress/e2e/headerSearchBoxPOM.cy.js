@@ -32,7 +32,7 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get("#side-panel .task").as("sideBarLink");
   });
 
-  it.skip("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
+  it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
     home.addNewProj()
       .addNewProjName(project_name)
       .pickFreeStlPrj()
@@ -40,12 +40,11 @@ describe('US_14.002 | Header > Search Box', () => {
       .addNewProjDescription()
       .clickSaveBtn()
 
-    header
-      .typeSearchTerm(project_name)
-      .clickFirstOptionFromACBox()
-      .searchTerm()
-      .getHeadlineIndex()
-      .should('contain.text', project_name)
+  header
+   .typeSearchTerm(project_name)
+   .clickSearchOption()
+   .searchTerm()
+  .getTextFromHeadlineIndex().should('eq', project_name)
   });
 
   it('TC_14.002-04 | Message that no matches found', () => {
