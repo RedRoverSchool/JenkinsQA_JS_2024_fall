@@ -8,6 +8,7 @@ class JobPage {
      return this.getHeadlineIndex().then($el => {
         return $el.text()
       });
+   }
      
   getProjectDescription = () => cy.get('[id="description"]');
 }
