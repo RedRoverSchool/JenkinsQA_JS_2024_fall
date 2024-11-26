@@ -1,8 +1,9 @@
-import header from "../fixtures/pomFixtures/header.json"
+import header from "../fixtures/pomFixtures/headerData.json"
 import DashboardPage from "./DashboardPage";
 
 class JobPage {
-  getHeadlineIndex = () => cy.get("h1.job-index-headline.page-headline");
+
+  getHeadlineIndex = () => cy.get("#main-panel h1");
   getProjectDescription = () => cy.get('[id="description"]');
   getDashboardLink = () => cy.get('a[href="/"].model-link')
   deleteProjectButton = () => cy.get('a[data-title="Delete Project"]')

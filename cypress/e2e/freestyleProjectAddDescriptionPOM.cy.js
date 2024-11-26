@@ -28,12 +28,12 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
   const projectNameHeadline = '#main-panel h1';
 
   beforeEach(() => {
-    dashboardPage.addNewProj();
-    newJobPage.addNewProjName(projectName).pickFreeStlPrj().okBtnClick();
+    dashboardPage.addNewProject();
+    newJobPage.addNewProjectName(projectName).selectFreestyleProject().clickOKButton();
   });
 
   it("TC_01.001.01 | Add a description when creating a project", () => {
-    projectConfigure.addNewProjDescription(projectDescription).clickSaveBtn();
+    projectConfigure.addProjectDescription(projectDescription).clickSaveButton();
     cy.url().should("include", "/job");
     jobPage.getHeadlineIndex().should("have.text", projectName);
     jobPage
@@ -94,13 +94,15 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
   
   it('TC_01.001.08-A | Verify the description is added when creating the project', () => {
 
-    cy.log('Adding description and saving the project')
-    cy.get(descriptionField)
-      .type(projectDescription)
-    cy.get(submitBtn).click()
+    cy.log('Adding description and saving the project');
+    projectConfigure
+        .addProjectDescription(projectDescription)
+        .clickSaveButton();
 
-    cy.log('Verifying the Freestyle Project was saved together with its description')
-    cy.get(projectNameHeadline).should('be.visible').and('exist')
-    cy.get(description).should('be.visible').and('contain.text', projectDescription)
+    cy.log('Verifying the Freestyle Project was saved together with its description');
+    jobPage
+        .getHeadlineIndex().should('be.visible').and('exist');
+    jobPage
+        .getProjectDescription().should('be.visible').and('contain.text', projectDescription);
   })
 });

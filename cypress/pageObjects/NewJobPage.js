@@ -7,16 +7,15 @@ class NewJobPage
     getItemNameInvalidErrorMessage = () => cy.get("#itemname-invalid")
 
 
-    addNewProjName(prjName) {
+    addNewProjectName(prjName) {
         this.getPrjNameField().type(prjName)
         return this
     }
-    pickFreeStlPrj() {
+    selectFreestyleProject() {
         this.getFreeStlPrjType().click()
         return this
     }
-    okBtnClick()
-    {
+    clickOKButton() {
         this.getOKBtn().click()
         return new ProjectConfigure()
     }
