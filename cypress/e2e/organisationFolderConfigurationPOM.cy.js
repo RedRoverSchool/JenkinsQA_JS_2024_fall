@@ -15,7 +15,7 @@ describe("US_06.001 | Organisation folder > Configuration", () => {
     cy.log("Preconditions:");
     dashboardPage
       .clickNewItemMenuLink()
-      .addNewProjName(prjName)
+      .addNewProjectName(prjName)
       .pickOrgFolder()
       .okBtnClickForOrgFolder()
       .clickDashboardBtn();
