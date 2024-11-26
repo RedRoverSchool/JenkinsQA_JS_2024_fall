@@ -90,13 +90,14 @@ describe('US_14.002 | Header > Search Box', () => {
   });
 
   it("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
-    cy.get("*.hidden-sm").contains('admin').click();
-    cy.get(".task-link-text").contains('Configure').click({ force: true });
-    cy.get("[name='insensitiveSearch']").check({ force: true });
-    cy.get("[name='Submit']").click();
-    cy.get("#search-box").click();
-    cy.get("#search-box").type("MA");
-    cy.get(".yui-ac-bd").should('have.text', 'manage')
+    header.clickUserDropdownLink()
+          .clickUserConfigureItem();
+    userConfigurePage.checkCheckBox()
+                     .clickOnSaveBtn();
+    header.typeSearchTerm(headerData.search.input.upperCaseMatchForManage);
+
+    header.getSearchAutoCompletionBox()
+          .should('have.text', headerData.search.searchSuggestions.manage);
   })
 
   it('TC_14.002.10 | Verify that the warning message is displayed when no matches are found', () => {
