@@ -3,7 +3,10 @@ import NewJobPage from "./NewJobPage"
 
 class DashboardPage {
 
-    getNewItemLink = ()=>  cy.get('a[href="/view/all/newJob"]')
+    getNewItemLink = ()=>  cy.get('a[href="/view/all/newJob"]');
+    getCreateJobBtn = () =>  cy.get('a[href="newJob"]').contains("Create a job");
+    getMainPanel = () => cy.get('div#main-panel');
+    getJobTable = () => cy.get("table.jenkins-table.sortable");
 
     clickNewItemMenuLink() {
         this.getNewItemLink().click({ force: true });
@@ -13,6 +16,12 @@ class DashboardPage {
     addNewProject()
     {
         this.getNewItemLink().click()
+        return new NewJobPage()
+    }
+
+    clickCreateJobBtn()
+    {
+        this.getCreateJobBtn().click()
         return new NewJobPage()
     }
 }
