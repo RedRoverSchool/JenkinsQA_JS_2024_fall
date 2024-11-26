@@ -159,8 +159,8 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         context('should create 5 folders and verify they exist', () => { 
         dashboardPage.clickNewItemMenuLink();
         newJobPage.addNewProjectName(newJobPageData.projectName)
-        newJobPage.selectFreestyleProject()
-        newJobPage.clickOKButton()
+                  .selectFreestyleProject()
+                  .clickOKButton();
         projectConfigurePage.clickSaveButton()
         header.clickJenkinsLogo()
       
@@ -169,8 +169,8 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
                 const uniqueFolderName = `${newJobPageData.folderName} ${i}`;
                 dashboardPage.clickNewItemMenuLink();
                 newJobPage.addFolderName(uniqueFolderName)
-                newJobPage.selectFolder()
-                newJobPage.clickOKButton()
+                          .selectFolder()
+                          .clickOKButton();
                 header.clickJenkinsLogo()
                 cy.contains(uniqueFolderName).should('exist');
         }
@@ -180,8 +180,8 @@ describe ('US_01.006 | FreestyleProject > Move project', () => {
         const selectedFolder = `${newJobPageData.folderName} ` + randomFolderNumber
         dashboardPage.openProjectPage(newJobPageData.projectName)
         projectConfigurePage.clickOnMoveTask()
-        projectConfigurePage.selectNewProjectDestination(`/${selectedFolder}`);
-        projectConfigurePage.clickSaveButton()
+                            .selectNewProjectDestination(`/${selectedFolder}`)
+                            .clickSaveButton();
 
         projectConfigurePage.getProjectInfoSection().should('contain', `Full project name: ${selectedFolder}/${newJobPageData.projectName}`)
     });   
