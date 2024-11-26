@@ -14,5 +14,22 @@ describe('US_04.004 | Folder > Add or Edit Description of a Folder', () => {
         cy.get('button[name="Submit"]').click()
         cy.get('#view-message').should('have.text', 'Description of The Folder')
     })
-
+    it('TC_04.004-02  Folder > Add or Edit Description of a Folder | Edit existing description', () => {
+        //Preconditions
+        const folder1Name = "Folder1";
+            cy.get('span').contains('New Item').click();
+            cy.get('input[name="name"]').clear();
+            cy.get('input[name="name"]').type(folder1Name);
+            cy.get('#j-add-item-type-nested-projects .j-item-options li[class*="folder_Folder"]').click();
+            cy.get('#ok-button').click();
+            cy.get('.jenkins-submit-button').click();
+            
+            cy.get('a#description-link').click();
+            cy.get('textarea.jenkins-input').type('Description of the folder');
+            cy.get('button.jenkins-submit-button').click();
+            cy.get('a#description-link').click();
+            cy.get('textarea.jenkins-input').clear('Description of the folder').type('Updated description of the folder');
+            cy.get('button.jenkins-submit-button').click;
+            cy.get('div#description').should('be.visible', 'Updated description of the folder');
+    });
 })
