@@ -203,5 +203,24 @@ describe('US_14.002 | Header > Search Box', () => {
       cy.get('[id="search-box"]').should("be.visible");
     });
   });
+
+  it('TC_14.002.15_A|Verify a User can select a suggestion to auto-fill the search box and complete the search', ()=>{
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage.addNewProjectName("New Folder TC_14.002.15_A")
+    cy.get(".com_cloudbees_hudson_plugins_folder_Folder").click();
+    newJobPage.clickOKButton();
+    userConfigurePage.clickOnSaveBtn()
+    cy.get('span.task-link-text').contains('New Item').click({force:true})
+    cy.get('input[id="name"]').type("Project TC_14.002.15_A");
+    cy.get('.org_jenkinsci_plugins_workflow_job_WorkflowJob > :nth-child(2) > .desc').click()
+    newJobPage.clickOKButton();
+    userConfigurePage.clickOnSaveBtn()
+    cy.get("#jenkins-name-icon").click();
+    header.typeSearchTerm('Pro');
+    header.clickFirstOptionFromACBox();
+    header.typeSearchTerm('{enter}');
+    cy.get('.job-index-headline').should('have.text', 'Project TC_14.002.15_A')
+    })
+
 });
 
