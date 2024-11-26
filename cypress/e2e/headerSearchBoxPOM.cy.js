@@ -110,11 +110,11 @@ describe('US_14.002 | Header > Search Box', () => {
   });
 
   it('TC_14.002-08-A |Case insensitive search', () => {
-    header.clickUserDopdownlink();
+    header.clickUserDropdownLink();
     header.clickUserConfigureItem();
 
-    userConfigurePage.getInsensitiveSearch().should('contain', 'Insensitive search tool');
-    userConfigurePage.getInsensitiveCheckBox()
+    userConfigurePage.getInsensitiveSearchLabel().should('contain', 'Insensitive search tool');
+    userConfigurePage.getInsensitiveSearchCheckBox()
       .should('exist').and('be.checked');
   });
 

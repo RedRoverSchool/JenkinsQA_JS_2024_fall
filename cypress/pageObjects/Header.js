@@ -28,7 +28,7 @@ class Header {
         this.getSearchField().type(`${input}{enter}`);
         return new SearchResultsPage();
     };
-    clickUserDopdownlink() {
+    clickUserDropdownLink() {
         this.getUserDropdownlink().click({ force: true }) 
         return this;
     }
