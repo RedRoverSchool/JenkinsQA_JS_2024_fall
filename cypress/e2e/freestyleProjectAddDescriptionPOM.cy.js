@@ -1,12 +1,20 @@
 /// <reference types="cypress"/>
+import DashboardPage from "../pageObjects/DashboardPage";
+import JobPage from "../pageObjects/JobPage";
+import NewJobPage from "../pageObjects/NewJobPage";
+import ProjectConfigure from "../pageObjects/ProjectConfigurePage";
 
 import { faker } from "@faker-js/faker";
 
-const projectName = `${faker.hacker.adjective()} ${faker.hacker.noun()}}`;
+const projectName = `${faker.hacker.adjective()} ${faker.hacker.noun()}`;
 const projectDescription = faker.lorem.sentence();
 const projectNewDescription = faker.lorem.sentence(2);
 
 describe("US_01.001 | FreestyleProject > Add description", () => {
+  const dashboardPage = new DashboardPage();
+  const jobPage = new JobPage();
+  const newJobPage = new NewJobPage();
+  const projectConfigure = new ProjectConfigure();
   const newItemBtn = '[href="/view/all/newJob"]';
   const itemNameField = ".jenkins-input";
   const freeStyleProjectItem = ".hudson_model_FreeStyleProject";
@@ -20,19 +28,16 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
   const projectNameHeadline = '#main-panel h1';
 
   beforeEach(() => {
-    cy.get(newItemBtn).click();
-    cy.get(itemNameField).type(projectName);
-    cy.get(freeStyleProjectItem).click();
-    cy.get(okBtn).click();
+    dashboardPage.addNewProj();
+    newJobPage.addNewProjName(projectName).pickFreeStlPrj().okBtnClick();
   });
 
   it("TC_01.001.01 | Add a description when creating a project", () => {
-    cy.get('[name="description"]').type(projectDescription);
-    cy.get(submitBtn).click();
+    projectConfigure.addNewProjDescription(projectDescription).clickSaveBtn();
     cy.url().should("include", "/job");
-
-    cy.get(".page-headline").should("have.text", projectName);
-    cy.get(description)
+    jobPage.getHeadlineIndex().should("have.text", projectName);
+    jobPage
+      .getProjectDescription()
       .should("be.visible")
       .and("have.text", projectDescription);
   });
