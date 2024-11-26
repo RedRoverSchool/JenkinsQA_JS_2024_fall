@@ -4,7 +4,6 @@ import JobPage from "../pageObjects/JobPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import ProjectConfigure from "../pageObjects/ProjectConfigurePage";
 
-
 import { faker } from "@faker-js/faker";
 
 const projectName = `${faker.hacker.adjective()} ${faker.hacker.noun()}`;
