@@ -1,7 +1,18 @@
-///<reference types = 'cypress'/>
+/// <reference types="cypress"/>
 import { faker } from '@faker-js/faker';
+import DashboardPage from "../pageObjects/DashboardPage"
+import NewJobPage from "../pageObjects/NewJobPage"
+import Header from '../pageObjects/Header';
+import ProjectConfigurePage from '../pageObjects/ProjectConfigurePage';
 
-const projectName = faker.company.name()
+import newJobPageData from "../fixtures/pomFixtures/newJobPageData.json";
+
+const dashboardPage = new DashboardPage()
+const newJobPage = new NewJobPage()
+const header = new Header()
+const projectConfigurePage = new ProjectConfigurePage()
+
+
 const btnNewItem = 'a[href="/view/all/newJob"]'
 const inputEnterAnItemName = '#name'
 const btnOK = '#ok-button'
@@ -38,7 +49,7 @@ const returnOnMainPage = () => {
   return cy.get(mainPageLogo).click();
 };
 
-describe.skip ('US_01.006 | FreestyleProject > Move project', () => {
+describe ('US_01.006 | FreestyleProject > Move project', () => {
 
     it('TC_01.006.01-A | FreestyleProject>Move project from the Project Page',() => {
         cy.get('span').contains('New Item').click()
@@ -146,34 +157,35 @@ describe.skip ('US_01.006 | FreestyleProject > Move project', () => {
 
     it('TC_01.006.06 | Choose from a list of existing folders', () => {
         context('should create 5 folders and verify they exist', () => { 
-        cy.get('span').contains('New Item').click();
-        cy.get('#name').type(projectName);
-        cy.get('span.label').contains('Freestyle project').click();
-        cy.get('#ok-button').click({ force: true });
-        cy.get('button').contains('Save').click();
-        cy.get('#jenkins-home-link').click();
-        const baseFolderName = 'Folder';
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.addNewProjectName(newJobPageData.projectName)
+        newJobPage.selectFreestyleProject()
+        newJobPage.clickOKButton()
+        projectConfigurePage.clickSaveButton()
+        header.clickJenkinsLogo()
+      
+
         for (let i = 1; i <= 5; i++) {
-                const uniqueFolderName = `${baseFolderName} ${i}`;
-                cy.get('span').contains('New Item').click();
-                cy.get('#name').type(uniqueFolderName);
-                cy.get('span.label').contains('Folder').click();
-                cy.get('#ok-button').click({ force: true });
-                cy.get('#jenkins-home-link').click();
+                const uniqueFolderName = `${newJobPageData.folderName} ${i}`;
+                dashboardPage.clickNewItemMenuLink();
+                newJobPage.addFolderName(uniqueFolderName)
+                newJobPage.selectFolder()
+                newJobPage.clickOKButton()
+                header.clickJenkinsLogo()
                 cy.contains(uniqueFolderName).should('exist');
-            }
-        })
+        }
+    })
 
-        const randomFolderNumber = faker.number.int({ min: 1, max: 5 }) ;
-        const selectedFolder = "Folder " + randomFolderNumber
-        cy.get('span').contains(projectName).click();
-        cy.get('span').contains('Move').click();
-        cy.get('select[name="destination"]').select(`/${selectedFolder}`);
-        cy.get('[name="Submit"]').click();
+        const randomFolderNumber = faker.number.int({ min: 1, max: 5 });
+        const selectedFolder = `${newJobPageData.folderName} ` + randomFolderNumber
+        dashboardPage.openProjectPage(newJobPageData.projectName)
+        projectConfigurePage.clickOnMoveTask()
+        projectConfigurePage.selectNewProjectDestination(`/${selectedFolder}`);
+        projectConfigurePage.clickSaveButton()
 
-        cy.get('#main-panel').should('contain', `Full project name: ${selectedFolder}/${projectName}`)
+        projectConfigurePage.getProjectInfoSection().should('contain', `Full project name: ${selectedFolder}/${newJobPageData.projectName}`)
     });   
-
+   
     it('TC_01.006.03 | Verify a project is moved from the Dashboard page after clicking move',() => {
         
         const expectedName = randomProjectName.replaceAll(" ", "%20")

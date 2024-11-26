@@ -90,7 +90,7 @@ describe('US_14.002 | Header > Search Box', () => {
 
   });
 
-  it("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
+  it("TC_14.002.03 | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
     header.clickUserDropdownLink()
           .clickUserConfigureItem();
     userConfigurePage.checkCheckBox()
