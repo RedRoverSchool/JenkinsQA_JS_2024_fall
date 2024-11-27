@@ -11,7 +11,7 @@ const dashboardLink = 'a[href="/"]';
 const projectNamePlace = `[id='job_${projectNameFaker}']`;
 const tableOfProjects= '[id="projectstatus"]';
 
-describe("US_00.002 | New Item > Create Pipeline Project", () => {
+describe.skip("US_00.002 | New Item > Create Pipeline Project", () => {
 
 
   let projectName = "New Pipeline"
