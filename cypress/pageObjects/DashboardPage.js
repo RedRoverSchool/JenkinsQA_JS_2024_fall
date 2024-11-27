@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import JobPage from "./JobPage";
 import NewJobPage from "./NewJobPage";
 import ManageJenkinsPage from "./ManageJenkinsPage";
 import ProjectConfigurePage from "./ProjectConfigurePage";
@@ -56,18 +55,6 @@ class DashboardPage {
       return (cookies.find((cookie) => cookie.name.includes(cookieName))).value;
     });
   }
-
-  clickLogOutButton() {
-    this.getLogOutButton().click()
-    return new LoginPage()
-  }
-
-  getSessionCookie(cookieName) {
-    return cy.getCookies().then((cookies) => {
-      return (cookies.find((cookie) => cookie.name.includes(cookieName))).value;
-    });
-  }
-
 };
 
 export default DashboardPage;
