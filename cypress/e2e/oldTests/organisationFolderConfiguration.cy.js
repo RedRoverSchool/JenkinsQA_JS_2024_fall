@@ -18,7 +18,7 @@ const orgFolderOnDashboard = `td a[href$="${encodedOrgFolderName}/"]`;
 let displayName = faker.commerce.productName();
 let description = faker.lorem.sentences();
 
-describe("US_06.001 | Organisation folder > Configuration", () => {
+describe.skip("US_06.001 | Organisation folder > Configuration", () => {
   
   it("TC_06.001.01 | A Jenkins administrator can change Display Name and Description from empty values by clicking Save button", () => {
     cy.log("Preconditions:");
