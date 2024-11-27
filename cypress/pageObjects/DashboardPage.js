@@ -17,36 +17,41 @@ class DashboardPage {
   getDeleteProjectDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item ').contains('Delete Project');
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]')
+  getProjectChevronIcon = (projectName) => cy.get(`span:contains('${projectName}') + .jenkins-menu-dropdown-chevron`);
+  getAllJobNames = () => cy.get('.jenkins-table__link span')
               
   clickNewItemMenuLink() {
     this.getNewItemLink().click({ force: true });
     return new NewJobPage();
   }
 
-  addNewProject() {
-    this.getNewItemLink().click();
+  clickNewItemMenuLink () {
+    this.getNewItemLink().click({ force: true });
     return new NewJobPage();
   }
 
-  clickCreateJobButton() {
-    this.getCreateJobButton().click();
-    return new NewJobPage();
-  }
-
-  clickJobTitleLink() {
+  clickJobTitleLink () {
     this.getJobTitleLink().click();
   }
 
-  clickManageJenkins() {
+  clickManageJenkins () {
     this.getManageJenkins().click();
     return new ManageJenkinsPage();
   }
 
-  openProjectPage(projectName) {
+  openProjectPage (projectName) {
     this.getProjectName().contains(projectName).click();
   }
 
-  clickJobName(name) {
+  openDropdownForProject (projectName) {
+    this.getProjectName().contains(projectName)
+      .trigger("mouseover").should("be.visible");
+    this.getProjectChevronIcon(projectName)
+      .click({ force: true });
+    return this;
+  }
+  
+  clickJobName (name) {
     this.getJobTable().contains(name).click()
     return new NewJobPage()
   }

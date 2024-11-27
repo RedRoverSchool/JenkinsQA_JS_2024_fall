@@ -17,31 +17,31 @@ const freestyleProjectPage = new FreestyleProjectPage();
 describe('US_01.006 | FreestyleProject > Move project', () => {
 
     it('TC_01.006.06 | Choose from a list of existing folders', () => {
-        context('should create 5 folders and verify they exist', () => { 
-        dashboardPage.clickNewItemMenuLink();
-        newJobPage.addNewProjectName(newJobPageData.projectName)
-                  .selectFreestyleProject()
-                  .clickOKButton();
-        freestyleProjectPage.clickSaveButton();
-        header.clickJenkinsLogo();
-      
-        for (let i = 1; i <= 5; i++) {
+        context('should create 5 folders and verify they exist', () => {
+            dashboardPage.clickNewItemMenuLink();
+            newJobPage.typeNewItemName(newJobPageData.projectName)
+                .selectFreestyleProject()
+                .clickOKButton();
+            freestyleProjectPage.clickSaveButton();
+            header.clickJenkinsLogo();
+
+            for (let i = 1; i <= 5; i++) {
                 const uniqueFolderName = `${newJobPageData.folderName} ${i}`;
                 dashboardPage.clickNewItemMenuLink();
-                newJobPage.addFolderName(uniqueFolderName)
-                          .selectFolder()
-                          .clickOKButton();
+                newJobPage.typeNewItemName(uniqueFolderName)
+                    .selectFolder()
+                    .clickOKButton();
                 header.clickJenkinsLogo()
                 cy.contains(uniqueFolderName).should('exist');
-        }
-    })
+            }
+        })
 
         const randomFolderNumber = faker.number.int({ min: 1, max: 5 });
         const selectedFolder = `${newJobPageData.folderName} ` + randomFolderNumber
         dashboardPage.openProjectPage(newJobPageData.projectName)
         freestyleProjectPage.clickMoveMenuItem()
-                            .selectNewProjectDestination(`/${selectedFolder}`)
-                            .clickMoveButton();
+            .selectNewProjectDestination(`/${selectedFolder}`)
+            .clickMoveButton();
 
         freestyleProjectPage.getProjectInfoSection().should('contain', `Full project name: ${selectedFolder}/${newJobPageData.projectName}`)
     });

@@ -20,17 +20,17 @@ describe("US_00.000 | New Item > Create New item", () => {
     const wrongJobName = 'Item#1';
 
     it('TC_00.000.01| Create new item from "Create a job" button| Invalid data', () => {
-        dashboardPage.clickCreateJobButton()
+        dashboardPage.clickNewItemMenuLink();
 
         newJobPage.addUnsaveNameItem(wrongJobName)
             .getUnsaveItemInvalidName().should("be.visible")
             .and("have.class", "input-validation-message")
-            .contains(newItem.newItemNameInvalidMessage)
+            .contains(newItem.newItemNameInvalidMessage);
 
         newJobPage.addEmptyNameItem()
             .getEmptyItemInvalidName().should("be.visible")
             .and("have.class", "input-validation-message")
-            .contains(newItem.emptyNameFieldReminder)
+            .contains(newItem.emptyNameFieldReminder);
     });
 
     it('TC_00.000.02 | Create new item from "Create a job" button', () => {
@@ -38,22 +38,22 @@ describe("US_00.000 | New Item > Create New item", () => {
         dashboardPage
             .getMainPanel().contains(randomItemName).should('not.exist')
             .then(() => {
-        dashboardPage.clickCreateJobButton();
-    })
+                dashboardPage.clickNewItemMenuLink();
+            });
         newJobPage
-            .addNewProjectName(randomItemName)
+            .typeNewItemName(randomItemName)
             .selectFreestyleProject()
             .clickOKButton();
         header
             .clickJenkinsLogo();
-        dashboardPage    
+        dashboardPage
             .getJobTable().contains(randomItemName).should('exist');
     });
 
     it('TC_00.000.03 | Create New item | From the "New Item" link in the left sidebar', () => {
         dashboardPage.clickNewItemMenuLink()
 
-        newJobPage.addNewProjectName(randomItemName)
+        newJobPage.typeNewItemName(randomItemName)
             .selectFreestyleProject()
             .clickOKButton()
         freestyleProjectPage.clickSaveButton()
