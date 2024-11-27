@@ -1,10 +1,10 @@
 /// <reference types="cypress" />
 
 import Header from "../pageObjects/Header";
-import JobPage from "../pageObjects/JobPage";
 import SearchResuls from "../pageObjects/SearchResultsPage";
 import DashboardPage from "../pageObjects/DashboardPage";
 import UserConfigurePage from "../pageObjects/UserConfigurePage";
+import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 
 import headerData from "../fixtures/headerData.json";
 import searchResultsData from "../fixtures/searchResultsData.json";
@@ -13,10 +13,10 @@ import newJobPageData from "../fixtures/newJobPageData.json";
 import configurePageData from "../fixtures/configurePageData.json"
 
 const header = new Header();
-const jobPage = new JobPage();
 const dashboardPage = new DashboardPage();
 const searchResults = new SearchResuls();
 const userConfigurePage = new UserConfigurePage();
+const freestyleProjectPage = new FreestyleProjectPage();
 
 describe('US_14.002 | Header > Search Box', () => {
 
@@ -24,16 +24,15 @@ describe('US_14.002 | Header > Search Box', () => {
     dashboardPage.addNewProject()
                  .addNewProjectName(newJobPageData.projectName)
                  .selectFreestyleProject()
-                 .clickOKButton()
-                 .addProjectDescription(configurePageData.projectDescription)
-                 .clickSaveButton();
-
+                 .clickOKButton();
+    freestyleProjectPage.typeJobDescription(configurePageData.projectDescription)
+                        .clickSaveButton();
     header.typeSearchTerm(newJobPageData.projectName)
           .clickFirstOptionFromACBox()
           .searchTerm();
 
-    jobPage.getHeadlineIndex()
-           .should('have.text', newJobPageData.projectName);
+    freestyleProjectPage.getJobHeadline()
+                        .should('have.text', newJobPageData.projectName);
   });
 
   it('TC_14.002.06 | Multiple matches are displayed on the result page', () => {

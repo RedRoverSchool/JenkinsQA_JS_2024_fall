@@ -1,15 +1,15 @@
 /// <reference types="cypress" />
 
 import JobPage from "./JobPage";
-import NewJobPage from "./NewJobPage"
-import ManageJenkinsPage from "./ManageJenkinsPage"
+import NewJobPage from "./NewJobPage";
+import ManageJenkinsPage from "./ManageJenkinsPage";
 import ProjectConfigurePage from "./ProjectConfigurePage";
 import LoginPage from "./LoginPage"
 
 class DashboardPage {
 
   getNewItemLink = () => cy.get('a[href="/view/all/newJob"]');
-  getCreateJobBtn = () => cy.get('a[href="newJob"]').contains("Create a job");
+  getCreateJobButton = () => cy.get('a[href="newJob"]').contains("Create a job");
   getMainPanel = () => cy.get("div#main-panel");
   getJobTable = () => cy.get("table.jenkins-table.sortable");
   getJobTitleLink = () => cy.get(".model-link.inside");
@@ -27,14 +27,13 @@ class DashboardPage {
     return new NewJobPage();
   }
 
-  clickCreateJobBtn() {
-    this.getCreateJobBtn().click();
+  clickCreateJobButton() {
+    this.getCreateJobButton().click();
     return new NewJobPage();
   }
 
   clickJobTitleLink() {
     this.getJobTitleLink().click();
-    return new JobPage();
   }
 
   clickManageJenkins() {
@@ -43,8 +42,19 @@ class DashboardPage {
   }
 
   openProjectPage(projectName) {
-    this.getProjectName().contains(projectName).click()
+    this.getProjectName().contains(projectName).click();
     return new ProjectConfigurePage()
+  }
+
+  clickLogOutButton() {
+    this.getLogOutButton().click()
+    return new LoginPage()
+  }
+
+  getSessionCookie(cookieName) {
+    return cy.getCookies().then((cookies) => {
+      return (cookies.find((cookie) => cookie.name.includes(cookieName))).value;
+    });
   }
 
   clickLogOutButton() {

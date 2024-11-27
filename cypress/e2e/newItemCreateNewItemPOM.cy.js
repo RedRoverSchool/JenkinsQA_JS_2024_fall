@@ -18,7 +18,7 @@ describe("US_00.000 | New Item > Create New item", () => {
     const wrongJobName = 'Item#1';
 
     it('TC_00.000.01| Create new item from "Create a job" button| Invalid data', () => {
-        dashboardPage.clickCreateJobBtn()
+        dashboardPage.clickCreateJobButton()
 
         newJobPage.addUnsaveNameItem(wrongJobName)
             .getUnsaveItemInvalidName().should("be.visible")
@@ -36,7 +36,7 @@ describe("US_00.000 | New Item > Create New item", () => {
         dashboardPage
             .getMainPanel().contains(randomItemName).should('not.exist')
             .then(() => {
-        dashboardPage.clickCreateJobBtn();
+        dashboardPage.clickCreateJobButton();
     })
         newJobPage
             .addNewProjectName(randomItemName)
