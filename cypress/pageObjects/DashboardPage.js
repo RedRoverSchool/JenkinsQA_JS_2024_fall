@@ -2,7 +2,6 @@
 
 import NewJobPage from "./NewJobPage";
 import ManageJenkinsPage from "./ManageJenkinsPage";
-import ProjectConfigurePage from "./ProjectConfigurePage";
 import LoginPage from "./LoginPage"
 
 class DashboardPage {
@@ -10,10 +9,11 @@ class DashboardPage {
   getNewItemLink = () => cy.get('a[href="/view/all/newJob"]');
   getCreateJobButton = () => cy.get('a[href="newJob"]').contains("Create a job");
   getMainPanel = () => cy.get("div#main-panel");
-  getJobTable = () => cy.get("table.jenkins-table.sortable");
+  getJobTable = () => cy.get("#projectstatus");
   getJobTitleLink = () => cy.get(".model-link.inside");
   getManageJenkins = () => cy.get('a[href="/manage"]');
   getProjectName = () => cy.get('*.jenkins-table__link span');
+  getAllJobNames = () => cy.get('.jenkins-table__link span')
   getLogOutButton = () => cy.get('a[href="/logout"]')
 
   clickNewItemMenuLink() {
@@ -42,7 +42,6 @@ class DashboardPage {
 
   openProjectPage(projectName) {
     this.getProjectName().contains(projectName).click();
-    return new ProjectConfigurePage()
   }
 
   clickLogOutButton() {
@@ -54,6 +53,11 @@ class DashboardPage {
     return cy.getCookies().then((cookies) => {
       return (cookies.find((cookie) => cookie.name.includes(cookieName))).value;
     });
+  }
+  
+  clickJobName(name) {
+    this.getJobTable().contains(name).click()
+    return new NewJobPage()
   }
 };
 

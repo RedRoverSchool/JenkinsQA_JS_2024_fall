@@ -5,7 +5,7 @@ const btnNewItem = ":nth-child(1) > .task-link-wrapper > .task-link"
 const btnDashboard = "li.jenkins-breadcrumbs__list-item a.model-link"
 const jobFreeStyleProject = ".hudson_model_FreeStyleProject"
 
-describe.skip("US_00.000 | New Item > Create New item", () => {
+describe("US_00.000 | New Item > Create New item", () => {
     const btnCreateNewItem = 'a[href="/view/all/newJob"]';
     const randomItemName = faker.lorem.words();
     const btnOK = '#ok-button';
@@ -249,9 +249,9 @@ describe.skip("US_00.000 | New Item > Create New item", () => {
         cy.get('#name').type(jobName);
         cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click();
         cy.get('#ok-button').click();
-        cy.get('[class="jenkins-input validated  "]').type(newJobName);
-        cy.get('[name="_.description"]');
-        cy.get('[name="Submit"]').click();
+        cy.get('div [class="jenkins-input validated  "]').type(newJobName);
+        cy.get('div [name="_.description"]');
+        cy.get('div [name="Submit"]').click();
 
         cy.get('div h1').should('be.visible');
     })
