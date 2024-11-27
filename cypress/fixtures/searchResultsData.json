@@ -1,5 +1,11 @@
 {
     "title": {
         "logRecorders": "Log Recorders"
+    },
+
+    "text": {
+        "lowCase": "tools",
+        "upperCase": "TOOLS",
+        "mixedCase": "Tools"
     }
 }
