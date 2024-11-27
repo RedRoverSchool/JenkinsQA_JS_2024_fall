@@ -74,7 +74,7 @@ describe.skip("US_00.000 | New Item > Create New item", () => {
         cy.get('#main-panel').should('contain', 'test2').and('exist');
     });
 
-    it("TC_00.000-04 | New Item > Create New item | New item from left Sidebar", () => {
+    it.skip("TC_00.000-04 | New Item > Create New item | New item from left Sidebar", () => {
         cy.get("span").contains("New Item").click();
         cy.get("input#name").type(sidebarJobName);
         cy.get("span.label").contains("Freestyle project").click();
