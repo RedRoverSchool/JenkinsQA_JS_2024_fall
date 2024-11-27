@@ -57,4 +57,12 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
       .getJobDescription().should('be.visible').and('contain.text', jobDescription);
   });
 
+  it('TC_01.001.09 | Description is shown on project page', () => {
+
+    freestyleProjectPage
+        .typeJobDescription(jobDescription)
+        .clickSaveButton();
+
+    freestyleProjectPage.getJobDescription().should('contain.text', jobDescription)
+  });
 });

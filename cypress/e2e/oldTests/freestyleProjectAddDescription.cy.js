@@ -107,7 +107,7 @@ describe.skip("US_01.001 | FreestyleProject > Add description", () => {
     cy.get(description).should('be.visible').and('contain.text', projectDescription)
   })
 
-  it('TC_01.001.09 | Description is shown on project page', () => {
+  it.skip('TC_01.001.09 | Description is shown on project page', () => {
 
     cy.get(descriptionTextAreaField).type(projectDescription)
     cy.get(submitBtn).click()
