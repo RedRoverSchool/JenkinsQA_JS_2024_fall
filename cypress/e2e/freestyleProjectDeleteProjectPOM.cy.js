@@ -16,7 +16,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
     it("TC_01.004.05 | Cancel deletion", () => {
         dashBoardPage.clickNewItemMenuLink()
-        newJobPage.addNewProjectName(newJobPageData.projectName)
+        newJobPage.typeNewItemName(newJobPageData.projectName)
                   .selectFreestyleProject()
                   .clickOKButton()
         freestyleProjectPage.typeJobDescription(configurePageData.projectDescription)

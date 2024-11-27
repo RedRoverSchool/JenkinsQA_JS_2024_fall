@@ -53,7 +53,7 @@ describe("US_00.000 | New Item > Create New item", () => {
     it('TC_00.000.03 | Create New item | From the "New Item" link in the left sidebar', () => {
         dashboardPage.clickNewItemMenuLink()
 
-        newJobPage.addNewProjectName(randomItemName)
+        newJobPage.typeNewItemName(randomItemName)
             .selectFreestyleProject()
             .clickOKButton()
         freestyleProjectPage.clickSaveButton()
