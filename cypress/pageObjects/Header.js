@@ -9,43 +9,44 @@ class Header {
     getSearchAutoCompletionBox = () => cy.get('div#search-box-completion li');
     getUserDropdownlink = () => cy.get('.login > .model-link > .jenkins-menu-dropdown-chevron');
     getDropdownConfigureItem = () => cy.get('.jenkins-dropdown > [href*="/configure"]');
-    getJenkinsLogo = () => cy.get("a#jenkins-home-link")
+    getJenkinsLogo = () => cy.get("a#jenkins-home-link");
+    getBreadcrumps = () => cy.get(".jenkins-breadcrumbs");
 
-    typeSearchTerm(term) {
+    typeSearchTerm (term) {
         this.getSearchField().type(term);
         return this;
     };
 
-    clickFirstOptionFromACBox() {
+    clickFirstOptionFromACBox () {
         this.getSearchAutoCompletionBox().first().click();
         return this;
     };
 
-    searchTerm() {
+    searchTerm () {
         this.getSearchField().type('{enter}');
         return new SearchResultsPage();
     };
 
-    search(input) {
+    search (input) {
         this.getSearchField().type(`${input}{enter}`);
         return new SearchResultsPage();
     };
 
-    clickUserDropdownLink() {
-        this.getUserDropdownlink().click({ force: true })
+    clickUserDropdownLink () {
+        this.getUserDropdownlink().click({ force: true });
         return this;
     }
 
-    clickUserConfigureItem() {
-        this.getDropdownConfigureItem().click({ force: true })
-        return this
+    clickUserConfigureItem () {
+        this.getDropdownConfigureItem().click({ force: true });
+        return this;
     }
 
-    clickJenkinsLogo() {
-        this.getJenkinsLogo().click()
-        return new DashboardPage()
+    clickJenkinsLogo () {
+        this.getJenkinsLogo().click();
+        return new DashboardPage();
     }
-    
+
 };
 
 export default Header;
