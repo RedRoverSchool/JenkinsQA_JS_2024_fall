@@ -220,10 +220,10 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
     it('TC_00.001.19 | New freestyle project is created if user enter projects name, choose project type and save it', () => {
 
         dashboardPage.clickNewItemMenuLink();
-        newJobPage.addNewProjName(folderName)
+        newJobPage.addNewProjectNamegit(folderName)
                   .pickFreeStlPrj()
                   .okBtnClick();
-        projectConfigurePage.clickSaveBtn();
+        projectConfigurePage.clickSaveButton();
 
         cy.url().should('include', folderName);
         jobPage.getHeadlineIndex()
