@@ -2,9 +2,11 @@ import JobPage from "./JobPage";
 
 class ProjectConfigure
 {
-    getPrjDescriptionField = ()=>  cy.get('textarea[name="description"]')
+    getPrjDescriptionField = () =>  cy.get('textarea[name="description"]')
     getSaveBtn = () => cy.get('button[formnovalidate="formNoValidate"]')
-    
+    getMovebtn = () => cy.get('span').contains('Move')
+    getProjectDesctination = () => cy.get('select[name="destination"]')
+    getProjectInfoSection = () => cy.get('#main-panel')
 
 
 
@@ -17,6 +19,16 @@ class ProjectConfigure
     clickSaveButton() {
         this.getSaveBtn().click()
         return new JobPage
+    }
+
+    clickOnMoveTask() {
+        this.getMovebtn().click()
+        return this
+    }
+
+    selectNewProjectDestination(movingDestination) {
+        this.getProjectDesctination().select(movingDestination)
+        return this
     }
 }
 export default ProjectConfigure
