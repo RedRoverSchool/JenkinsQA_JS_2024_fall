@@ -5,7 +5,8 @@ import messages from "../fixtures/messages.json";
 
 import { faker } from '@faker-js/faker';
 
-const randomSearchWord = faker.animal.type() + faker.finance.accountNumber(3)
+const randomSearchWord = faker.animal.type() + faker.finance.accountNumber(3)   
+const listOfPossibleSearchResults = ["System", "Tools", "Security", "Credentials", "Credential Providers"]
 
 describe('US_09.001 | Manage Jenkins > Search settings', () =>{
 
@@ -27,6 +28,17 @@ describe('US_09.001 | Manage Jenkins > Search settings', () =>{
         manageJenkinsPage.getNoResultsErrorMessage()
                          .should('be.visible')
                          .and('have.text', messages.searchSettings.noResultsError)
+    })
+
+    it('TC_09.001.03 | Verify search suggestion dropdown displays all matches available', () => {
+        dashboardPage.clickManageJenkins();
+        manageJenkinsPage.typeSearchWord("t")
+                         .getSearchResultList()
+                         .should('have.length', listOfPossibleSearchResults.length);
+        
+        listOfPossibleSearchResults.forEach((dropDownItem) => {
+        manageJenkinsPage.getSearchResultList().should('contain', dropDownItem);
+        });  
     })
 })
 
