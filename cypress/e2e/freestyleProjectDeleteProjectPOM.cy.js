@@ -14,7 +14,7 @@ const freestyleProjectPage = new FreestyleProjectPage();
 
 describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
-    it("RF_01.004.05 | Cancel deletion", () => {
+    it("TC_01.004.05 | Cancel deletion", () => {
         dashBoardPage.clickNewItemMenuLink()
         newJobPage.addNewProjectName(newJobPageData.projectName)
                   .selectFreestyleProject()
