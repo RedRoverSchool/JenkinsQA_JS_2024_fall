@@ -1,12 +1,10 @@
 /// <reference types="cypress" />
 
-import ProjectConfigure from "./ProjectConfigurePage"
-
 class NewJobPage {
 
-    getPrjNameField = () => cy.get('.jenkins-input')
+    getJobNameField = () => cy.get('.jenkins-input')
     getFreeStlPrjType = () => cy.get('.label').contains('Freestyle project')
-    getOKBtn = () => cy.get('#ok-button')
+    getOKButton = () => cy.get('#ok-button')
     getItemNameInvalidErrorMessage = () => cy.get("#itemname-invalid")
     getUnsaveItemInvalidName = () => cy.get("#itemname-invalid").contains(/is an unsafe character/)
     getEmptyItemInvalidName = () => cy.get("#itemname-required")
@@ -15,7 +13,7 @@ class NewJobPage {
     getPipeLinePrjType = () => cy.get('.org_jenkinsci_plugins_workflow_job_WorkflowJob > :nth-child(2) > .desc')
 
     addNewProjectName(prjName) {
-        this.getPrjNameField().type(prjName)
+        this.getJobNameField().type(prjName)
         return this
     }
     
@@ -30,17 +28,16 @@ class NewJobPage {
     }
 
     clickOKButton() {
-        this.getOKBtn().click()
-        return new ProjectConfigure()
+        this.getOKButton().click()
     }
 
     addUnsaveNameItem() {
-        this.getPrjNameField().type("<")
+        this.getJobNameField().type("<")
         return this
     }
 
     addEmptyNameItem() {
-        this.getPrjNameField().clear()
+        this.getJobNameField().clear()
         return this;
     }
 
