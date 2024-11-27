@@ -221,8 +221,8 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
 
         dashboardPage.clickNewItemMenuLink();
         newJobPage.addNewProjectName(folderName)
-                  .pickFreeStlPrj()
-                  .okBtnClick();
+                  .selectFreestyleProject()
+                  .clickOKButton();
         projectConfigurePage.clickSaveButton();
 
         cy.url().should('include', folderName);
