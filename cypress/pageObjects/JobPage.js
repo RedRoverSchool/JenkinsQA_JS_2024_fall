@@ -10,7 +10,6 @@ class JobPage {
   getAddDescriptionButton = () => cy.get('[href="editDescription"]');
   getSubmitButton = () => cy.get("[name='Submit']");
 
-
   getTextFromHeadlineIndex() {
     return this.getHeadlineIndex().then(($el) => {
       return $el.text();
@@ -33,4 +32,5 @@ class JobPage {
   }
 
 };
+
 export default JobPage;
