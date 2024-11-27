@@ -6,5 +6,9 @@
 
     "search": {
         "noMatchesError": "Nothing seems to match."
-    }
+    },
+
+    "searchSettings": {
+        "noResultsError": "No results"
+}
 }
