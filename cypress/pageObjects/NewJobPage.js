@@ -11,6 +11,8 @@ class NewJobPage {
     getUnsaveItemInvalidName = () => cy.get("#itemname-invalid").contains(/is an unsafe character/)
     getEmptyItemInvalidName = () => cy.get("#itemname-required")
     getFolferType = () => cy.get('.label').contains('Folder')
+    getPrjNameFieldfromFolderPage = () => cy.get('input[id="name"]')
+    getPipeLinePrjType = () => cy.get('.org_jenkinsci_plugins_workflow_job_WorkflowJob > :nth-child(2) > .desc')
 
     addNewProjectName(prjName) {
         this.getPrjNameField().type(prjName)
@@ -44,6 +46,16 @@ class NewJobPage {
 
     addFolderName(folderName) {
         this.getFreeStlPrjType().type(folderName)
+        return this
+    }
+
+    addNewPrgNameFromFolder(projName) {
+        this.getPrjNameFieldfromFolderPage().type(projName)
+        return this
+    }
+
+    selectPipelineProject() {
+        this.getPipeLinePrjType().click()
         return this
     }
 

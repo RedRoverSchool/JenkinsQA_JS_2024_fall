@@ -11,12 +11,16 @@ import searchResultsData from "../fixtures/searchResultsData.json";
 import messages from "../fixtures/messages.json";
 import newJobPageData from "../fixtures/newJobPageData.json";
 import configurePageData from "../fixtures/configurePageData.json"
+import NewJobPage from "../pageObjects/NewJobPage";
+import FolderPage from "../pageObjects/FolderPage";
 
 const header = new Header();
 const jobPage = new JobPage();
+const newJobPage = new NewJobPage();
 const dashboardPage = new DashboardPage();
 const searchResults = new SearchResuls();
 const userConfigurePage = new UserConfigurePage();
+const folderPage = new FolderPage();
 
 describe('US_14.002 | Header > Search Box', () => {
 
@@ -94,5 +98,26 @@ describe('US_14.002 | Header > Search Box', () => {
     userConfigurePage.getInsensitiveSearchCheckBox()
       .should('exist').and('be.checked');
   });
+  
+  it('TC_14.002.15_A | Verify a User can select a suggestion to auto-fill the search box and complete the search', ()=>{
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage. addNewProjectName("New Folder TC_14.002.15_A")
+    newJobPage.selectFolder();
+    newJobPage.clickOKButton();
+    userConfigurePage.clickOnSaveBtn()
+    folderPage.clickNewItemMenuLink();
+    newJobPage.addNewPrgNameFromFolder("Project TC_14.002.15_A");
+    newJobPage.selectPipelineProject();
+    newJobPage.clickOKButton();
+    userConfigurePage.clickOnSaveBtn()
+    header.getJenkinsLogo();
+    header.typeSearchTerm('Pro');
+    header.clickFirstOptionFromACBox();
+    header.typeSearchTerm('{enter}');
+    // cy.get('.job-index-headline').should('have.text', 'Project TC_14.002.15_A')
+    jobPage.getHeadlineIndex().should('have.text', 'Project TC_14.002.15_A');
+    })
+
+
 
 });
