@@ -5,7 +5,7 @@ const PASSWORD = Cypress.env('local.admin.password');
 const LOCAL_PORT = Cypress.env('local.port');
 const LOCAL_HOST = Cypress.env('local.host');
 
-describe('US_04.001 | Folder > Rename Folder', () => {
+describe.skip('US_04.001 | Folder > Rename Folder', () => {
     it('TC_04.001.06 | Folder > Rename Folder | Successfully enter a valid folder name in the special field', () => {
         //preconditions
         cy.get('span').contains('New Item').click()

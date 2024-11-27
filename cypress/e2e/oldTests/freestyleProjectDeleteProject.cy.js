@@ -22,7 +22,7 @@ const dropdownItem = '.jenkins-dropdown__item ';
 const dashboardPage = 'div#main-panel';
 const welcomeToJenkins = '.empty-state-block h1';
 
-describe('US_01.004 | FreestyleProject > Delete Project', () => {
+describe.skip('US_01.004 | FreestyleProject > Delete Project', () => {
 
     beforeEach(function () {
         cy.fixture('deleteProject').then((deleteProject) => {

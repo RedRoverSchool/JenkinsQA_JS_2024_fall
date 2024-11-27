@@ -38,7 +38,7 @@ const returnOnMainPage = () => {
   return cy.get(mainPageLogo).click();
 };
 
-describe.skip ('US_01.006 | FreestyleProject > Move project', () => {
+describe.skip('US_01.006 | FreestyleProject > Move project', () => {
 
     it('TC_01.006.01-A | FreestyleProject>Move project from the Project Page',() => {
         cy.get('span').contains('New Item').click()

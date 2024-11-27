@@ -1,7 +1,9 @@
-import header from "../fixtures/pomFixtures/headerData.json"
+/// <reference types="cypress" />
+
 import DashboardPage from "./DashboardPage";
 
 class JobPage {
+
   getHeadlineIndex = () => cy.get("#main-panel h1");
   getProjectDescription = () => cy.get('[id="description"]');
   getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
@@ -19,14 +21,16 @@ class JobPage {
     return new DashboardPage();
   }
 
-  clickAddDescriptionButton(){
+  clickAddDescriptionButton() {
     this.getAddDescriptionButton().click();
     return this;
   }
 
-  clickSubmitButton(){
+  clickSubmitButton() {
     this.getSubmitButton().click();
     return this;
   }
-}
-export default JobPage
+
+};
+
+export default JobPage;
