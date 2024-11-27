@@ -14,6 +14,8 @@ class DashboardPage {
   getJobTitleLink = () => cy.get(".model-link.inside");
   getManageJenkins = () => cy.get('a[href="/manage"]');
   getProjectName = () => cy.get('*.jenkins-table__link span');
+  projectStatusTable = () => cy.get('#projectstatus')
+  getAllProjectNames = () => cy.get('.jenkins-table__link span')
 
   clickNewItemMenuLink() {
     this.getNewItemLink().click({ force: true });
@@ -43,6 +45,11 @@ class DashboardPage {
   openProjectPage(projectName) {
     this.getProjectName().contains(projectName).click()
     return new ProjectConfigurePage()
+  }
+
+  clickProjectName(name) {
+    this.projectStatusTable().contains(name).click()
+    return new JobPage()
   }
 
 };
