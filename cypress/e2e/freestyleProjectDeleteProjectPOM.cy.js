@@ -7,11 +7,13 @@ import ProjectConfigure from "../pageObjects/ProjectConfigurePage";
 import JobPage from "../pageObjects/JobPage";
 import {getAllProjectNames} from "../pageObjects/DashboardPage"
 import {projectName} from "../fixtures/newJobPageData.json"
+import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 
 const dashBoardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const projectConfigure = new ProjectConfigure();
 const jobPage = new JobPage();
+const freestyleProjectPage = new FreestyleProjectPage();
 
 describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
@@ -22,11 +24,11 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
                   .clickOKButton()
         projectConfigure.addProjectDescription(projectDescription)
                         .clickSaveButton()
-        jobPage.clickDashboardLink()
+        freestyleProjectPage.clickDashboardLink()
         dashBoardPage.clickProjectName(projectName)
-        jobPage.clickDeleteProjectButton()
-               .clickCancelButton()
-               .clickDashboardLink()
+        freestyleProjectPage.clickDeleteProjectButton()
+                            .clickCancelButton()
+                            .clickDashboardLink()
         dashBoardPage.getAllProjectNames().should('have.text', projectName)
       });
 
