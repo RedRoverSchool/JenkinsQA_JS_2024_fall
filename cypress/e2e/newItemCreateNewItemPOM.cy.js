@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker';
 import Header from "../pageObjects/Header";
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
-import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
+import FreestyleProjectPage from '../pageObjects/FreestyleProjectPage';
 
 import {newItem} from "../fixtures/messages.json";
 
@@ -50,7 +50,18 @@ describe("US_00.000 | New Item > Create New item", () => {
             .getJobTable().contains(randomItemName).should('exist');
     });
 
-    it('TC_00.000.04 | New item from left Sidebar ', () => {
+    it('TC_00.000.03 | Create New item | From the "New Item" link in the left sidebar', () => {
+        dashboardPage.clickNewItemMenuLink()
+
+        newJobPage.addNewProjectName(randomItemName)
+            .selectFreestyleProject()
+            .clickOKButton()
+        freestyleProjectPage.clickSaveButton()
+        freestyleProjectPage.getJobHeadline()
+            .should('contain', randomItemName).and('exist');
+    });
+  
+  it('TC_00.000.04 | New item from left Sidebar ', () => {
 
         dashboardPage
             .addNewProject()
@@ -64,5 +75,5 @@ describe("US_00.000 | New Item > Create New item", () => {
         freestyleProjectPage
             .getJobHeadline().should('contain.text', randomItemName)
             .getJobHeadline().should('be.visible')
-    });
+    }); 
 });
