@@ -3,7 +3,7 @@
 import Header from "../pageObjects/Header";
 import SearchResuls from "../pageObjects/SearchResultsPage";
 import DashboardPage from "../pageObjects/DashboardPage";
-import UserConfigurePage from "../pageObjects/UserConfigurePage";
+import UserPage from "../pageObjects/UserPage";
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 
 import headerData from "../fixtures/headerData.json";
@@ -15,7 +15,7 @@ import configurePageData from "../fixtures/configurePageData.json";
 const header = new Header();
 const dashboardPage = new DashboardPage();
 const searchResults = new SearchResuls();
-const userConfigurePage = new UserConfigurePage();
+const userPage = new UserPage();
 const freestyleProjectPage = new FreestyleProjectPage();
 
 describe('US_14.002 | Header > Search Box', () => {
@@ -67,9 +67,10 @@ describe('US_14.002 | Header > Search Box', () => {
 
   it("TC_14.002.03 | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
     header.clickUserDropdownLink()
-      .clickUserConfigureItem();
-    userConfigurePage.checkCheckBox()
-      .clickOnSaveBtn();
+       .clickUserConfigureItem();
+    userPage.checkCheckBox()
+       .clickOnSaveBtn();
+
     header.typeSearchTerm(headerData.search.input.upperCaseMatchForManage);
 
     header.getSearchAutoCompletionBox()
@@ -89,8 +90,8 @@ describe('US_14.002 | Header > Search Box', () => {
     header.clickUserDropdownLink();
     header.clickUserConfigureItem();
 
-    userConfigurePage.getInsensitiveSearchLabel().should('contain', 'Insensitive search tool');
-    userConfigurePage.getInsensitiveSearchCheckBox()
+    userPage.getInsensitiveSearchLabel().should('contain', 'Insensitive search tool');
+    userPage.getInsensitiveSearchCheckBox()
       .should('exist').and('be.checked');
   });
 
