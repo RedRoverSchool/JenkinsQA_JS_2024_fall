@@ -1,4 +1,3 @@
-import header from "../fixtures/pomFixtures/header.json"
 class LoginPage
 {
    getSessionCookie(cookieName) {

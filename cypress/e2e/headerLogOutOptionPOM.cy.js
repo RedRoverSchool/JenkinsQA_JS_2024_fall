@@ -9,7 +9,7 @@
    const dashboardPage = new DashboardPage();
    const loginPage = new LoginPage();
  
-   it.only("TC_14.003.03 | All session-related cookies are cleared", () => {
+   it("TC_14.003.03 | All session-related cookies are cleared", () => {
      dashboardPage.getSessionCookie(sessionIdCookie).then((sessionCookie) => {
        dashboardPage.clickLogOutButton();
        loginPage.checkSessionCookieChanged(sessionCookie, sessionIdCookie);
