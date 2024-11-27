@@ -17,11 +17,11 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
     it("RF_01.004.05 | FreestyleProject > Delete Project | Cancel deletion", () => {
         dashBoardPage.clickNewItemMenuLink()
-        newJobPage.addNewProjName(projectName)
-                  .pickFreeStlPrj()
-                  .okBtnClick()
-        projectConfigure.addNewProjDescription(projectDescription)
-                        .clickSaveBtn()
+        newJobPage.addNewProjectName(projectName)
+                  .selectFreestyleProject()
+                  .clickOKButton()
+        projectConfigure.addProjectDescription(projectDescription)
+                        .clickSaveButton()
         jobPage.clickDashboardLink()
         dashBoardPage.clickProjectName(projectName)
         jobPage.clickDeleteProjectButton()
