@@ -227,5 +227,20 @@ describe.skip('US_00.001 | New item > Create Freestyle Project', function () {
         cy.get(nameProjOnPage).contains(folderName).should('be.visible');
               
     });
-});
+
+    it("TC_00.001.015_A | User can create and save new job Freestyle project", () => {
+
+        cy.get(".task-link-text").contains("New Item").click({ force: true });
+
+        cy.get(".jenkins-input").type("Test");
+        cy.get(".label").first().click();
+        cy.get("#ok-button").click();
+    
+        cy.get(".jenkins-submit-button").click();
+    
+        cy.get("h1").should("have.text", "Test");
+      });
+    });
+
+
 

@@ -12,11 +12,16 @@
         "input": {
             "noMatches": "no matches",
             "matchForCon": "con",
-            "matchForLo": "lo"
+            "matchForLo": "lo",
+            "upperCaseMatchForManage" : "MA"
         },
         "autoCompletionItems": [
             "config",
             "configure"
-        ]
+        ],
+        "searchSuggestions": {
+            "manage": "manage"
+        }
+        
     }
 }

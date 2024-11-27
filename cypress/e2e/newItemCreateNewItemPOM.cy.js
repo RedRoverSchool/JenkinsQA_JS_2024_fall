@@ -1,11 +1,23 @@
 /// <reference types="cypress" />
+import Header from "../pageObjects/Header";
+import DashboardPage from "../pageObjects/DashboardPage";
+import JobPage from "../pageObjects/JobPage";
+import NewJobPage from "../pageObjects/NewJobPage";
+import ProjectConfigure from "../pageObjects/ProjectConfigurePage";
+
 import { faker } from '@faker-js/faker';
+import {newItem} from "../fixtures/messages.json"
 
 const btnNewItem = ":nth-child(1) > .task-link-wrapper > .task-link"
 const btnDashboard = "li.jenkins-breadcrumbs__list-item a.model-link"
 const jobFreeStyleProject = ".hudson_model_FreeStyleProject"
 
 describe("US_00.000 | New Item > Create New item", () => {
+    const header = new Header();
+    const dashboardPage = new DashboardPage();
+    const jobPage = new JobPage();
+    const newJobPage = new NewJobPage();
+    const projectConfigure = new ProjectConfigure();
     const btnCreateNewItem = 'a[href="/view/all/newJob"]';
     const randomItemName = faker.lorem.words();
     const btnOK = '#ok-button';
@@ -21,46 +33,34 @@ describe("US_00.000 | New Item > Create New item", () => {
 
 
     it('TC_00.000.01| Create new item from "Create a job" button| Invalid data', () => {
-        cy.get("a[href='newJob']").click();
-        cy.url().should("include", "/newJob");
-        cy.get('input[name="name"]').type(jobName);
-        cy.get(jobFreeStyleProject).click();
-        cy.get("#ok-button").click();
-        cy.get(".jenkins-submit-button").click();
-        cy.url().should("include", jobName);
-        cy.get("#main-panel").should("contain", jobName).and("exist");
-        cy.get(btnDashboard).first().click();
-        cy.get(btnNewItem).click();
-        cy.get('input[name="name"]').type(existingJobName);
-        cy.get("#itemname-invalid").should(
-            "have.class",
-            "input-validation-message"
-        );
-        cy.get("#itemname-invalid").should("be.visible");
-        cy.contains(/A job already exists with the name /);
-        cy.get('input[name="name"]').type("@@@@");
-        cy.get("#itemname-invalid").should(
-            "have.class",
-            "input-validation-message"
-        );
-        cy.get("#itemname-invalid").should("be.visible");
-        cy.contains(/is an unsafe character/);
-        cy.get('input[name="name"]').click();
-        cy.get("#itemname-required")
-            .contains(/This field cannot be empty/)
-            .should("have.class", "input-validation-message");
+        dashboardPage.clickCreateJobBtn()
+
+        newJobPage.addUnsaveNameItem(wrongJobName)
+            .getUnsaveItemInvalidName().should("be.visible")
+            .and("have.class", "input-validation-message")
+            .contains(newItem.newItemNameInvalidMessage)
+
+        newJobPage.addEmptyNameItem()
+            .getEmptyItemInvalidName().should("be.visible")
+            .and("have.class", "input-validation-message")
+            .contains(newItem.emptyNameFieldReminder)
     });
 
-    it('TC_00.000-02 | New Item > Create New item | Create new item from "Create a job" button', () => {
-        cy.get("span").contains("jobName").should("not.exist");
-        cy.get('a[href="newJob"]').contains("Create a job").click();
-        cy.get("input#name.jenkins-input").type(jobName);
-        cy.get(".desc").eq(0).click();
-        cy.get("#ok-button").click();
-        cy.get("a#jenkins-home-link").click();
+    it('TC_00.000.02 | New Item > Create New item | Create new item from "Create a job" button', () => {
 
-
-        cy.get("table.jenkins-table.sortable").contains(jobName).should("exist");
+        dashboardPage
+            .getMainPanel().contains(randomItemName).should('not.exist')
+            .then(() => {
+        dashboardPage.clickCreateJobBtn();
+    })
+        newJobPage
+            .addNewProjectName(randomItemName)
+            .selectFreestyleProject()
+            .clickOKButton();
+        header
+            .clickJenkinsLogo();
+        dashboardPage    
+            .getJobTable().contains(randomItemName).should('exist');
     });
 
     it('TC_00.000.03 | New Item > Create New item | From the "New Item" link in the left sidebar', () => {

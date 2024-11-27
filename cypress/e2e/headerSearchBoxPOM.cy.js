@@ -1,10 +1,11 @@
 /// <reference types="cypress" />
 
 import headerData from "../fixtures/headerData.json";
-import searchResultsData from "../fixtures/searchResultsData.json"
+import searchResultsData from "../fixtures/searchResultsData.json";
 import messages from "../fixtures/messages.json";
-import {project_name} from "../fixtures/pomFixtures/header.json";
-import {leftSideBar, endPoint} from "../fixtures/dashboardPage.json"
+import newJobPageData from "../fixtures/pomFixtures/newJobPageData.json";
+import configurePageData from "../fixtures/pomFixtures/configurePageData.json"
+import {leftSideBar, endPoint} from "../fixtures/dashboardPage.json";
 
 import Header from "../pageObjects/Header";
 import JobPage from "../pageObjects/JobPage";
@@ -12,15 +13,16 @@ import SearchResuls from "../pageObjects/SearchResultsPage";
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import ProjectConfigure from "../pageObjects/ProjectConfigurePage";
+import UserConfigurePage from "../pageObjects/UserConfigurePage";
 
 describe('US_14.002 | Header > Search Box', () => {
 
-
   const header = new Header();
   const jobPage = new JobPage();
-  const home = new DashboardPage()
+  const dashboardPage = new DashboardPage()
   const newJobPage = new NewJobPage()
   const searchResults = new SearchResuls();
+  const userConfigurePage = new UserConfigurePage()
 
   let searchTerm = 'pipeline'
   let newJobFolderName = 'conFolder'
@@ -30,20 +32,20 @@ describe('US_14.002 | Header > Search Box', () => {
     cy.get("#side-panel .task").as("sideBarLink");
   });
 
-  it.skip("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
-    home.addNewProj()
-      .addNewProjName(project_name)
-      .pickFreeStlPrj()
-      .okBtnClick()
-      .addNewProjDescription()
-      .clickSaveBtn()
+  it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
+    dashboardPage.addNewProject()
+                 .addNewProjectName(newJobPageData.projectName)
+                 .selectFreestyleProject()
+                 .clickOKButton()
+                 .addProjectDescription(configurePageData.projectDescription)
+                 .clickSaveButton();
 
-    header
-      .typeSearchTerm(project_name)
-      .clickFirstOptionFromACBox()
-      .searchTerm()
-      .getHeadlineIndex()
-      .should('contain.text', project_name)
+    header.typeSearchTerm(newJobPageData.projectName)
+          .clickFirstOptionFromACBox()
+          .searchTerm();
+
+    jobPage.getHeadlineIndex()
+           .should('have.text', newJobPageData.projectName);
   });
 
   it('TC_14.002-04 | Message that no matches found', () => {
@@ -88,14 +90,15 @@ describe('US_14.002 | Header > Search Box', () => {
 
   });
 
-  it("Header > Search Box | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
-    cy.get("*.hidden-sm").contains('admin').click();
-    cy.get(".task-link-text").contains('Configure').click({ force: true });
-    cy.get("[name='insensitiveSearch']").check({ force: true });
-    cy.get("[name='Submit']").click();
-    cy.get("#search-box").click();
-    cy.get("#search-box").type("MA");
-    cy.get(".yui-ac-bd").should('have.text', 'manage')
+  it("TC_14.002.03 | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
+    header.clickUserDropdownLink()
+          .clickUserConfigureItem();
+    userConfigurePage.checkCheckBox()
+                     .clickOnSaveBtn();
+    header.typeSearchTerm(headerData.search.input.upperCaseMatchForManage);
+
+    header.getSearchAutoCompletionBox()
+          .should('have.text', headerData.search.searchSuggestions.manage);
   })
 
   it('TC_14.002.10 | Verify that the warning message is displayed when no matches are found', () => {
@@ -108,15 +111,12 @@ describe('US_14.002 | Header > Search Box', () => {
   });
 
   it('TC_14.002-08-A |Case insensitive search', () => {
-    cy.get('.login .model-link').should('be.visible').click()
-    cy.url().should('include', '/user');
-    cy.get('a[href$="/configure"]').click({ force: true });
-    cy.get("label[class='attach-previous ']").should('contain', 'Insensitive search tool').and('exist')
-    cy.get("input[name='insensitiveSearch']").should("exist")
-      .uncheck({ force: true })
-      .should("not.be.checked")
-      .check({ force: true })
-      .should("be.checked");
+    header.clickUserDropdownLink();
+    header.clickUserConfigureItem();
+
+    userConfigurePage.getInsensitiveSearchLabel().should('contain', 'Insensitive search tool');
+    userConfigurePage.getInsensitiveSearchCheckBox()
+      .should('exist').and('be.checked');
   });
 
   it('TC_14.002.01 | Auto-Completion Suggestion Selection', () => {
