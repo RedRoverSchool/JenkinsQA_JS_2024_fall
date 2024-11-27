@@ -204,7 +204,7 @@ describe('US_14.002 | Header > Search Box', () => {
     });
   });
 
-  it('TC_14.002.15_A|Verify a User can select a suggestion to auto-fill the search box and complete the search', ()=>{
+  it('TC_14.002.15_A | Verify a User can select a suggestion to auto-fill the search box and complete the search', ()=>{
     dashboardPage.clickNewItemMenuLink();
     newJobPage.addNewProjectName("New Folder TC_14.002.15_A")
     cy.get(".com_cloudbees_hudson_plugins_folder_Folder").click();
