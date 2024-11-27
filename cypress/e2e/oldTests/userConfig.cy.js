@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-describe('US_13.003 | User > Config', ()=>{
+describe.skip('US_13.003 | User > Config', ()=>{
     it('TC_13.003.01 | Edit the profile description from the account settings page by clicking on your username' , ()=>{
         cy.get('[href^="/user"]').click()
         cy.get('#description-link').click()

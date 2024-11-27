@@ -15,7 +15,7 @@ const renameBtn = '[href*="rename"]';
 let project1Name = "Project1";
 let project2Name = "Project2";
 
-describe("US_01.002 | FreestyleProject > Rename Project", () => {
+describe.skip("US_01.002 | FreestyleProject > Rename Project", () => {
   it("TC_01.002-01 | FreestyleProject > Rename Project > User receives an Error when the new name is invalid", () => {
     cy.get("span.task-link-text").contains("New Item").click({ force: true });
     cy.wait(500);

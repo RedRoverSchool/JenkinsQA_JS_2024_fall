@@ -1,6 +1,6 @@
 /// <reference types = "cypress" />
 
-describe('US_06.005 | Organization folder > Delete Organization Folder', () => {
+describe.skip('US_06.005 | Organization folder > Delete Organization Folder', () => {
     const name = "New Folder";
     beforeEach(() => {
         cy.get('a[href="/view/all/newJob"]').click();

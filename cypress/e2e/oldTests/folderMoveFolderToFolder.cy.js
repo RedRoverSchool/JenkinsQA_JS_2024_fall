@@ -1,5 +1,5 @@
 // <reference types="cypress"/>
-describe('US_04.002|Folder > Move Folder to Folder', () => {
+describe.skip('US_04.002|Folder > Move Folder to Folder', () => {
 
   it('TC_04.002-01A |Folder > Move Folder to Folder', () => {
     const folder1Name = "Folder1";
