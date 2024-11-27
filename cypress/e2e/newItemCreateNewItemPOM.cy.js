@@ -5,12 +5,14 @@ import { faker } from '@faker-js/faker';
 import Header from "../pageObjects/Header";
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
+import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 
 import {newItem} from "../fixtures/messages.json";
 
 const header = new Header();
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
+const freestyleProjectPage = new FreestyleProjectPage();
 
 describe("US_00.000 | New Item > Create New item", () => {
 
@@ -48,4 +50,19 @@ describe("US_00.000 | New Item > Create New item", () => {
             .getJobTable().contains(randomItemName).should('exist');
     });
 
+    it('TC_00.000.04 | New item from left Sidebar ', () => {
+
+        dashboardPage
+            .addNewProject()
+        newJobPage
+            .addNewProjectName(randomItemName)
+            .selectFreestyleProject()
+            .clickOKButton();
+        freestyleProjectPage
+            .clickSaveButton()
+
+        freestyleProjectPage
+            .getJobHeadline().should('contain.text', randomItemName)
+            .getJobHeadline().should('be.visible')
+    });
 });
