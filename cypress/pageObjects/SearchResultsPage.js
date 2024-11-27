@@ -7,6 +7,6 @@ class SearchResultsPage {
     getConfigItem = () => cy.get('#item_config');
     getConfigureItem = () => cy.get('#item_configure');
 
-}
+};
 
 export default SearchResultsPage;
