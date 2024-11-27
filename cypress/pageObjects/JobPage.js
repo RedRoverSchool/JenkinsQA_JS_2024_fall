@@ -47,12 +47,12 @@ class JobPage {
 
   clickDeleteProjectButton() {
     this.deleteProjectButton().click()
-    return new JobPage()
+    return this
   }
 
   clickCancelButton() {
     this.cancelButton().click()
-    return new JobPage()
+    return this
   }
 
 };
