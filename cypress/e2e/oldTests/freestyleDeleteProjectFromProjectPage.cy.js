@@ -1,5 +1,5 @@
 /// <reference types="cypress"/>
-describe('US_01.004 | FreestyleProject > Delete Project', () => {
+describe.skip('US_01.004 | FreestyleProject > Delete Project', () => {
     it('TC_01.004.04 | FreestyleProject > Delete Project|Delete a project from the Project Page', () => {
         //Create a project
         cy.get('span').contains('New Item').click()

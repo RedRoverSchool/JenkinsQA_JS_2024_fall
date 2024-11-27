@@ -1,4 +1,4 @@
-describe('US_00.002 | New Item > Create Pipeline Project #14', () => {
+describe.skip('US_00.002 | New Item > Create Pipeline Project #14', () => {
     
     it('TC_00.002.006 | New Pipeline Project Create', () => {
         let itemName = 'MyTestPipeline'

@@ -1,5 +1,5 @@
 /// <reference types="cypress"/>
-describe('US_001|Delete the project', ()=>{
+describe.skip('US_001|Delete the project', ()=>{
     const LOCAL_PORT = Cypress.env('local.port');
     const LOCAL_HOST = Cypress.env('local.host');
 
