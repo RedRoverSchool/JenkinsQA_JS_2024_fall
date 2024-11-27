@@ -30,18 +30,15 @@ describe('US_09.001 | Manage Jenkins > Search settings', () =>{
                          .and('have.text', messages.searchSettings.noResultsError)
     })
 
-    it.only('TC_09.001.03 | Verify search suggestion dropdown displays all matches available', () => {
-        dashboardPage
-                .clickManageJenkins();
-        manageJenkinsPage
-                .typeSearchWord("t")
-                .getSearchResultList()
-                .should('have.length', listOfPossibleSearchResults.length);
+    it('TC_09.001.03 | Verify search suggestion dropdown displays all matches available', () => {
+        dashboardPage.clickManageJenkins();
+        manageJenkinsPage.typeSearchWord("t")
+                         .getSearchResultList()
+                         .should('have.length', listOfPossibleSearchResults.length);
         
         listOfPossibleSearchResults.forEach((dropDownItem) => {
-                manageJenkinsPage
-                .getSearchResultList().should('contain', dropDownItem);
-          });  
+        manageJenkinsPage.getSearchResultList().should('contain', dropDownItem);
+        });  
     })
 })
 
