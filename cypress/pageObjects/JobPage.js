@@ -33,5 +33,4 @@ class JobPage {
   }
 
 };
-
 export default JobPage;
