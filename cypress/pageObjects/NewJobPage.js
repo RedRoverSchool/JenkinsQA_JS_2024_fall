@@ -11,6 +11,7 @@ class NewJobPage {
     getUnsaveItemInvalidName = () => cy.get("#itemname-invalid").contains(/is an unsafe character/);
     getEmptyItemInvalidName = () => cy.get("#itemname-required");
     getFolferType = () => cy.get('.label').contains('Folder');
+    getOrganizationFolderType = () => cy.get('.label').contains('Organization Folder'); 
 
     typeNewItemName (prjName) {
         this.getJobNameField().type(prjName);
@@ -45,6 +46,11 @@ class NewJobPage {
     selectPipelineProject() {
         this.getPipelinePrjType().click()
         return this
+    }
+
+    selectOrganizationFolder () {
+        this.getOrganizationFolderType().click();
+        return this;
     }
 
 };
