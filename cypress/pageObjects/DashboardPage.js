@@ -2,6 +2,7 @@
 
 import NewJobPage from "./NewJobPage";
 import ManageJenkinsPage from "./ManageJenkinsPage";
+import LoginPage from "./LoginPage"
 
 class DashboardPage {
 
@@ -16,6 +17,7 @@ class DashboardPage {
   getJobTableDropdownChevron = () => cy.get('.jenkins-table__link > .jenkins-menu-dropdown-chevron');
   getJobTableDropdownItem = () => cy.get('.jenkins-dropdown__item ');
   getAllJobNames = () => cy.get('.jenkins-table__link span')
+  getLogOutButton = () => cy.get('a[href="/logout"]')
   getDeleteProjectDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item ').contains('Delete Project');
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
@@ -41,6 +43,17 @@ class DashboardPage {
     this.getProjectName().contains(projectName).click();
   }
 
+  clickLogOutButton() {
+    this.getLogOutButton().click()
+    return new LoginPage()
+  }
+
+  getSessionCookie(cookieName) {
+    return cy.getCookies().then((cookies) => {
+      return (cookies.find((cookie) => cookie.name.includes(cookieName))).value;
+    });
+  }
+  
   openDropdownForProject (projectName) {
     this.getProjectName().contains(projectName)
       .trigger("mouseover").should("be.visible");
