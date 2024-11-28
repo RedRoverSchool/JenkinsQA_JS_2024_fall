@@ -6,6 +6,8 @@ import LoginPage from "./LoginPage"
 
 class DashboardPage {
 
+  getDashboardBreadcrumb = () => cy.get('a[href="/"].model-link');
+  getDashboardBreadcrumbChevron = () => cy.get('a[href="/"] .jenkins-menu-dropdown-chevron');
   getNewItemLink = () => cy.get('a[href="/view/all/newJob"]');
   getCreateJobButton = () => cy.get('a[href="newJob"]').contains("Create a job");
   getMainPanel = () => cy.get("div#main-panel");
@@ -25,6 +27,24 @@ class DashboardPage {
 
 
 
+  hoverDashboardDropdownChevron() {
+    this.getDashboardBreadcrumb().realHover()
+    return this
+  }
+
+  clickDashboardDropdownChevron() {
+    this.getDashboardBreadcrumbChevron().click()
+    return this
+  }
+
+  selectNewItemFromDashboardChevron() {
+    this.getJobTableDropdownItem().each(($els) => {
+      let eText = $els.text().trim()
+      if (eText == 'New Item') { cy.wrap($els).click() }
+  });
+    return new NewJobPage()
+  }
+  
   clickNewItemMenuLink () {
     this.getNewItemLink().click({ force: true });
     return new NewJobPage();
