@@ -14,6 +14,9 @@ class DashboardPage {
   getProjectName = () => cy.get('*.jenkins-table__link span');
   getProjectChevronIcon = (projectName) => cy.get(`span:contains('${projectName}') + .jenkins-menu-dropdown-chevron`);
   getAllJobNames = () => cy.get('.jenkins-table__link span')
+  getDeleteProjectDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item ').contains('Delete Project');
+  getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
+  getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]')
 
 
 
@@ -47,6 +50,27 @@ class DashboardPage {
     this.getJobTable().contains(name).click()
     return new NewJobPage()
   }
+
+  hoverJobTitleLink() {
+    this.getJobTitleLink().trigger('mouseover')
+    return this
+  }
+
+  clickProjectChevronIcon(projectName) {
+    this.getProjectChevronIcon(projectName).click({ force: true })
+    return this
+  }
+
+  clickDeleteProjectDropdownMenuItem() {
+    this.getDeleteProjectDropdownMenuItem().click()
+    return this
+  }
+
+  clickCancelDeletingButton() {
+    this.getCancelProjectDeletingButton().click();
+    return this;
+  }
+
 };
 
 export default DashboardPage;
