@@ -1,5 +1,7 @@
 /// <reference types="cypress"/>
 
+import { faker } from '@faker-js/faker';
+
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
@@ -17,6 +19,7 @@ const header = new Header();
 
 describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
+    const randomItemName = faker.lorem.words();
     let project = genData.newProject();
 
     it("TC_01.004.05 | Cancel deletion", () => {
@@ -34,7 +37,27 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         dashboardPage.getAllJobNames().should('have.text', newJobPageData.projectName)
       });
 
-      it("TC_01.004.11 | Verify user is able to cancel project deleting", () => {
+      it('TC_01.004.10 | Verify Freestyle Project is deleted from Dashboard page', () => {
+
+        cy.log('Creating Freestyle project');
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(randomItemName)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        freestyleProjectPage.clickSaveButton();
+        header.clickJenkinsLogo();  
+        cy.log('Deleting Freestyle project');
+        dashboardPage.hoverJobTitleLink()
+                     .clickJobTableDropdownChevron()
+                     .clickDeleteProjectDropdownMenuItem()
+                     .clickSubmitDeletingButton();
+
+        cy.log('Verifying Freestyle Project is deleted from Dashboard page');
+        dashboardPage.getMainPanel().contains(randomItemName).should('not.exist')
+        dashboardPage.getWelcomeToJenkins().should('be.visible');
+      })
+
+      it('TC_01.004.11 | Verify user is able to cancel project deleting', () => {
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(project.name)
                   .selectFreestyleProject()

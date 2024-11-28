@@ -13,10 +13,13 @@ class DashboardPage {
   getManageJenkins = () => cy.get('a[href="/manage"]');
   getProjectName = () => cy.get('*.jenkins-table__link span');
   getProjectChevronIcon = (projectName) => cy.get(`span:contains('${projectName}') + .jenkins-menu-dropdown-chevron`);
+  getJobTableDropdownChevron = () => cy.get('.jenkins-table__link > .jenkins-menu-dropdown-chevron');
+  getJobTableDropdownItem = () => cy.get('.jenkins-dropdown__item ');
   getAllJobNames = () => cy.get('.jenkins-table__link span')
   getDeleteProjectDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item ').contains('Delete Project');
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
-  getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]')
+  getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
+  getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
 
 
 
@@ -61,6 +64,11 @@ class DashboardPage {
     return this
   }
 
+  clickJobTableDropdownChevron() {
+    this.getJobTableDropdownChevron().click({ force: true })
+    return this
+  }
+
   clickDeleteProjectDropdownMenuItem() {
     this.getDeleteProjectDropdownMenuItem().click()
     return this
@@ -71,6 +79,10 @@ class DashboardPage {
     return this;
   }
 
+  clickSubmitDeletingButton() {
+    this.getSubmitProjectDeletingButton().click()
+    return this
+  }
 };
 
 export default DashboardPage;
