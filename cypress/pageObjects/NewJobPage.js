@@ -30,12 +30,7 @@ class NewJobPage {
         return this;
     }
 
-    addUnsaveNameItem () {
-        this.getJobNameField().type("<");
-        return this;
-    }
-
-    addEmptyNameItem () {
+    clearItemNameField () {
         this.getJobNameField().clear();
         return this;
     }
