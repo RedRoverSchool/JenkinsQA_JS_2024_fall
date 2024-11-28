@@ -42,13 +42,8 @@ class NewJobPage {
         return this;
     }
 
-    addNewPrgNameFromFolder(projName) {
-        this.getPrjNameFieldfromFolderPage().type(projName)
-        return this
-    }
-
     selectPipelineProject() {
-        this.getPipeLinePrjType().click()
+        this.getPipelinePrjType().click()
         return this
     }
 

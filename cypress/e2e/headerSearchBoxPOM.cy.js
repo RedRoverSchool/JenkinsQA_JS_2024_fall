@@ -5,6 +5,10 @@ import SearchResuls from "../pageObjects/SearchResultsPage";
 import DashboardPage from "../pageObjects/DashboardPage";
 import UserPage from "../pageObjects/UserPage";
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
+import NewJobPage from "../pageObjects/NewJobPage";
+import FolderPage from "../pageObjects/FolderPage";
+import PipelinePage from "../pageObjects/PipelinePage"
+
 import headerData from "../fixtures/headerData.json";
 import searchResultsData from "../fixtures/searchResultsData.json";
 import messages from "../fixtures/messages.json";
@@ -98,13 +102,13 @@ describe('US_14.002 | Header > Search Box', () => {
   it("TC_14.002.15 | Verify suggestions in the search box", () => {
     dashboardPage.clickNewItemMenuLink();
     newJobPage
-      .addNewProjectName("New Folder TC_14.002.15_A")
+      .typeNewItemName("New Folder TC_14.002.15_A")
       .selectFolder()
       .clickOKButton();
-    userConfigurePage.clickOnSaveBtn();
-    folderPage.clickNewItemMenuLink();
+    folderPage.clickSaveBtn()  
+      .clickNewItemMenuOption();
     newJobPage
-      .addNewPrgNameFromFolder("Project TC_14.002.15_A")
+      .typeNewItemName("Project TC_14.002.15_A")
       .selectPipelineProject()
       .clickOKButton();
     pipelinePage.clickOnSaveBtn();
@@ -112,6 +116,7 @@ describe('US_14.002 | Header > Search Box', () => {
     header.typeSearchTerm("Pro")
       .clickFirstOptionFromACBox()
       .typeSearchTerm("{enter}");
+
     freestyleProjectPage.getJobHeadline().should("have.text", "Project TC_14.002.15_A");
   });
 });
