@@ -2,48 +2,44 @@
 
 class NewJobPage {
 
-    getJobNameField = () => cy.get('.jenkins-input')
-    getFreeStlPrjType = () => cy.get('.label').contains('Freestyle project')
-    getOKButton = () => cy.get('#ok-button')
-    getItemNameInvalidErrorMessage = () => cy.get("#itemname-invalid")
-    getUnsaveItemInvalidName = () => cy.get("#itemname-invalid").contains(/is an unsafe character/)
-    getEmptyItemInvalidName = () => cy.get("#itemname-required")
-    getFolferType = () => cy.get('.label').contains('Folder')
-    getPrjNameFieldfromFolderPage = () => cy.get('input[id="name"]')
-    getPipeLinePrjType = () => cy.get('.org_jenkinsci_plugins_workflow_job_WorkflowJob > :nth-child(2) > .desc')
+    getJobNameField = () => cy.get('#name');
+    getFreeStlPrjType = () => cy.get('.label').contains('Freestyle project');
+    getPipelinePrjType = () => cy.get('span.label').contains('Pipeline');
+    getPipelineSelectedState = () => cy.get('.org_jenkinsci_plugins_workflow_job_WorkflowJob');
+    getOKButton = () => cy.get('#ok-button');
+    getItemNameInvalidErrorMessage = () => cy.get("#itemname-invalid");
+    getUnsaveItemInvalidName = () => cy.get("#itemname-invalid").contains(/is an unsafe character/);
+    getEmptyItemInvalidName = () => cy.get("#itemname-required");
+    getFolferType = () => cy.get('.label').contains('Folder');
 
-    addNewProjectName(prjName) {
-        this.getJobNameField().type(prjName)
-        return this
-    }
-    
-    selectFreestyleProject() {
-        this.getFreeStlPrjType().click()
-        return this
-    }
-
-    selectFolder() {
-        this.getFolferType().click()
-        return this
-    }
-
-    clickOKButton() {
-        this.getOKButton().click()
-    }
-
-    addUnsaveNameItem() {
-        this.getJobNameField().type("<")
-        return this
-    }
-
-    addEmptyNameItem() {
-        this.getJobNameField().clear()
+    typeNewItemName (prjName) {
+        this.getJobNameField().type(prjName);
         return this;
     }
 
-    addFolderName(folderName) {
-        this.getFreeStlPrjType().type(folderName)
-        return this
+    selectFreestyleProject () {
+        this.getFreeStlPrjType().click();
+        return this;
+    }
+
+    selectPipelineProject () {
+        this.getPipelinePrjType().click();
+        return this;
+    }
+
+    selectFolder () {
+        this.getFolferType().click();
+        return this;
+    }
+
+    clickOKButton () {
+        this.getOKButton().click();
+        return this;
+    }
+
+    clearItemNameField () {
+        this.getJobNameField().clear();
+        return this;
     }
 
     addNewPrgNameFromFolder(projName) {

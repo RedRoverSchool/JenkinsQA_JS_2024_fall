@@ -1,22 +1,21 @@
 /// <reference types="cypress" />
+import Header from "./Header";
 
-import NewJobPage from "./NewJobPage";
+class FolderPage extends Header {
+    getSaveBtn = () => cy.get(".jenkins-submit-button");
+    getTitleConfiguration = () => cy.get("#side-panel h1");
+    getFolderNameOnMainPanel = () => cy.get("#main-panel h1");
 
-class FolderPage {
-     
-    getNewItemLink = () => cy.get('span.task-link-text').contains('New Item');
-    getFolderSaveBtn = () => cy.get('.jenkins-submit-button');
-
-    clickNewItemMenuLink() {
-        this.getNewItemLink().click({ force: true });
-        return new NewJobPage();
-      }
-
-      clickOnSaveBtn() {
-        this.getFolderSaveBtn().click()
-        return this
+    clickSaveBtn () {
+        this.getSaveBtn().click();
+        return this;
     }
 
-}
+    verifyTitleConfigurationIsVisible () {
+        this.getTitleConfiguration()
+            .should('be.visible');
+        return this;
+    }
+};
 
 export default FolderPage;
