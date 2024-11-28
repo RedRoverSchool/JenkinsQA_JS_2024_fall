@@ -22,12 +22,12 @@ describe("US_00.000 | New Item > Create New item", () => {
     it('TC_00.000.01| Create new item from "Create a job" button| Invalid data', () => {
         dashboardPage.clickNewItemMenuLink();
 
-        newJobPage.addUnsaveNameItem(wrongJobName)
+        newJobPage.typeNewItemName("<")
             .getUnsaveItemInvalidName().should("be.visible")
             .and("have.class", "input-validation-message")
             .contains(newItem.newItemNameInvalidMessage);
 
-        newJobPage.addEmptyNameItem()
+        newJobPage.clearItemNameField()
             .getEmptyItemInvalidName().should("be.visible")
             .and("have.class", "input-validation-message")
             .contains(newItem.emptyNameFieldReminder);
