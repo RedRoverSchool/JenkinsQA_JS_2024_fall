@@ -46,7 +46,12 @@ class Header {
         this.getJenkinsLogo().click();
         return new DashboardPage();
     }
-
+    
+    verifyAutoCompletionNotVisible () {
+        this.getSearchAutoCompletionBox().should('not.be.visible')
+        return this
+    };
+    
 };
 
 export default Header;

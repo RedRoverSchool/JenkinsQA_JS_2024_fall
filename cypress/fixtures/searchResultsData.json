@@ -7,5 +7,19 @@
         "lowCase": "tools",
         "upperCase": "TOOLS",
         "mixedCase": "Tools"
+    },
+
+    "heading" : {
+        "text": "Search for",
+        "cssRequirements": {
+            "color": "rgb(20, 20, 31)"
+        }
+    },
+    "error" : {
+        "text": "Nothing seems to match.",
+        "cssRequirements": {
+            "color" : "rgb(230, 0, 31)"
+        }
     }
+
 }

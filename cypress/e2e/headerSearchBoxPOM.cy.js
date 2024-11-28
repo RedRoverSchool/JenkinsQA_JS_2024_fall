@@ -19,6 +19,7 @@ const userPage = new UserPage();
 const freestyleProjectPage = new FreestyleProjectPage();
 
 describe('US_14.002 | Header > Search Box', () => {
+  let searchTermNoMatches  = 'RegressionSuite'
 
   it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search",() => {
     dashboardPage.clickNewItemMenuLink()
@@ -93,6 +94,16 @@ describe('US_14.002 | Header > Search Box', () => {
     userPage.getInsensitiveSearchLabel().should('contain', 'Insensitive search tool');
     userPage.getInsensitiveSearchCheckBox()
       .should('exist').and('be.checked');
+  });
+
+  it('TC_14.002.02| Verify error message appears when no matches found', () => {
+    header
+      .typeSearchTerm(searchTermNoMatches)
+      .verifyAutoCompletionNotVisible()
+      .searchTerm()
+    searchResults.getNoMatchesErrorMessage()
+      .should('contain', searchResultsData.error.text)
+      .and('have.css', 'color', searchResultsData.error.cssRequirements.color)
   });
 
 });
