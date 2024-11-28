@@ -7,6 +7,9 @@ import SearchResuls from "../pageObjects/SearchResultsPage";
 import DashboardPage from "../pageObjects/DashboardPage";
 import UserPage from "../pageObjects/UserPage";
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
+import NewJobPage from "../pageObjects/NewJobPage";
+import FolderPage from "../pageObjects/FolderPage";
+import PipelinePage from "../pageObjects/PipelinePage"
 
 import headerData from "../fixtures/headerData.json";
 import searchResultsData from "../fixtures/searchResultsData.json";
@@ -15,10 +18,13 @@ import newJobPageData from "../fixtures/newJobPageData.json";
 import configurePageData from "../fixtures/configurePageData.json";
 
 const header = new Header();
+const newJobPage = new NewJobPage();
 const dashboardPage = new DashboardPage();
 const searchResults = new SearchResuls();
 const userPage = new UserPage();
 const freestyleProjectPage = new FreestyleProjectPage();
+const folderPage = new FolderPage();
+const pipelinePage = new PipelinePage();
 
 let searchTermNoMatches = faker.string.alpha(10)
 
@@ -39,15 +45,14 @@ describe('US_14.002 | Header > Search Box', () => {
       .should('have.text', newJobPageData.projectName);
   });
 
-  it('TC_14.002.06 | Multiple matches are displayed on the result page', () => {
-    header.search('conf');
+  it("TC_14.002.06 | Multiple matches are displayed on the result page", () => {
+    header.search("conf");
 
-    searchResults.getConfigItem().should('contain.text', 'config');
-    searchResults.getConfigureItem().should('contain.text', 'configure');
+    searchResults.getConfigItem().should("contain.text", "config");
+    searchResults.getConfigureItem().should("contain.text", "configure");
   });
 
-  it('TC_14.002.07 | Verify the search box provides auto-completion', () => {
-
+  it("TC_14.002.07 | Verify the search box provides auto-completion", () => {
     header.typeSearchTerm(headerData.search.input.matchForCon);
 
     header.getSearchAutoCompletionBox()
@@ -81,8 +86,7 @@ describe('US_14.002 | Header > Search Box', () => {
       .should('have.text', headerData.search.searchSuggestions.manage);
   });
 
-  it('TC_14.002.10 | Verify that the warning message is displayed when no matches are found', () => {
-
+  it("TC_14.002.10 | Verify that the warning message is displayed when no matches are found", () => {
     header.search(headerData.search.input.noMatches);
 
     searchResults.getNoMatchesErrorMessage()
@@ -90,7 +94,7 @@ describe('US_14.002 | Header > Search Box', () => {
 
   });
 
-  it('TC_14.002-08 | Case insensitive search', () => {
+  it("TC_14.002-08 | Case insensitive search", () => {
     header.clickUserDropdownLink();
     header.clickUserConfigureItem();
 
@@ -109,4 +113,24 @@ describe('US_14.002 | Header > Search Box', () => {
       .and('have.text', searchResultsData.error.text);
   });
 
+  it("TC_14.002.15 | Verify suggestions in the search box", () => {
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage
+      .typeNewItemName("New Folder TC_14.002.15_A")
+      .selectFolder()
+      .clickOKButton();
+    folderPage.clickSaveBtn()  
+      .clickNewItemMenuOption();
+    newJobPage
+      .typeNewItemName("Project TC_14.002.15_A")
+      .selectPipelineProject()
+      .clickOKButton();
+    pipelinePage.clickOnSaveBtn();
+    header.getJenkinsLogo()
+    header.typeSearchTerm("Pro")
+      .clickFirstOptionFromACBox()
+      .typeSearchTerm("{enter}");
+
+    freestyleProjectPage.getJobHeadline().should("have.text", "Project TC_14.002.15_A");
+  });
 });
