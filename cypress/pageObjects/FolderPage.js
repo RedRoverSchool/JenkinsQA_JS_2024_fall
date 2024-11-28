@@ -5,6 +5,7 @@ class FolderPage extends Header {
     getSaveBtn = () => cy.get(".jenkins-submit-button");
     getTitleConfiguration = () => cy.get("#side-panel h1");
     getFolderNameOnMainPanel = () => cy.get("#main-panel h1");
+    getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
 
     clickSaveBtn () {
         this.getSaveBtn().click();
@@ -16,6 +17,13 @@ class FolderPage extends Header {
             .should('be.visible');
         return this;
     }
+
+    clickNewItemMenuOption () {
+        this.getNewItemMenuOption().click();
+        return this;
+    }
+ 
+
 };
 
 export default FolderPage;
