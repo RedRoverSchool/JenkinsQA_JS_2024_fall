@@ -4,7 +4,7 @@ class NewJobPage {
 
     getJobNameField = () => cy.get('#name');
     getFreeStlPrjType = () => cy.get('.label').contains('Freestyle project');
-    getPipelineType = () => cy.get('span.label').contains('Pipeline');
+    getPipelinePrjType = () => cy.get('span.label').contains('Pipeline');
     getPipelineSelectedState = () => cy.get('.org_jenkinsci_plugins_workflow_job_WorkflowJob');
     getOKButton = () => cy.get('#ok-button');
     getItemNameInvalidErrorMessage = () => cy.get("#itemname-invalid");
@@ -23,7 +23,7 @@ class NewJobPage {
     }
 
     selectPipelineProject () {
-        this.getPipelineType().click();
+        this.getPipelinePrjType().click();
         return this;
     }
 
