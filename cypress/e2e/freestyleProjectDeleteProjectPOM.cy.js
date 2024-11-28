@@ -28,7 +28,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
                             .clickSaveButton()
                             .clickDashboardBreadcrumbsLink()
         dashboardPage.clickJobName(newJobPageData.projectName)
-        freestyleProjectPage.clickDeleteJobButton()
+        freestyleProjectPage.clickDeleteMenuItem()
                             .clickCancelButton()
                             .clickDashboardBreadcrumbsLink()
         dashboardPage.getAllJobNames().should('have.text', newJobPageData.projectName)
