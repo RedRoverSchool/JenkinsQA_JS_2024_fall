@@ -47,6 +47,11 @@ class Header {
         return new DashboardPage();
     }
 
+    clickDashboardBtn() {
+        this.getBreadcrumps().contains('Dashboard').click();
+        return this;
+    }
+
 };
 
 export default Header;
