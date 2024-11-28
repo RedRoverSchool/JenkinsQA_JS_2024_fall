@@ -10,5 +10,6 @@
         "all/builds",
         "manage/",
         "me/my-views/view/all/"
-    ]
+    ],
+    "sessionIdCookie": "JSESSIONID"
 }
