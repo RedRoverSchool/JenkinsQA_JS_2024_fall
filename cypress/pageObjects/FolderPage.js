@@ -7,6 +7,7 @@ class FolderPage extends Header {
     getTitleConfiguration = () => cy.get("#side-panel h1");
     getFolderNameOnMainPanel = () => cy.get("#main-panel h1");
     getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
+    getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
 
     clickSaveBtn () {
         this.getSaveBtn().click();
@@ -24,6 +25,11 @@ class FolderPage extends Header {
         return new DashboardPage();
     }
 
+    clickNewItemMenuOption () {
+        this.getNewItemMenuOption().click();
+        return this;
+    }
+ 
 };
 
 export default FolderPage;

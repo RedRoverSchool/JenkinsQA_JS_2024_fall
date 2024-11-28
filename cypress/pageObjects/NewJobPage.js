@@ -42,6 +42,11 @@ class NewJobPage {
         return this;
     }
 
+    selectPipelineProject() {
+        this.getPipelinePrjType().click()
+        return this
+    }
+
 };
 
 export default NewJobPage;
