@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { faker } from "@faker-js/faker";
+
 import Header from "../pageObjects/Header";
 import SearchResuls from "../pageObjects/SearchResultsPage";
 import DashboardPage from "../pageObjects/DashboardPage";
@@ -17,6 +19,8 @@ const dashboardPage = new DashboardPage();
 const searchResults = new SearchResuls();
 const userPage = new UserPage();
 const freestyleProjectPage = new FreestyleProjectPage();
+
+let searchTermNoMatches = faker.string.alpha(10)
 
 describe('US_14.002 | Header > Search Box', () => {
 
@@ -93,6 +97,16 @@ describe('US_14.002 | Header > Search Box', () => {
     userPage.getInsensitiveSearchLabel().should('contain', 'Insensitive search tool');
     userPage.getInsensitiveSearchCheckBox()
       .should('exist').and('be.checked');
+  });
+
+  it('TC_14.002.04 | Message that no matches found', () => {
+    header.search(searchTermNoMatches);
+    searchResults.getTitle()
+      .should('have.css', 'color', searchResultsData.heading.cssRequirements.color)
+      .and('have.text', `${searchResultsData.heading.text} '${searchTermNoMatches}'`);
+    searchResults.getNoMatchesErrorMessage()
+      .should('have.css', 'color', searchResultsData.error.cssRequirements.color)
+      .and('have.text', searchResultsData.error.text);
   });
 
 });
