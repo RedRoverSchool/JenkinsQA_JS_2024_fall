@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-class UserConfigurePage {
+class UserPage {
 
     getInsensitiveSearchLabel = () => cy.get("label[class='attach-previous ']");
     getInsensitiveSearchCheckBox = () => cy.get("input[name='insensitiveSearch']");
@@ -18,4 +18,4 @@ class UserConfigurePage {
 
 };
 
-export default UserConfigurePage;
+export default UserPage;

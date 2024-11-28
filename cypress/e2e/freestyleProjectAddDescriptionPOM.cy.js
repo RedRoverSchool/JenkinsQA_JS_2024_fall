@@ -7,7 +7,7 @@ import NewJobPage from "../pageObjects/NewJobPage";
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 
 const dashboardPage = new DashboardPage();
-const newJobPage = new NewJobPage();
+const newJobPage = new NewJobPage(); 
 const freestyleProjectPage = new FreestyleProjectPage();
 
 const jobName = `${faker.hacker.adjective()} ${faker.hacker.noun()}`;
@@ -16,8 +16,8 @@ const jobDescription = faker.lorem.sentence();
 describe("US_01.001 | FreestyleProject > Add description", () => {
 
   beforeEach(() => {
-    dashboardPage.addNewProject();
-    newJobPage.addNewProjectName(jobName).selectFreestyleProject().clickOKButton();
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage.typeNewItemName(jobName).selectFreestyleProject().clickOKButton();
   });
 
   it("TC_01.001.01 | Add a description when creating a project", () => {
@@ -32,15 +32,15 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
 
   it("TC_01.001.02 | Add a Description to an Existing Project", () => {
     freestyleProjectPage.clickSaveButton()
-                        .clickDashboardBreadcrumbsLink();
+      .clickDashboardBreadcrumbsLink();
     dashboardPage.clickJobTitleLink();
     freestyleProjectPage.clickAddDescriptionButton()
-                        .typeJobDescription(jobDescription)
-                        .clickSaveButton();
+      .typeJobDescription(jobDescription)
+      .clickSaveButton();
 
     freestyleProjectPage.getJobDescription()
-                        .should("be.visible")
-                        .and("have.text", jobDescription);
+      .should("be.visible")
+      .and("have.text", jobDescription);
   });
 
   it('TC_01.001.08 | Verify the description is added when creating the project', () => {
