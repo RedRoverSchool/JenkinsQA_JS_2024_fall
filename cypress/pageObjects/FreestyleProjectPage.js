@@ -63,6 +63,11 @@ class FreestyleProjectPage {
         return this
     }
 
+    clearJobDescriptionField() {
+        this.getJobDescriptionField().clear();
+        return this;
+    }
+
 }
 
 export default FreestyleProjectPage;
