@@ -2,12 +2,13 @@
 
 import SearchResultsPage from "./SearchResultsPage";
 import DashboardPage from './DashboardPage';
+import { realHover } from "cypress-real-events/commands/realHover";
 
 class Header {
 
     getSearchField = () => cy.get("#search-box");
     getSearchAutoCompletionBox = () => cy.get('div#search-box-completion li');
-    getUserDropdownlink = () => cy.get('.login > .model-link > .jenkins-menu-dropdown-chevron');
+    getUserDropdownlink = () => cy.get('#page-header .jenkins-menu-dropdown-chevron');
     getDropdownConfigureItem = () => cy.get('.jenkins-dropdown > [href*="/configure"]');
     getJenkinsLogo = () => cy.get("a#jenkins-home-link");
     getBreadcrumps = () => cy.get(".jenkins-breadcrumbs");
@@ -33,7 +34,7 @@ class Header {
     };
 
     clickUserDropdownLink () {
-        this.getUserDropdownlink().click({ force: true });
+        this.getUserDropdownlink().realHover().click();
         return this;
     }
 
