@@ -22,7 +22,7 @@ describe('US_06.005 | Organization folder > Delete Organization Folder', () => {
                               .should('contain.text', folderName);
     });
 
-    it('TC_06.005-01 | Delete Organization Folder from a sidebar menu', () => {
+    it('TC_06.005.01 | Delete Organization Folder from a sidebar menu', () => {
         organizationFolderPage.clickSideMenuDeleteLink()
                               .clickOKButton()
                 
