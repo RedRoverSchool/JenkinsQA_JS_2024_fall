@@ -64,12 +64,10 @@ describe("US_00.000 | New Item > Create New item", () => {
     it('TC_00.000.09 | Verify New item can be created from "Create a job" button', () => {
 
         dashboardPage.clickNewItemMenuLink()
-
         newJobPage
             .typeNewItemName(randomItemName)
             .selectFreestyleProject()
             .clickOKButton()
-
         freestyleProjectPage.clickSaveButton()
             .clickDashboardBreadcrumbsLink()
 
