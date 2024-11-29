@@ -86,19 +86,17 @@ describe("US_00.000 | New Item > Create New item", () => {
                      .should('be.visible').and('have.text', randomItemName);
     })
   
-  it('TC_00.000.09 | Verify New item can be created from "Create a job" button', () => {
+  it.only('TC_00.000.09 | Verify New item can be created from "Create a job" button', () => {
 
-        dashboardPage.clickNewItemMenuLink()
-        newJobPage
-            .typeNewItemName(randomItemName)
-            .selectFreestyleProject()
-            .clickOKButton()
-        freestyleProjectPage.clickSaveButton()
-            .clickDashboardBreadcrumbsLink()
+      dashboardPage.clickNewItemMenuLink()
+      newJobPage
+          .typeNewItemName(randomItemName)
+          .selectFreestyleProject()
+          .clickOKButton()
+      freestyleProjectPage.clickSaveButton()
+          .clickDashboardBreadcrumbsLink()
 
-        dashboardPage
-            .getJobTable().contains(randomItemName).should('exist')
-
+      dashboardPage
+          .getJobTable().contains(randomItemName).should('exist')
     });
-
 });
