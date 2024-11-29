@@ -86,7 +86,7 @@ describe("US_00.000 | New Item > Create New item", () => {
                      .should('be.visible').and('have.text', randomItemName);
     })
   
-  it.only('TC_00.000.09 | Verify New item can be created from "Create a job" button', () => {
+  it('TC_00.000.09 | Verify New item can be created from "Create a job" button', () => {
 
       dashboardPage.clickNewItemMenuLink()
       newJobPage
