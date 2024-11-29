@@ -34,6 +34,7 @@ describe('US_04.004 | Folder > Add or Edit Description of a Folder', () => {
     });
 
     it('TC_04.004-03  Folder > Add or Edit Description of a Folder|Enter&Save description in a special field', () => {
+        
         //Preconditions
         const folder1Name = 'Folder1';
             cy.get('span').contains('New Item').click();
