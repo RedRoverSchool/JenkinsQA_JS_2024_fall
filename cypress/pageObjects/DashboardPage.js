@@ -23,7 +23,7 @@ class DashboardPage {
   getDeleteProjectDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item ').contains('Delete Project');
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
-  getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
+  getWelcomeToJenkinsHeadline = () => cy.get('.empty-state-block h1');
 
 
 
