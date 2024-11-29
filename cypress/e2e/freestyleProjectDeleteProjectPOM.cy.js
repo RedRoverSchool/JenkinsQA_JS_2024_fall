@@ -54,7 +54,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
         cy.log('Verifying Freestyle Project is deleted from Dashboard page');
         dashboardPage.getMainPanel().contains(randomItemName).should('not.exist')
-        dashboardPage.getWelcomeToJenkins().should('be.visible');
+        dashboardPage.getWelcomeToJenkinsHeadline().should('be.visible');
       })
 
       it('TC_01.004.11 | Verify user is able to cancel project deleting', () => {

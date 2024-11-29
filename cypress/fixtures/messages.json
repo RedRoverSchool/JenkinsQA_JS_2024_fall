@@ -1,7 +1,8 @@
 {
     "newItem": {
         "emptyNameFieldReminder": "» This field cannot be empty, please enter a valid name",
-        "newItemNameInvalidMessage": "» ‘<’ is an unsafe character"
+        "newItemNameInvalidMessage": "» ‘<’ is an unsafe character",
+        "duplicateNotAllowedMessage": "» A job already exists with the name"
     },
 
     "search": {

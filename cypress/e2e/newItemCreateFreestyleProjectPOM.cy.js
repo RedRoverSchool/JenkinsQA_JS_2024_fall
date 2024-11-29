@@ -7,6 +7,8 @@ import NewJobPage from '../pageObjects/NewJobPage';
 import FreestyleProjectPage from '../pageObjects/FreestyleProjectPage';
 import Header from '../pageObjects/Header';
 
+import { newItem } from '../fixtures/messages.json'
+
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const freestyleProjectPage = new FreestyleProjectPage();
@@ -32,7 +34,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
     });
 
 
-    it('TC_00.001.10 | Create Freestyle Project using the "New Item" button', function () {
+    it('TC_00.001.10 | Create Freestyle Project using the "New Item" button', () => {
         
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(folderName)
@@ -43,6 +45,25 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         header.clickJenkinsLogo();
 
         dashboardPage.getProjectName().should('contain', folderName);
+
+    });
+
+    it('TC_00.001.13 | Verify that duplicate names are not allowed during project creation', () => {
+        
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(folderName)
+            .selectFreestyleProject()
+            .clickOKButton();
+        freestyleProjectPage.clickSaveButton();
+        header.clickDashboardBtn();
+   
+        dashboardPage.clickNewItemMenuLink();
+
+        newJobPage.typeNewItemName(folderName)
+            .getItemNameInvalidErrorMessage()
+                .should('contain.text', `${newItem.duplicateNotAllowedMessage} ‘${folderName}’`);
+        
+        newJobPage.getOKButton().should('be.disabled');
 
     });
 
