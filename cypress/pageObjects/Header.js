@@ -51,6 +51,12 @@ class Header {
         this.getBreadcrumps().contains('Dashboard').click();
         return this;
     }
+   
+    verifyAutoCompletionNotVisible () {
+        this.getSearchAutoCompletionBox().should('not.be.visible')
+        return this
+    };
+    
 
 };
 

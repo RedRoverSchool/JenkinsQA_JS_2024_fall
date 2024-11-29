@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { faker } from "@faker-js/faker";
+
 import Header from "../pageObjects/Header";
 import SearchResuls from "../pageObjects/SearchResultsPage";
 import DashboardPage from "../pageObjects/DashboardPage";
@@ -23,6 +25,8 @@ const userPage = new UserPage();
 const freestyleProjectPage = new FreestyleProjectPage();
 const folderPage = new FolderPage();
 const pipelinePage = new PipelinePage();
+
+let searchTermNoMatches = faker.string.alpha(10)
 
 describe('US_14.002 | Header > Search Box', () => {
 
@@ -99,6 +103,16 @@ describe('US_14.002 | Header > Search Box', () => {
       .should('exist').and('be.checked');
   });
 
+  it('TC_14.002.04 | Message that no matches found', () => {
+    header.search(searchTermNoMatches);
+    searchResults.getTitle()
+      .should('have.css', 'color', searchResultsData.heading.cssRequirements.color)
+      .and('have.text', `${searchResultsData.heading.text} '${searchTermNoMatches}'`);
+    searchResults.getNoMatchesErrorMessage()
+      .should('have.css', 'color', searchResultsData.error.cssRequirements.color)
+      .and('have.text', searchResultsData.error.text);
+  });
+
   it("TC_14.002.15 | Verify suggestions in the search box", () => {
     dashboardPage.clickNewItemMenuLink();
     newJobPage
@@ -119,4 +133,15 @@ describe('US_14.002 | Header > Search Box', () => {
 
     freestyleProjectPage.getJobHeadline().should("have.text", "Project TC_14.002.15_A");
   });
+
+  it('TC_14.002.02| Verify error message appears when no matches found', () => {
+    header
+      .typeSearchTerm(searchTermNoMatches)
+      .verifyAutoCompletionNotVisible()
+      .searchTerm()
+    searchResults.getNoMatchesErrorMessage()
+      .should('contain', searchResultsData.error.text)
+      .and('have.css', 'color', searchResultsData.error.cssRequirements.color)
+  });
+  
 });
