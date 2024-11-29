@@ -3,10 +3,11 @@ import { faker } from '@faker-js/faker';
 
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
-import Header from '../pageObjects/Header';
+import Header from "../pageObjects/Header";
 
 import allKeys from "../fixtures/newJobPageData.json";
 import { newItem } from "../fixtures/messages.json";
+import genData from "../fixtures/genData";
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
@@ -15,6 +16,7 @@ const header = new Header();
 const { projectNameInvalid, errorMessageColor } = allKeys;
 
 describe("US_00.002 | New Item > Create Pipeline Project", () => {
+  let project = genData.newProject();
 
   const randomItemName = faker.commerce.productName();
 
@@ -67,4 +69,23 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
 
     newJobPage.getOKButton().should('be.disabled');
   })
+
+  it('TC_00.002.14 | Create Pipeline Project', () => {
+    dashboardPage.clickCreateJobLink();
+    newJobPage.typeNewItemName(project.name)
+      .selectPipelineProject()
+      .clickOKButton()
+      .clickSaveButton();
+    header.clickJenkinsLogo();
+
+    dashboardPage
+      .getProjectName()
+      .should('be.visible')
+      .and('contain.text', project.name);
+    dashboardPage
+      .getJobTable()
+      .should('contain.text', project.name)
+      .and('be.visible');
+  });
+
 });
