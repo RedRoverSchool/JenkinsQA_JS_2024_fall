@@ -12,6 +12,7 @@ class NewJobPage {
     getEmptyItemInvalidName = () => cy.get("#itemname-required");
     getFolferType = () => cy.get('.label').contains('Folder');
     getOrganizationFolderType = () => cy.get('[class="jenkins_branch_OrganizationFolder"]');
+  
 
     typeNewItemName (prjName) {
         this.getJobNameField().type(prjName);

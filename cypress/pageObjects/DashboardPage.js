@@ -6,6 +6,8 @@ import LoginPage from "./LoginPage"
 
 class DashboardPage {
 
+  getDashboardBreadcrumb = () => cy.get('a[href="/"].model-link');
+  getDashboardBreadcrumbChevron = () => cy.get('a[href="/"] .jenkins-menu-dropdown-chevron');
   getNewItemLink = () => cy.get('a[href="/view/all/newJob"]');
   getCreateJobButton = () => cy.get('a[href="newJob"]').contains("Create a job");
   getMainPanel = () => cy.get("div#main-panel");
@@ -22,10 +24,28 @@ class DashboardPage {
   getDeleteOrganizationFolderDropdownMenuItem = () => cy.get('[class="jenkins-dropdown__item "]').contains('Delete Organization Folder');
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
+  getWelcomeToJenkinsHeadline = () => cy.get('.empty-state-block h1');
   getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
   getJobHeadline = () => cy.get('#main-panel h1');
 
+  hoverDashboardDropdownChevron() {
+    this.getDashboardBreadcrumb().realHover()
+    return this
+  }
 
+  clickDashboardDropdownChevron() {
+    this.getDashboardBreadcrumbChevron().click()
+    return this
+  }
+
+  selectNewItemFromDashboardChevron() {
+    this.getJobTableDropdownItem().each(($els) => {
+      let eText = $els.text().trim()
+      if (eText == 'New Item') { cy.wrap($els).click() }
+  });
+    return new NewJobPage()
+  }
+  
   clickNewItemMenuLink () {
     this.getNewItemLink().click({ force: true });
     return new NewJobPage();
