@@ -123,6 +123,11 @@ class DashboardPage {
     return this;
   }
 
+  clickCreateJobLink() {
+    this.getCreateJobButton().click();
+    return this;
+  }
+
 };
 
 export default DashboardPage;
