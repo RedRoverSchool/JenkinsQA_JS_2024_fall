@@ -17,6 +17,7 @@ const freestyleProjectPage = new FreestyleProjectPage();
 describe("US_00.000 | New Item > Create New item", () => {
 
     const randomItemName = faker.lorem.words();
+    const newRandomItemName = faker.lorem.words();
     const wrongJobName = 'Item#1';
 
     it('TC_00.000.01| Create new item from "Create a job" button| Invalid data', () => {
@@ -85,4 +86,41 @@ describe("US_00.000 | New Item > Create New item", () => {
         dashboardPage.getJobTable().contains(randomItemName)
                      .should('be.visible').and('have.text', randomItemName);
     })
+
+    it('TC_00.000.07 | Verify new item can only be created using unique item names', () => {
+
+        cy.log('Creating the 1st Item');
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(randomItemName)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        header.clickJenkinsLogo();
+        cy.log('Attempting to create the 2nd Item with the previously used name');
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(randomItemName)
+                  .getItemNameInvalidErrorMessage()
+                  .should('contain.text', `${newItem.duplicateNotAllowedMessage} ‘${randomItemName}’`);
+        newJobPage.clearItemNameField()
+                  .typeNewItemName(newRandomItemName)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        header.clickJenkinsLogo();
+        
+        cy.log('Verifying that new item with unique name was created');
+        dashboardPage.getJobTable().contains(newRandomItemName)
+                     .should('be.visible').and('have.text', newRandomItemName);
+    })
+  
+    it('TC_00.000.09 | Verify New item can be created from "Create a job" button', () => {
+
+        dashboardPage.clickNewItemMenuLink()
+        newJobPage
+           .typeNewItemName(randomItemName)
+           .selectFreestyleProject()
+           .clickOKButton()
+        freestyleProjectPage.clickSaveButton()
+           .clickDashboardBreadcrumbsLink()
+
+       dashboardPage.getJobTable().contains(randomItemName).should('exist')
+    });
 });
