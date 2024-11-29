@@ -8,6 +8,7 @@ import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 import Header from "../pageObjects/Header";
 
 import { newItem } from "../fixtures/messages.json";
+import genData from "../fixtures/genData";
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
@@ -17,6 +18,7 @@ const header = new Header();
 const folderName = faker.commerce.product();
 
 describe("US_00.001 | New item > Create Freestyle Project", function () {
+  let project = genData.newProject();
   it("TC_00.001.19 | New freestyle project is created if user enter projects name, choose project type and save it", () => {
     dashboardPage.clickNewItemMenuLink();
     newJobPage
@@ -67,15 +69,17 @@ describe("US_00.001 | New item > Create Freestyle Project", function () {
     newJobPage.getOKButton().should("be.disabled");
   });
 
-  it.only("TC_00.001.21 | New freestyle project is created if user enter projects' name, choose project type and save it.", () => {
-    dashboardPage.clickNewItemMenuLink();
+  it("TC_00.001.11 | Create Freestyle Project by clicking on Create a Job", function () {
+    dashboardPage.clickCreateJobLink();
     newJobPage
-      .typeNewItemName(folderName)
+      .typeNewItemName(project.name)
       .selectFreestyleProject()
-      .clickOKButton();
-    freestyleProjectPage.clickSaveButton();
+      .clickOKButton()
+      .clickSaveButton();
 
-    header.clickJenkinsLogo();
-    dashboardPage.getProjectName().should("contain", folderName);
+    freestyleProjectPage
+      .getJobHeadline()
+      .should("be.visible")
+      .and("have.text", project.name);
   });
 });
