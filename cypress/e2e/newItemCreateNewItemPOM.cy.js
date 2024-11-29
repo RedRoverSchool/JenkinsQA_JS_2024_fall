@@ -73,4 +73,16 @@ describe("US_00.000 | New Item > Create New item", () => {
 
         dashboardPage.getJobTable().contains(randomItemName).should('be.visible');
     })
+
+    it('TC_00.000.06 | Create new item from the "New Item" link in the left sidebar', () => {
+
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(randomItemName)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        header.clickJenkinsLogo();
+
+        dashboardPage.getJobTable().contains(randomItemName)
+                     .should('be.visible').and('have.text', randomItemName);
+    })
 });
