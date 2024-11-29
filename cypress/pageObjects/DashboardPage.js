@@ -23,7 +23,6 @@ class DashboardPage {
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
   getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
-  getJenkinsHomeLink = () => cy.get('[id="jenkins-home-link"]')
   getJobHeadline = () => cy.get('#main-panel h1');
 
 
@@ -96,11 +95,6 @@ class DashboardPage {
 
   clickSubmitDeletingButton() {
     this.getSubmitProjectDeletingButton().click();
-    return this;
-  }
-
-  clickJenkinsHomeLinkImage() {
-    this.getJenkinsHomeLink().click();
     return this;
   }
 
