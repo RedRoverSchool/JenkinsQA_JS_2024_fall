@@ -133,4 +133,15 @@ describe('US_14.002 | Header > Search Box', () => {
 
     freestyleProjectPage.getJobHeadline().should("have.text", "Project TC_14.002.15_A");
   });
+
+  it('TC_14.002.02| Verify error message appears when no matches found', () => {
+    header
+      .typeSearchTerm(searchTermNoMatches)
+      .verifyAutoCompletionNotVisible()
+      .searchTerm()
+    searchResults.getNoMatchesErrorMessage()
+      .should('contain', searchResultsData.error.text)
+      .and('have.css', 'color', searchResultsData.error.cssRequirements.color)
+  });
+  
 });
