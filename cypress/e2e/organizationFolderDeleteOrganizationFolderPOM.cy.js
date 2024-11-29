@@ -13,7 +13,8 @@ describe("US_06.005 | Organization folder > Delete Organization Folder", () => {
   let project = genData.newProject();
 
   beforeEach(() => {
-    dashboardPage.clickNewItemMenuLink();
+    dashboardPage
+      .clickNewItemMenuLink();
     newJobPage
       .typeNewItemName(project.name)
       .selectOrganizationFolder()
@@ -41,6 +42,21 @@ describe("US_06.005 | Organization folder > Delete Organization Folder", () => {
       .clickDropdownMenuDeleteLink()
       .clickOKButton();
 
+    organizationFolderPage
+      .getJobHeadline()
+      .should("not.contain.text", project.name);
+  });
+
+  it("TC_06.005.03 | Delete Organization Folder from project status table on Dashboard page", () => {
+    dashboardPage
+      .clickJenkinsHomeLinkImage()
+      .clickJobTableDropdownChevron()
+      .clickDeleteOrganizationFolderDropdownMenuItem()
+      .clickSubmitDeletingButton();
+
+    dashboardPage
+      .getJobHeadline()
+      .should("not.contain.text", project.name);
     organizationFolderPage
       .getJobHeadline()
       .should("not.contain.text", project.name);
