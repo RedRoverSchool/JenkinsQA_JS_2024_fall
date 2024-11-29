@@ -60,4 +60,17 @@ describe("US_00.000 | New Item > Create New item", () => {
         freestyleProjectPage.getJobHeadline()
             .should('contain', randomItemName).and('exist');
     });
+
+    it('TC_00.000.05 | Create new item from Dashboard dropdown menu', () => {
+
+        dashboardPage.hoverDashboardDropdownChevron()
+                     .clickDashboardDropdownChevron()
+                     .selectNewItemFromDashboardChevron();
+        newJobPage.typeNewItemName(randomItemName)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        header.clickJenkinsLogo();
+
+        dashboardPage.getJobTable().contains(randomItemName).should('be.visible');
+    })
 });
