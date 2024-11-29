@@ -32,7 +32,7 @@ describe("US_06.001 | Organisation folder > Configuration", () => {
         .clickConfigureNavBar()
         .typeDisplayName(displayName)
         .typeDescription(description)
-        .clickSaveBtn();
+        .clickSaveButton();
 
         organizationFolderPage
         .getDisplayName()
