@@ -2,8 +2,6 @@
 
 import SearchResultsPage from "./SearchResultsPage";
 import DashboardPage from './DashboardPage';
-import { realHover } from "cypress-real-events/commands/realHover";
-
 class Header {
 
     getSearchField = () => cy.get("#search-box");
