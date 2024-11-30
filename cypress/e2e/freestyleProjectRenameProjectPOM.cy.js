@@ -28,7 +28,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
       .clickRenameButton()
       .typeNewName(project.newName)
       .clickSaveButton();
-    cy.url().should("include", project.newName);
+    cy.url({ decode: true }).should("include", project.newName);
     freestyleProjectPage.getJobHeadline().should("have.text", project.newName);
     freestyleProjectPage.clickDashboardBreadcrumbsLink();
 
