@@ -7,12 +7,15 @@ import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import FreestyleProjectPage from '../pageObjects/FreestyleProjectPage';
 
+import allKeys from "../fixtures/newJobPageData.json";
 import {newItem} from "../fixtures/messages.json";
 
 const header = new Header();
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const freestyleProjectPage = new FreestyleProjectPage();
+
+const { projectName, projectNameInvalid, errorMessageColor } = allKeys;
 
 describe("US_00.000 | New Item > Create New item", () => {
 
@@ -110,7 +113,28 @@ describe("US_00.000 | New Item > Create New item", () => {
         dashboardPage.getJobTable().contains(newRandomItemName)
                      .should('be.visible').and('have.text', newRandomItemName);
     })
-  
+
+    it('TC_00.000.08 | Verify item name does not contain any special characters', () => {
+
+        cy.log('Attempting to create New Item containing special characters in its name');
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(projectNameInvalid)
+                  .getItemNameInvalidErrorMessage().should('have.text', newItem.newItemNameInvalidMessage);
+        cy.log('Creating New Item');
+        newJobPage.clearItemNameField()
+                  .typeNewItemName(projectName)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        header.clickJenkinsLogo();
+        
+        cy.log('Verifying that new item was created, not containing any special characters in its name');
+        dashboardPage.getJobTable().should('contain.text', projectName).and('be.visible');
+        dashboardPage.getJobTable().contains(projectName).then(($item) => {
+            let itemName = $item.text();
+            cy.wrap(itemName).should('not.match', /[!@#$%^&*[\]\/\\|;:<>,?]/);
+        })
+    })
+
     it('TC_00.000.09 | Verify New item can be created from "Create a job" button', () => {
 
         dashboardPage.clickNewItemMenuLink()
