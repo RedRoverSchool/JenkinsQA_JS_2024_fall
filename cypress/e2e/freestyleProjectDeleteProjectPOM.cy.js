@@ -76,7 +76,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
           .and("be.visible");
       }); 
 
-      it.only('TC_01.004.04 | FreestyleProject > Delete Project|Delete a project from the Project Page', () => {
+      it('TC_01.004.04 | FreestyleProject > Delete Project|Delete a project from the Project Page', () => {
         //Create a project
         dashboardPage.clickNewItemMenuLink()
         newJobPage.typeNewItemName(newJobPageData.projectName)
