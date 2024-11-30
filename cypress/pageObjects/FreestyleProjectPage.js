@@ -22,8 +22,7 @@ class FreestyleProjectPage {
     getNewNameField = () => cy.get('[name="newName"]');
     getRenameButtonSubmit = () => cy.get('button.jenkins-submit-button');
     getBreadcrumbBar = () => cy.get('#breadcrumbBar');
-    getHeaderOnRename = () => cy.get("div h1")
-    getErrorMessageParagraph = () => cy.get('p')
+
 
     clickSaveButton() {
         this.getSaveButton().click();
@@ -103,25 +102,6 @@ class FreestyleProjectPage {
         this.getRenameButtonSubmit().click();
         return this;
     }
-
-    validateSpecialCharacters() {
-        const specialChars = `!@#$%^*|[]\\:;\?/`.split("");
-
-        specialChars.forEach((char) => {
-            // Clear, type the new name, and click Save
-            this.getNewNameField().clear().type(`Rename${char}Folder`);
-            this.getSaveButton().click();
-
-            // Assertions for error messages
-            this.getHeaderOnRename().should("have.text", "Error");
-            this.getErrorMessageParagraph().should(
-                "have.text",
-                `‘${char}’ is an unsafe character`
-            );
-
-            // Navigate back to retry the next character
-            cy.go("back");
-        });
-    }
 }
+
 export default FreestyleProjectPage;
