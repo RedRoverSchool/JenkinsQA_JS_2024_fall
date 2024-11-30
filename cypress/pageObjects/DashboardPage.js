@@ -21,11 +21,14 @@ class DashboardPage {
   getAllJobNames = () => cy.get('.jenkins-table__link span')
   getLogOutButton = () => cy.get('a[href="/logout"]')
   getDeleteProjectDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item ').contains('Delete Project');
+  getDeleteOrganizationFolderDropdownMenuItem = () => cy.get('[class="jenkins-dropdown__item "]').contains('Delete Organization Folder');
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
+  getWelcomeToJenkinsHeadline = () => cy.get('.empty-state-block h1');
   getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
-
-
+  getJobHeadline = () => cy.get('#main-panel h1');
+  getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
+  getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');
 
   hoverDashboardDropdownChevron() {
     this.getDashboardBreadcrumb().realHover()
@@ -113,9 +116,30 @@ class DashboardPage {
   }
 
   clickSubmitDeletingButton() {
-    this.getSubmitProjectDeletingButton().click()
+    this.getSubmitProjectDeletingButton().click();
+    return this;
+  }
+
+  clickDeleteOrganizationFolderDropdownMenuItem() {
+    this.getDeleteOrganizationFolderDropdownMenuItem().click();
+    return this;
+  }
+
+  clickCreateJobLink() {
+    this.getCreateJobButton().click();
+    return this;
+  }
+
+  clickRenameFolderDropdownMenuItem() {
+    this.getRenameFolderDropdownMenuItem().click();
     return this
   }
+
+  clickRenameProjectDropdownMenuItem() {
+    this.getRenameProjectDropdownMenuItem().click();
+    return this;
+  }
+
 };
 
 export default DashboardPage;

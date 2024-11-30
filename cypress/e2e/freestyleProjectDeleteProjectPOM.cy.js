@@ -54,7 +54,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
         cy.log('Verifying Freestyle Project is deleted from Dashboard page');
         dashboardPage.getMainPanel().contains(randomItemName).should('not.exist')
-        dashboardPage.getWelcomeToJenkins().should('be.visible');
+        dashboardPage.getWelcomeToJenkinsHeadline().should('be.visible');
       })
 
       it('TC_01.004.11 | Verify user is able to cancel project deleting', () => {
@@ -75,4 +75,22 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
           .should("have.text", project.name)
           .and("be.visible");
       }); 
+
+      it('TC_01.004.04 | FreestyleProject > Delete Project|Delete a project from the Project Page', () => {
+        //Create a project
+        dashboardPage.clickNewItemMenuLink()
+        newJobPage.typeNewItemName(newJobPageData.projectName)
+            .selectFreestyleProject()
+            .clickOKButton()
+        freestyleProjectPage.typeJobDescription(configurePageData.projectDescription)
+            .clickSaveButton()
+
+        cy.url().should('include', 'Project%20Name')
+
+        //Delete the project
+        freestyleProjectPage.clickDeleteMenuItem()
+            .clickYesButton()
+
+        dashboardPage.getAllJobNames().should('not.exist', newJobPageData.projectName)
+    })
 })
