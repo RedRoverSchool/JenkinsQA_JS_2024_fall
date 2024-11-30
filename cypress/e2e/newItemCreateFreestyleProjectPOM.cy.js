@@ -82,4 +82,36 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
             .should("be.visible")
             .and("have.text", project.name);
     });
+  
+      it('TC_00.001.07 | Verify that duplicate names are not accepted during project creation', function () {
+        
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(folderName)
+                  .chooseRandomItemFromList()
+                  .clickOKButton();
+        freestyleProjectPage.clickSaveButton()
+                            .clickDashboardBreadcrumbsLink();
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(folderName)
+                  .selectFreestyleProject();
+        
+        newJobPage.getItemNameInvalidErrorMessage()
+                  .should('have.text', `${newItem.duplicateNotAllowedMessage} ‘${folderName}’`);
+                  
+        newJobPage.getOKButton()
+                  .should('be.disabled')
+                  .and('be.visible');
+  });
+
+it('TC_00.001.03 | Create a new Freestyle Project using the "New Item" button from the Dashboard', function () {
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage
+            .typeNewItemName(project.name)
+            .selectFreestyleProject()
+            .clickOKButton()
+            .clickSaveButton();
+        freestyleProjectPage.getJobHeadline().should("have.text", project.name);
+        freestyleProjectPage.getBreadcrumbBar().should('contain', project.name);
+    });
 });
+

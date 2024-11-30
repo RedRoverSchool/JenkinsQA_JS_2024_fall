@@ -8,6 +8,8 @@ class FolderPage extends Header {
     getFolderNameOnMainPanel = () => cy.get("#main-panel h1");
     getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
     getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
+    getNewNameField = () => cy.get('input[name="newName"]')
+    getFolderUrl = () => cy.url({ decode: true })
 
     clickSaveBtn () {
         this.getSaveBtn().click();
@@ -28,6 +30,20 @@ class FolderPage extends Header {
     clickNewItemMenuOption () {
         this.getNewItemMenuOption().click();
         return this;
+    }
+    
+    clearNewNameField () {
+        this.getNewNameField().clear();
+        return this;
+    }
+
+    typeNewFolderName (newFolderName) {
+        this.getNewNameField().type(newFolderName);
+        return this;
+    }   
+
+    verifyFolderUrl(folderName) {
+        this.getFolderUrl().should('contain', folderName)
     }
  
 };
