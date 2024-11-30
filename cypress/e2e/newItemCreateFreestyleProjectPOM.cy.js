@@ -67,4 +67,25 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
 
     });
 
+    it('TC_00.001.07 | Verify that duplicate names are not accepted during project creation', function () {
+        
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(folderName)
+                  .chooseRandomItemFromList()
+                  .clickOKButton();
+        freestyleProjectPage.clickSaveButton()
+                            .clickDashboardBreadcrumbsLink();
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(folderName)
+                  .selectFreestyleProject();
+        
+        newJobPage.getItemNameInvalidErrorMessage()
+                  .should('have.text', `${newItem.duplicateNotAllowedMessage} ‘${folderName}’`);
+                  
+        newJobPage.getOKButton()
+                  .should('be.disabled')
+                  .and('be.visible');
+
+    });
+
 });

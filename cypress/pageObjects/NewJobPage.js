@@ -12,6 +12,7 @@ class NewJobPage {
     getEmptyItemInvalidName = () => cy.get("#itemname-required");
     getFolferType = () => cy.get('.label').contains('Folder');
     getOrganizationFolderType = () => cy.get('[class="jenkins_branch_OrganizationFolder"]');
+    getAllItemsList = () => cy.get('#items li')
 
     typeNewItemName (prjName) {
         this.getJobNameField().type(prjName);
@@ -53,6 +54,14 @@ class NewJobPage {
         return this
     }
 
+    chooseRandomItemFromList() {
+        this.getAllItemsList().then((items) => {
+            const randomIndex = Math.floor(Math.random() * items.length);
+            cy.wrap(items).eq(randomIndex).click(); 
+        }).then(() => this);
+        return this;   
+    }
+    
 };
 
 export default NewJobPage;
