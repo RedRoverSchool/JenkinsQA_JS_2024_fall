@@ -4,6 +4,8 @@ import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 
+import { faker } from '@faker-js/faker';
+
 import genData from "../fixtures/genData"
 
 const dashboardPage = new DashboardPage();
@@ -30,4 +32,20 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
 
     dashboardPage.getJobTitleLink().should("have.text", project.newName);
   });
+    
+  it('TC-01.002.06| Rename a project name from the Dashboard page', () => {
+    const initialProjectName = faker.lorem.words(); 
+    const renamedProjectName = faker.lorem.words();
+    
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage.typeNewItemName(initialProjectName).selectFreestyleProject();
+    newJobPage.clickOKButton();
+    freestyleProjectPage.clickSaveButton().clickDashboardBreadcrumbsLink();
+
+    dashboardPage.clickJobTableDropdownChevron().clickRenameProjectDropdownMenuItem();
+    freestyleProjectPage.getRenameField().click();
+    freestyleProjectPage.clearRenameField().typeRenameField(renamedProjectName);
+    freestyleProjectPage.clickRenameButtonSubmit();
+    freestyleProjectPage.getPageHeadline().should('have.text', renamedProjectName);
+   })
 });
