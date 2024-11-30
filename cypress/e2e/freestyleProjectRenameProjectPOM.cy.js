@@ -30,4 +30,34 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
 
     dashboardPage.getJobTitleLink().should("have.text", project.newName);
   });
+
+  it("TC_01.002.04 | Rename a project name from the Dashboard page", () => {
+    //Preconditions, Create new item nameJob
+    dashboardPage
+        .clickNewItemMenuLink();
+    newJobPage
+        .typeNewItemName(project.name)
+        .selectFreestyleProject()
+        .clickOKButton();
+    freestyleProjectPage
+        .clickSaveButton()
+        .clickDashboardBreadcrumbsLink();
+    //Navigate drop-down menu
+    dashboardPage
+        .clickJobTableDropdownChevron()
+        .clickRenameProjectDropdownMenuItem();
+    //Rename job
+    freestyleProjectPage
+      .typeNewName(project.newName)
+      .clickSaveButton();
+    //Checks
+    freestyleProjectPage
+        .getJobHeadline().should('contain', project.newName)
+    freestyleProjectPage
+        .clickDashboardBreadcrumbsLink();
+    dashboardPage
+        .getJobTitleLink()
+        .should("contain", project.newName);
+    });
+
 });

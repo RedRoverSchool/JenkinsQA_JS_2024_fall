@@ -21,13 +21,14 @@ class DashboardPage {
   getAllJobNames = () => cy.get('.jenkins-table__link span')
   getLogOutButton = () => cy.get('a[href="/logout"]')
   getDeleteProjectDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item ').contains('Delete Project');
+  getRenameProjectDropdownMenuItem = () => cy.get('.jenkins-dropdown__item').contains('Rename');
   getDeleteOrganizationFolderDropdownMenuItem = () => cy.get('[class="jenkins-dropdown__item "]').contains('Delete Organization Folder');
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
   getWelcomeToJenkinsHeadline = () => cy.get('.empty-state-block h1');
   getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
   getJobHeadline = () => cy.get('#main-panel h1');
-
+  
   hoverDashboardDropdownChevron() {
     this.getDashboardBreadcrumb().realHover()
     return this
@@ -125,6 +126,11 @@ class DashboardPage {
 
   clickCreateJobLink() {
     this.getCreateJobButton().click();
+    return this;
+  }
+
+  clickRenameProjectDropdownMenuItem() {
+    this.getRenameProjectDropdownMenuItem().click();
     return this;
   }
 
