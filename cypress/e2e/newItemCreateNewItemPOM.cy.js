@@ -147,4 +147,17 @@ describe("US_00.000 | New Item > Create New item", () => {
 
        dashboardPage.getJobTable().contains(randomItemName).should('exist')
     });
+
+    it('TC_00.000.10 | Verify that to create a new item, user should choose "an item type" first', () => {
+
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(randomItemName)
+                  .getOKButton().should('be.disabled');
+        newJobPage.selectFreestyleProject()
+                  .getOKButton().should('be.enabled');
+        newJobPage.clickOKButton();
+        header.clickJenkinsLogo();
+                  
+        dashboardPage.getJobTable().should('contain.text', randomItemName).and('be.visible');
+    })
 });
