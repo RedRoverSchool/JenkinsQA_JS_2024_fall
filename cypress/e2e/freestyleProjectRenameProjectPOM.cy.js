@@ -13,6 +13,8 @@ const newJobPage = new NewJobPage();
 const freestyleProjectPage = new FreestyleProjectPage();
 
 describe("US_01.002 | FreestyleProject > Rename Project", () => {
+  const initialProjectName = faker.lorem.words(); 
+  const renamedProjectName = faker.lorem.words();
   let project = genData.newProject();
   it("TC_01.002.02 | Rename a project from the Project Page", () => {
     dashboardPage.clickNewItemMenuLink();
@@ -34,8 +36,6 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
   });
     
   it('TC-01.002.06| Rename a project name from the Dashboard page', () => {
-    const initialProjectName = faker.lorem.words(); 
-    const renamedProjectName = faker.lorem.words();
     
     dashboardPage.clickNewItemMenuLink();
     newJobPage.typeNewItemName(initialProjectName).selectFreestyleProject();
@@ -43,9 +43,9 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     freestyleProjectPage.clickSaveButton().clickDashboardBreadcrumbsLink();
 
     dashboardPage.clickJobTableDropdownChevron().clickRenameProjectDropdownMenuItem();
-    freestyleProjectPage.getRenameField().click();
+    freestyleProjectPage.getNewNameField().click();
     freestyleProjectPage.clearRenameField().typeRenameField(renamedProjectName);
     freestyleProjectPage.clickRenameButtonSubmit();
-    freestyleProjectPage.getPageHeadline().should('have.text', renamedProjectName);
+    freestyleProjectPage.getJobHeadline().should('have.text', renamedProjectName);
    })
 });

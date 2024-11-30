@@ -19,9 +19,7 @@ class FreestyleProjectPage {
     getCancelButton = () => cy.get('button[data-id="cancel"]');
     getRenameButton = () => cy.get('[href*="rename"]');
     getNewNameField = () => cy.get('[name="newName"]');
-    getRenameField = () => cy.get('input.jenkins-input');
     getRenameButtonSubmit = () => cy.get('button.jenkins-submit-button');
-    getPageHeadline = () => cy.get('h1.job-index-headline');
 
 
     clickSaveButton() {
@@ -85,11 +83,11 @@ class FreestyleProjectPage {
     }
 
     clearRenameField() {
-        this.getRenameField().clear();
+        this.getNewNameField().clear();
         return this;
     }
     typeRenameField(ProjectName) {
-        this.getRenameField().type(ProjectName);
+        this.getNewNameField().type(ProjectName);
         return this;
     }
 
@@ -97,8 +95,6 @@ class FreestyleProjectPage {
         this.getRenameButtonSubmit().click();
         return this;
     }
-
-
 }
 
 export default FreestyleProjectPage;
