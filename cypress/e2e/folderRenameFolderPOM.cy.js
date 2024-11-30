@@ -3,8 +3,9 @@
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import FolderPage from "../pageObjects/FolderPage";
-import genData from "../fixtures/genData";
 import Header from "../pageObjects/Header";
+
+import genData from "../fixtures/genData";
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
