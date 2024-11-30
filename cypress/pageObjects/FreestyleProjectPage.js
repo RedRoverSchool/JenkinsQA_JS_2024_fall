@@ -18,8 +18,10 @@ class FreestyleProjectPage {
     getDeleteMenuItem = () => cy.get('a[data-title="Delete Project"]');
     getCancelButton = () => cy.get('button[data-id="cancel"]');
     getRenameField = () => cy.get('input.jenkins-input')
-    getRenameButton = () => cy.get('button.jenkins-submit-button')
+    getRenameButtonSubmit = () => cy.get('button.jenkins-submit-button')
     getPageHeadline = () => cy.get('h1.job-index-headline')
+    getRenameButton = () => cy.get('[href*="rename"]');
+    getNewNameField = () => cy.get('[name="newName"]');
 
     clickSaveButton() {
         this.getSaveButton().click();
@@ -70,17 +72,31 @@ class FreestyleProjectPage {
         this.getJobDescriptionField().clear();
         return this;
     }
-
+  
     clearRenameField() {
-        this.getRenameField().clear()
-        return this
+        this.getRenameField().clear();
+        return this;
     }
+  
     typeRenameField(ProjectName) {
         this.getRenameField().type(ProjectName)
+        return this;
+    }
+
+    clickRenameButtonSubmit() {
+        this.getRenameButtonSubmit().click();
+        return this; 
     }
 
     clickRenameButton() {
-        this.getRenameButton().click()
+        this.getRenameButton().click();
+        return this;
+    }
+
+    typeNewName(projectNewName) {
+        this.getNewNameField().clear().type(projectNewName);
+        return this;
+
     }
 }
 

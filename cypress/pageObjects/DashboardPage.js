@@ -125,7 +125,11 @@ class DashboardPage {
 
   clickRenameProjectDropdownMenuItem() {
     this.getRenameProjectDropdownMenuItem().click()
-    return this
+    return this;
+
+  clickCreateJobLink() {
+    this.getCreateJobButton().click();
+    return this;
   }
 
 };
