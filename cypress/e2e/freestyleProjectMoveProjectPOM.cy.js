@@ -62,11 +62,11 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
             .selectFreestyleProject()
             .clickOKButton();
         freestyleProjectPage.clickSaveButton();
-        cy.url().should('include', `/${project.newName}`)
+        cy.url({ decode: true }).should('include', `/${project.newName}`)
         freestyleProjectPage.clickMoveMenuItem()
             .selectNewProjectDestination(`/${project.name}`)
             .clickMoveButton();
 
-        cy.url().should('include', `/job/${project.name}/job/${project.newName}`);
+        cy.url({ decode: true }).should('include', `/job/${project.name}/job/${project.newName}`);
     });
 });

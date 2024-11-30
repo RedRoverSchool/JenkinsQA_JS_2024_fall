@@ -9,7 +9,7 @@ class FolderPage extends Header {
     getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
     getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
     getNewNameField = () => cy.get('input[name="newName"]')
-    getFolderUrl = () => cy.url()
+    getFolderUrl = () => cy.url({ decode: true })
 
     clickSaveBtn () {
         this.getSaveBtn().click();
@@ -43,7 +43,7 @@ class FolderPage extends Header {
     }   
 
     verifyFolderUrl(folderName) {
-        this.getFolderUrl().should('include', `/${folderName}`)
+        this.getFolderUrl().should('contain', folderName)
     }
  
 };
