@@ -13,6 +13,8 @@ class NewJobPage {
     getFolferType = () => cy.get('.label').contains('Folder');
     getOrganizationFolderType = () => cy.get('[class="jenkins_branch_OrganizationFolder"]');
     getSaveButton = () => cy.get('button[name="Submit"]');
+    getUrlConfigurePageField = () => cy.location('href');
+    getBreadcrumbsListItem = () => cy.get("[aria-current='page']");
   
 
     typeNewItemName (prjName) {
