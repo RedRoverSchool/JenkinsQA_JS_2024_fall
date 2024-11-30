@@ -21,6 +21,7 @@ class FreestyleProjectPage {
     getRenameButton = () => cy.get('[href*="rename"]');
     getNewNameField = () => cy.get('[name="newName"]');
     getRenameButtonSubmit = () => cy.get('button.jenkins-submit-button');
+    getBreadcrumbBar = () => cy.get('#breadcrumbBar');
 
 
     clickSaveButton() {

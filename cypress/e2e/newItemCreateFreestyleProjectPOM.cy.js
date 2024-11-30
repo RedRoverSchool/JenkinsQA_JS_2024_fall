@@ -82,4 +82,15 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
             .should("be.visible")
             .and("have.text", project.name);
     });
+
+    it('TC_00.001.03 | Create a new Freestyle Project using the "New Item" button from the Dashboard', function () {
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage
+            .typeNewItemName(project.name)
+            .selectFreestyleProject()
+            .clickOKButton()
+            .clickSaveButton();
+        freestyleProjectPage.getJobHeadline().should("have.text", project.name);
+        freestyleProjectPage.getBreadcrumbBar().should('contain', project.name);
+    });
 });
