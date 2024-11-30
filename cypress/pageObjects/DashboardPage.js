@@ -28,6 +28,7 @@ class DashboardPage {
   getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
   getJobHeadline = () => cy.get('#main-panel h1');
   getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
+  getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');
 
   hoverDashboardDropdownChevron() {
     this.getDashboardBreadcrumb().realHover()
@@ -132,6 +133,11 @@ class DashboardPage {
   clickRenameFolderDropdownMenuItem() {
     this.getRenameFolderDropdownMenuItem().click();
     return this
+  }
+
+  clickRenameProjectDropdownMenuItem() {
+    this.getRenameProjectDropdownMenuItem().click();
+    return this;
   }
 
 };
