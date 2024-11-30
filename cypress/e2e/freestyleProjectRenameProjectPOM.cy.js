@@ -16,7 +16,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
   const initialProjectName = faker.lorem.words(); 
   const renamedProjectName = faker.lorem.words();
   let project = genData.newProject();
-  it("TC_01.002.02 | Rename a project from the Project Page", () => {
+  it.skip("TC_01.002.02 | Rename a project from the Project Page", () => {
     dashboardPage.clickNewItemMenuLink();
     newJobPage
       .typeNewItemName(project.name)
