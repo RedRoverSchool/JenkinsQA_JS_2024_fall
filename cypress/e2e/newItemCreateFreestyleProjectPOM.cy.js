@@ -113,5 +113,15 @@ it('TC_00.001.03 | Create a new Freestyle Project using the "New Item" button fr
         freestyleProjectPage.getJobHeadline().should("have.text", project.name);
         freestyleProjectPage.getBreadcrumbBar().should('contain', project.name);
     });
+
+it('TC_00.001.14 | Create Freestyle Project from the Dashboard Menu', function () {
+
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage.typeNewItemName(project.name)
+                .selectFreestyleProject()
+                .clickOKButton()
+                .clickSaveButton();
+    freestyleProjectPage.getJobHeadline().should("have.text", project.name);
+    });     
 });
 
