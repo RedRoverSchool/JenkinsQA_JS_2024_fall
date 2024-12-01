@@ -99,7 +99,7 @@ class DashboardPage {
     return this
   }
 
-  clickMoveTheProject() {
+  clickMoveTheProjectButton() {
     this.getMoveTheProject().click()
     return FreestyleProjectPage
   }

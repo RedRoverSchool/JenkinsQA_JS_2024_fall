@@ -47,7 +47,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
 
         freestyleProjectPage.getProjectInfoSection().should('contain', `Full project name: ${selectedFolder}/${newJobPageData.projectName}`)
     });
-    it.only('TC_01.006.05 | Move project from Dashboard to Folder', () => {
+    it('TC_01.006.05 | Move project from Dashboard to Folder', () => {
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(newJobPageData.projectName)
             .selectFreestyleProject()
@@ -63,7 +63,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         header.clickJenkinsLogo();
 
         dashboardPage.openDropdownForProject(newJobPageData.projectName)
-                     .clickMoveTheProject()
+                     .clickMoveTheProjectButton()
         freestyleProjectPage.clickMoveMenuItem()
                      .selectNewProjectDestination(`/${newJobPageData.folderName}`)
                      .clickMoveButton()
