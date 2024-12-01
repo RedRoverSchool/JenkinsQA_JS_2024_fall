@@ -55,7 +55,7 @@ describe('US_09.001 | Manage Jenkins > Search settings', () =>{
         dashboardPage.clickManageJenkins()
         manageJenkinsPage.getSettingsSearchField()
         manageJenkinsPage.typeSearchWord(randomSearchWord)
-        .getXButtonSearchField()
+            .getXButtonSearchField()
             .should('have.css', 'opacity', '0')
             .and('have.value', '')
     });
