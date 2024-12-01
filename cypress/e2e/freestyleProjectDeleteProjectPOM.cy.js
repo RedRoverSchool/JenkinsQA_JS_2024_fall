@@ -22,30 +22,29 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
     const randomItemName = faker.lorem.words();
     let project = genData.newProject();
 
+    beforeEach(() => {
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage
+            .typeNewItemName(project.name)
+            .selectFreestyleProject()
+            .clickOKButton()
+        freestyleProjectPage
+            .typeJobDescription(project.description)
+            .clickSaveButton();
+        header.clickJenkinsLogo()
+    });
+
     it("TC_01.004.05 | Cancel deletion", () => {
-        dashboardPage.clickNewItemMenuLink()
-        newJobPage.typeNewItemName(newJobPageData.projectName)
-                  .selectFreestyleProject()
-                  .clickOKButton()
-        freestyleProjectPage.typeJobDescription(configurePageData.projectDescription)
-                            .clickSaveButton()
-                            .clickDashboardBreadcrumbsLink()
-        dashboardPage.clickJobName(newJobPageData.projectName)
+
+        dashboardPage.clickJobName(project.name)
         freestyleProjectPage.clickDeleteMenuItem()
                             .clickCancelButton()
                             .clickDashboardBreadcrumbsLink()
-        dashboardPage.getAllJobNames().should('have.text', newJobPageData.projectName)
+        dashboardPage.getAllJobNames().should('have.text', project.name)
       });
 
       it('TC_01.004.10 | Verify Freestyle Project is deleted from Dashboard page', () => {
 
-        cy.log('Creating Freestyle project');
-        dashboardPage.clickNewItemMenuLink();
-        newJobPage.typeNewItemName(randomItemName)
-                  .selectFreestyleProject()
-                  .clickOKButton();
-        freestyleProjectPage.clickSaveButton();
-        header.clickJenkinsLogo();  
         cy.log('Deleting Freestyle project');
         dashboardPage.hoverJobTitleLink()
                      .clickJobTableDropdownChevron()
@@ -54,16 +53,10 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
         cy.log('Verifying Freestyle Project is deleted from Dashboard page');
         dashboardPage.getMainPanel().contains(randomItemName).should('not.exist')
-        dashboardPage.getWelcomeToJenkins().should('be.visible');
+        dashboardPage.getWelcomeToJenkinsHeadline().should('be.visible');
       })
 
       it('TC_01.004.11 | Verify user is able to cancel project deleting', () => {
-        dashboardPage.clickNewItemMenuLink();
-        newJobPage.typeNewItemName(project.name)
-                  .selectFreestyleProject()
-                  .clickOKButton();
-        freestyleProjectPage.clickSaveButton();
-        header.clickJenkinsLogo();
         dashboardPage.hoverJobTitleLink()
                       .clickProjectChevronIcon(project.name)
                       .clickDeleteProjectDropdownMenuItem();
@@ -75,4 +68,32 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
           .should("have.text", project.name)
           .and("be.visible");
       }); 
+
+      it('TC_01.004.04 | FreestyleProject > Delete Project|Delete a project from the Project Page', () => {
+        //Create a project
+        dashboardPage.clickNewItemMenuLink()
+        newJobPage.typeNewItemName(newJobPageData.projectName)
+            .selectFreestyleProject()
+            .clickOKButton()
+        freestyleProjectPage.typeJobDescription(configurePageData.projectDescription)
+            .clickSaveButton()
+
+        cy.url().should('include', 'Project%20Name')
+
+        //Delete the project
+        freestyleProjectPage.clickDeleteMenuItem()
+            .clickYesButton()
+
+        dashboardPage.getJobTitleLink().should('not.contain.value', newJobPageData.projectName)
+    })
+
+    it('TC_01.004.17 | Delete project from the Project Page', () => {
+
+        dashboardPage.clickJobName(project.name)
+        freestyleProjectPage
+            .clickDeleteMenuItem()
+            .clickYesButton()
+
+        dashboardPage.getWelcomeToJenkinsHeadline().should('be.visible');
+    });
 })

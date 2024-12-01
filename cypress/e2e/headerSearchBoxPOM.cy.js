@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { faker } from "@faker-js/faker";
+
 import Header from "../pageObjects/Header";
 import SearchResuls from "../pageObjects/SearchResultsPage";
 import DashboardPage from "../pageObjects/DashboardPage";
@@ -14,6 +16,7 @@ import searchResultsData from "../fixtures/searchResultsData.json";
 import messages from "../fixtures/messages.json";
 import newJobPageData from "../fixtures/newJobPageData.json";
 import configurePageData from "../fixtures/configurePageData.json";
+import genData from "../fixtures/genData";
 
 const header = new Header();
 const newJobPage = new NewJobPage();
@@ -23,6 +26,9 @@ const userPage = new UserPage();
 const freestyleProjectPage = new FreestyleProjectPage();
 const folderPage = new FolderPage();
 const pipelinePage = new PipelinePage();
+
+let searchTermNoMatches = faker.string.alpha(10)
+let project = genData.newProject()
 
 describe('US_14.002 | Header > Search Box', () => {
 
@@ -99,6 +105,16 @@ describe('US_14.002 | Header > Search Box', () => {
       .should('exist').and('be.checked');
   });
 
+  it('TC_14.002.04 | Message that no matches found', () => {
+    header.search(searchTermNoMatches);
+    searchResults.getTitle()
+      .should('have.css', 'color', searchResultsData.heading.cssRequirements.color)
+      .and('have.text', `${searchResultsData.heading.text} '${searchTermNoMatches}'`);
+    searchResults.getNoMatchesErrorMessage()
+      .should('have.css', 'color', searchResultsData.error.cssRequirements.color)
+      .and('have.text', searchResultsData.error.text);
+  });
+
   it("TC_14.002.15 | Verify suggestions in the search box", () => {
     dashboardPage.clickNewItemMenuLink();
     newJobPage
@@ -119,4 +135,33 @@ describe('US_14.002 | Header > Search Box', () => {
 
     freestyleProjectPage.getJobHeadline().should("have.text", "Project TC_14.002.15_A");
   });
+
+  it('TC_14.002.02| Verify error message appears when no matches found', () => {
+    header
+      .typeSearchTerm(searchTermNoMatches)
+      .verifyAutoCompletionNotVisible()
+      .searchTerm()
+    searchResults.getNoMatchesErrorMessage()
+      .should('contain', searchResultsData.error.text)
+      .and('have.css', 'color', searchResultsData.error.cssRequirements.color)
+  });
+  
+  it('TC_14.002.13 | Verify auto-fill suggestions contain the search term', () => {
+    cy.log('create a job')
+    dashboardPage
+      .clickNewItemMenuLink()
+    newJobPage
+      .typeNewItemName(project.name)
+      .selectFolder() 
+      .clickOKButton()
+    folderPage.clickSaveBtn()  
+
+    cy.log('start search')
+    header
+      .typeSearchTerm(project.name.slice(0,4))
+      .getSearchAutofillSuggestionList().each(($row) => {
+        cy.wrap($row).invoke('text').should('contain', project.name.slice(0,4))
+      })
+  });
+
 });

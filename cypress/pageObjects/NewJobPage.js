@@ -11,6 +11,12 @@ class NewJobPage {
     getUnsaveItemInvalidName = () => cy.get("#itemname-invalid").contains(/is an unsafe character/);
     getEmptyItemInvalidName = () => cy.get("#itemname-required");
     getFolferType = () => cy.get('.label').contains('Folder');
+    getOrganizationFolderType = () => cy.get('[class="jenkins_branch_OrganizationFolder"]');
+    getSaveButton = () => cy.get('button[name="Submit"]');
+    getAllItemsList = () => cy.get('#items li')
+    getUrlConfigurePageField = () => cy.location('href');
+    getBreadcrumbsListItem = () => cy.get("[aria-current='page']");
+  
 
     typeNewItemName (prjName) {
         this.getJobNameField().type(prjName);
@@ -45,6 +51,32 @@ class NewJobPage {
     selectPipelineProject() {
         this.getPipelinePrjType().click()
         return this
+    }
+
+    selectOrganizationFolder() {
+        this.getOrganizationFolderType().click();
+        return this
+    }
+
+    clickSaveButton() {
+        this.getSaveButton().click();
+        return this;
+    }
+    
+     chooseRandomItemFromList() {
+        this.getAllItemsList().then((items) => {
+            const randomIndex = Math.floor(Math.random() * items.length);
+            cy.wrap(items).eq(randomIndex).click(); 
+        }).then(() => this);
+        return this;   
+    }
+    
+     chooseRandomItemFromList() {
+        this.getAllItemsList().then((items) => {
+            const randomIndex = Math.floor(Math.random() * items.length);
+            cy.wrap(items).eq(randomIndex).click(); 
+        }).then(() => this);
+        return this;   
     }
 
 };

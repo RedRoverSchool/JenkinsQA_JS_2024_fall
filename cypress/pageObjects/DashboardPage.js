@@ -7,6 +7,8 @@ import FreestyleProjectPage from "./FreestyleProjectPage";
 
 class DashboardPage {
 
+  getDashboardBreadcrumb = () => cy.get('a[href="/"].model-link');
+  getDashboardBreadcrumbChevron = () => cy.get('a[href="/"] .jenkins-menu-dropdown-chevron');
   getNewItemLink = () => cy.get('a[href="/view/all/newJob"]');
   getCreateJobButton = () => cy.get('a[href="newJob"]').contains("Create a job");
   getMainPanel = () => cy.get("div#main-panel");
@@ -20,13 +22,34 @@ class DashboardPage {
   getAllJobNames = () => cy.get('.jenkins-table__link span')
   getLogOutButton = () => cy.get('a[href="/logout"]')
   getDeleteProjectDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item ').contains('Delete Project');
+  getDeleteOrganizationFolderDropdownMenuItem = () => cy.get('[class="jenkins-dropdown__item "]').contains('Delete Organization Folder');
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
+  getWelcomeToJenkinsHeadline = () => cy.get('.empty-state-block h1');
   getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
   getMoveTheProject = () => cy.get('a[href*="move"]');
+  getJobHeadline = () => cy.get('#main-panel h1');
+  getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
+  getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');
 
+  hoverDashboardDropdownChevron() {
+    this.getDashboardBreadcrumb().realHover()
+    return this
+  }
 
+  clickDashboardDropdownChevron() {
+    this.getDashboardBreadcrumbChevron().click()
+    return this
+  }
 
+  selectNewItemFromDashboardChevron() {
+    this.getJobTableDropdownItem().each(($els) => {
+      let eText = $els.text().trim()
+      if (eText == 'New Item') { cy.wrap($els).click() }
+  });
+    return new NewJobPage()
+  }
+  
   clickNewItemMenuLink () {
     this.getNewItemLink().click({ force: true });
     return new NewJobPage();
@@ -95,7 +118,22 @@ class DashboardPage {
   }
 
   clickSubmitDeletingButton() {
-    this.getSubmitProjectDeletingButton().click()
+    this.getSubmitProjectDeletingButton().click();
+    return this;
+  }
+
+  clickDeleteOrganizationFolderDropdownMenuItem() {
+    this.getDeleteOrganizationFolderDropdownMenuItem().click();
+    return this;
+  }
+
+  clickCreateJobLink() {
+    this.getCreateJobButton().click();
+    return this;
+  }
+
+  clickRenameFolderDropdownMenuItem() {
+    this.getRenameFolderDropdownMenuItem().click();
     return this
   }
 
@@ -103,6 +141,11 @@ class DashboardPage {
     this.getMoveTheProject().click()
     return FreestyleProjectPage
   }
+  clickRenameProjectDropdownMenuItem() {
+    this.getRenameProjectDropdownMenuItem().click();
+    return this;
+  }
+
 };
 
 export default DashboardPage;
