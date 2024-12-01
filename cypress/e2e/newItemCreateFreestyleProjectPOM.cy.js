@@ -137,5 +137,28 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
     
     });
 
-});
+    it('TC_00.001.04 | Verify a friendly reminder appeared when attempting to create a new Freestyle Project without a name', function () {
 
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.selectFreestyleProject();
+
+        newJobPage.getEmptyNameFieldReminder()
+                  .should('have.text', message.newItem.emptyNameFieldReminder);
+
+    });
+
+    it('TC_00.001.05 | Verify a description can be added when creating a new Freestyle Project', function () {
+        
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.name)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        freestyleProjectPage.typeJobDescription(project.description)
+                            .clickSaveButton();
+
+        freestyleProjectPage.getJobDescription()
+                            .should('have.text', project.description);
+
+    });
+
+});
