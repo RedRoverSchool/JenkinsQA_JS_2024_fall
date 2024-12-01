@@ -8,8 +8,10 @@ class FolderPage extends Header {
     getFolderNameOnMainPanel = () => cy.get("#main-panel h1");
     getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
     getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
-    getNewNameField = () => cy.get('input[name="newName"]')
-    getFolderUrl = () => cy.url({ decode: true })
+    getNewNameField = () => cy.get('input[name="newName"]');
+    getFolderUrl = () => cy.url({ decode: true });
+    getProjectName = () => cy.get('*.jenkins-table__link span');
+
 
     clickSaveBtn () {
         this.getSaveBtn().click();
