@@ -20,4 +20,15 @@ describe('US_13.003 | User > Config', () => {
         userPage.getUserAvatar().should('be.visible');
         userPage.getUserDescription().should('have.text', userDescription);
     })
+
+    it("TC_13.003.01 | Edit the profile description from the account settings page by clicking on your username", () => {
+        header.clickUserName();
+        userPage
+          .clickEditDescriptionBtn()
+          .clearUserDescriptionOnStatus()
+          .typeUserDescriptionOnStatus(userDescription)
+          .clickOnSaveBtn();
+        userPage.getUserDescription().should("have.text", userDescription);
+      });
+
 })
