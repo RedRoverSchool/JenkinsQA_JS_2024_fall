@@ -69,4 +69,29 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
 
         cy.url({ decode: true }).should('include', `/job/${project.name}/job/${project.newName}`);
     });
+
+    it('TC_01.006.08 | Successful movement of the project from the project page to the folder', () => {
+        cy.log('Precondition: create a folder and project');
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.folderName)
+            .selectFolder()
+            .clickOKButton();
+        header.clickJenkinsLogo();
+
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.projectName)
+            .selectFreestyleProject()
+            .clickOKButton();
+        header.clickJenkinsLogo();
+
+        cy.log('Steps');
+        dashboardPage.openProjectPage(project.projectName);
+        freestyleProjectPage.clickMoveMenuItem()
+            .selectNewProjectDestination(`/${project.folderName}`)
+            .clickMoveButton();
+        header.clickJenkinsLogo();
+        dashboardPage.openProjectPage(project.folderName);
+
+        folderPage.getProjectName().should('have.text', project.projectName);
+    });
 });
