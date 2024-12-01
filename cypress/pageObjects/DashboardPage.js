@@ -29,6 +29,7 @@ class DashboardPage {
   getJobHeadline = () => cy.get('#main-panel h1');
   getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
   getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');
+  getDeleteProjectDialogBox = () => cy.get('dialog.jenkins-dialog');
 
   hoverDashboardDropdownChevron() {
     this.getDashboardBreadcrumb().realHover()
