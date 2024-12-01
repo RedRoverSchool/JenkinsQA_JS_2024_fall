@@ -18,6 +18,7 @@ const header = new Header();
 const folderName = faker.commerce.product();
 
 describe('US_00.001 | New item > Create Freestyle Project', function () {
+
     let project = genData.newProject();
 
     it('TC_00.001.19 | New freestyle project is created if user enter projects name, choose project type and save it', () => {
@@ -34,7 +35,6 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
             .and('have.text', folderName);
 
     });
-
 
     it('TC_00.001.10 | Create Freestyle Project using the "New Item" button', () => {
         
@@ -83,7 +83,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
             .and("have.text", project.name);
     });
   
-      it('TC_00.001.07 | Verify that duplicate names are not accepted during project creation', function () {
+    it('TC_00.001.07 | Verify that duplicate names are not accepted during project creation', function () {
         
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(folderName)
@@ -101,9 +101,9 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         newJobPage.getOKButton()
                   .should('be.disabled')
                   .and('be.visible');
-  });
+    });
 
-it('TC_00.001.03 | Create a new Freestyle Project using the "New Item" button from the Dashboard', function () {
+    it('TC_00.001.03 | Create a new Freestyle Project using the "New Item" button from the Dashboard', function () {
         dashboardPage.clickNewItemMenuLink();
         newJobPage
             .typeNewItemName(project.name)
@@ -114,14 +114,28 @@ it('TC_00.001.03 | Create a new Freestyle Project using the "New Item" button fr
         freestyleProjectPage.getBreadcrumbBar().should('contain', project.name);
     });
 
-it('TC_00.001.14 | Create Freestyle Project from the Dashboard Menu', function () {
+    it('TC_00.001.14 | Create Freestyle Project from the Dashboard Menu', function () {
 
-    dashboardPage.clickNewItemMenuLink();
-    newJobPage.typeNewItemName(project.name)
-                .selectFreestyleProject()
-                .clickOKButton()
-                .clickSaveButton();
-    freestyleProjectPage.getJobHeadline().should("have.text", project.name);
-    });     
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.name)
+                  .selectFreestyleProject()
+                  .clickOKButton()
+                  .clickSaveButton();
+        freestyleProjectPage.getJobHeadline().should("have.text", project.name);
+    });
+
+    it('TC_00.001.02 | Verify a new freestyle project can be created from the Dahsboard page', function () {
+
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.name)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        freestyleProjectPage.clickSaveButton();
+
+        freestyleProjectPage.getJobHeadline()
+                            .should('have.text', project.name);
+    
+    });
+
 });
 
