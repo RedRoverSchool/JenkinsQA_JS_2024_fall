@@ -12,12 +12,6 @@ class FolderPage extends Header {
     getNewNameField = () => cy.get('input[name="newName"]');
     getFolderUrl = () => cy.url({ decode: true });
 
-    getNewNameField = () => cy.get('input[name="newName"]');
-    getFolderUrl = () => cy.url({ decode: true });
-    getProjectName = () => cy.get('*.jenkins-table__link span');
-
-
-
     clickSaveBtn () {
         this.getSaveBtn().click();
         return this;
