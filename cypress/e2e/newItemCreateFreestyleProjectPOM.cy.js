@@ -9,6 +9,7 @@ import Header from '../pageObjects/Header';
 
 import { newItem } from '../fixtures/messages.json'
 import genData from "../fixtures/genData";
+import message from "../fixtures/messages.json"
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
@@ -141,7 +142,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
 
         dashboardPage.clickNewItemMenuLink();
         newJobPage.selectFreestyleProject();
-
+        
         newJobPage.getEmptyNameFieldReminder()
                   .should('have.text', message.newItem.emptyNameFieldReminder);
 

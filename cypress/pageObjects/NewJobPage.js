@@ -17,6 +17,7 @@ class NewJobPage {
     getUrlConfigurePageField = () => cy.location('href');
     getBreadcrumbsListItem = () => cy.get("[aria-current='page']");
     configurePagePipelineButton = () => cy.get('button[data-section-id="pipeline"]');
+    getEmptyNameFieldReminder = () => cy.get('div[class$="validation-message"]');
   
 
     typeNewItemName (prjName) {
