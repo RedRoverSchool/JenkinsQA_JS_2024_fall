@@ -19,6 +19,7 @@ const folderPage = new FolderPage();
 
 describe('US_01.006 | FreestyleProject > Move project', () => {
     let project = genData.newProject();
+    let folder = genData.newProject();
 
     it('TC_01.006.06 | Choose from a list of existing folders', () => {
         context('should create 5 folders and verify they exist', () => {
@@ -95,4 +96,33 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
 
         cy.url({ decode: true }).should('include', `/job/${project.name}/job/${project.newName}`);
     });
+
+    it("RF_01.006.07 Verify user is able to move a project from the Project Page", () => {
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.name)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        freestyleProjectPage.clickSaveButton();
+        header.clickJenkinsLogo();
+    
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(folder.name)
+                  .selectFolder()
+                  .clickOKButton();
+        freestyleProjectPage.clickSaveButton();
+        header.clickJenkinsLogo();    
+    
+    dashboardPage.openProjectPage(project.name);
+    freestyleProjectPage.clickMoveMenuItem()
+                        .selectNewProjectDestination(`Jenkins » ${folder.name}`)
+                        .clickMoveButton();
+    header.clickJenkinsLogo();
+
+    dashboardPage.openProjectPage(folder.name);
+    folderPage.getProjectName()
+              .contains(project.name)
+              .should('be.visible');
+     
+    });
+
 });

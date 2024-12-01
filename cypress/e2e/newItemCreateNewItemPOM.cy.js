@@ -160,4 +160,27 @@ describe("US_00.000 | New Item > Create New item", () => {
                   
         dashboardPage.getJobTable().should('contain.text', randomItemName).and('be.visible');
     })
+
+    it('TC_00.000.12 | Verify redirection to the configure page for the selected item type after clicking "OK"', () => {
+
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(randomItemName)
+                  .selectPipelineProject()
+                  .clickOKButton();
+
+        newJobPage.getUrlConfigurePageField().should('include', '/configure');
+        newJobPage.configurePagePipelineButton().should('be.visible');
+    })
+
+    it('TC_00.000.13 | Verify that after saving, new item is present on dashboard', () => {
+
+        dashboardPage.clickNewItemMenuLink()
+                     .typeNewItemName(randomItemName)
+                     .selectFreestyleProject()
+                     .clickOKButton()
+                     .clickSaveButton();
+        header.clickJenkinsLogo();
+
+        dashboardPage.getJobTable().should('contain.text', randomItemName).and('be.visible');
+    })
 });
