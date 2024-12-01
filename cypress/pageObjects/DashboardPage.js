@@ -3,6 +3,7 @@
 import NewJobPage from "./NewJobPage";
 import ManageJenkinsPage from "./ManageJenkinsPage";
 import LoginPage from "./LoginPage"
+import FreestyleProjectPage from "./FreestyleProjectPage";
 
 class DashboardPage {
 
@@ -22,6 +23,7 @@ class DashboardPage {
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
   getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
+  getMoveTheProject = () => cy.get('a[href*="move"]');
 
 
 
@@ -95,6 +97,11 @@ class DashboardPage {
   clickSubmitDeletingButton() {
     this.getSubmitProjectDeletingButton().click()
     return this
+  }
+
+  clickMoveTheProject() {
+    this.getMoveTheProject().click()
+    return FreestyleProjectPage
   }
 };
 

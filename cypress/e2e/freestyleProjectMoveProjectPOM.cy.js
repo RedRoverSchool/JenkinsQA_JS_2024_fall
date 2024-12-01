@@ -8,11 +8,13 @@ import Header from '../pageObjects/Header';
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 
 import newJobPageData from "../fixtures/newJobPageData.json";
+import FolderPage from "../pageObjects/FolderPage";
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const header = new Header();
 const freestyleProjectPage = new FreestyleProjectPage();
+const folderPage = new FolderPage();
 
 describe('US_01.006 | FreestyleProject > Move project', () => {
 
@@ -45,5 +47,29 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
 
         freestyleProjectPage.getProjectInfoSection().should('contain', `Full project name: ${selectedFolder}/${newJobPageData.projectName}`)
     });
+    it.only('TC_01.006.05 | Move project from Dashboard to Folder', () => {
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(newJobPageData.projectName)
+            .selectFreestyleProject()
+            .clickOKButton()
 
+        freestyleProjectPage.clickSaveButton();
+        header.clickJenkinsLogo();
+
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(newJobPageData.folderName)
+                  .selectFolder()
+                  .clickOKButton()
+        header.clickJenkinsLogo();
+
+        dashboardPage.openDropdownForProject(newJobPageData.projectName)
+                     .clickMoveTheProject()
+        freestyleProjectPage.clickMoveMenuItem()
+                     .selectNewProjectDestination(`/${newJobPageData.folderName}`)
+                     .clickMoveButton()
+        header.clickJenkinsLogo()
+              .openProjectPage(newJobPageData.folderName);
+        
+        folderPage.getProjectName().should('have.text', newJobPageData.projectName)
+    });
 });

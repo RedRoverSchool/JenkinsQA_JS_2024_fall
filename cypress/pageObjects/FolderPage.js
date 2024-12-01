@@ -6,6 +6,7 @@ class FolderPage extends Header {
     getTitleConfiguration = () => cy.get("#side-panel h1");
     getFolderNameOnMainPanel = () => cy.get("#main-panel h1");
     getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
+    getProjectName = () => cy.get('.jenkins-table__link > span');
 
     clickSaveBtn () {
         this.getSaveBtn().click();
@@ -22,8 +23,6 @@ class FolderPage extends Header {
         this.getNewItemMenuOption().click();
         return this;
     }
- 
-
 };
 
 export default FolderPage;
