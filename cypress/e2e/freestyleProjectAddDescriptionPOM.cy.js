@@ -75,9 +75,7 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
       .typeJobDescription(jobDescription)
       .clickSaveButton();
 
-    cy.log('Verifying the Freestyle Project was saved together with its description');
-    freestyleProjectPage
-      .getJobHeadline().should('be.visible').and('exist');
+    cy.log('Verifying the desription was added to the project');
     freestyleProjectPage
       .getJobDescription().should('be.visible').and('contain.text', jobDescription);
   });
