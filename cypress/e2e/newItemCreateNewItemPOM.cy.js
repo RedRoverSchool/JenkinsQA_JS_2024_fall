@@ -171,4 +171,16 @@ describe("US_00.000 | New Item > Create New item", () => {
         newJobPage.getUrlConfigurePageField().should('include', '/configure');
         newJobPage.configurePagePipelineButton().should('be.visible');
     })
+
+    it('TC_00.000.13 | Verify that after saving, new item is present on dashboard', () => {
+
+        dashboardPage.clickNewItemMenuLink()
+                     .typeNewItemName(randomItemName)
+                     .selectFreestyleProject()
+                     .clickOKButton()
+                     .clickSaveButton();
+        header.clickJenkinsLogo();
+
+        dashboardPage.getJobTable().should('contain.text', randomItemName).and('be.visible');
+    })
 });
