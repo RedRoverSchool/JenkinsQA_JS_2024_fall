@@ -24,7 +24,7 @@ class FreestyleProjectPage {
     getRenameButtonSubmit = () => cy.get('button.jenkins-submit-button');
     getBreadcrumbBar = () => cy.get('#breadcrumbBar');
 
-    getHeaderOnRename = () => cy.get("#main-panel h1");
+    getHeaderOnRename = () => cy.get("div h1");
     getErrorMessageParagraph = () => cy.get('p')
 
     clickSaveButton() {

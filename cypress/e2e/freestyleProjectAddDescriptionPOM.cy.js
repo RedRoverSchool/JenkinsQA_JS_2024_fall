@@ -8,7 +8,7 @@ import NewJobPage from "../pageObjects/NewJobPage";
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 
 const dashboardPage = new DashboardPage();
-const newJobPage = new NewJobPage(); 
+const newJobPage = new NewJobPage();
 const freestyleProjectPage = new FreestyleProjectPage();
 const jobDescription = faker.lorem.sentence();
 
@@ -62,7 +62,7 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
       .typeJobDescription(project.newDescription)
       .clickSaveButton();
 
-      freestyleProjectPage
+    freestyleProjectPage
       .getJobDescription()
       .should("be.visible")
       .and("have.text", project.newDescription);
@@ -85,8 +85,8 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
   it('TC_01.001.09 | Description is shown on project page', () => {
 
     freestyleProjectPage
-        .typeJobDescription(jobDescription)
-        .clickSaveButton();
+      .typeJobDescription(jobDescription)
+      .clickSaveButton();
 
     freestyleProjectPage.getJobDescription().should('contain.text', jobDescription)
   });
@@ -94,14 +94,14 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
   it('TC_01.001.07 | It is possible to add description on project update', () => {
 
     freestyleProjectPage.typeJobDescription(project.description)
-                        .clickSaveButton();
-    freestyleProjectPage.getHeaderOnRename()
-                        .should("have.text", project.name);
+      .clickSaveButton();
+    freestyleProjectPage.getJobHeadline()
+      .should("have.text", project.name);
     freestyleProjectPage.clickConfigureLink();
     cy.url().should('include', '/configure');
     freestyleProjectPage.typeJobDescription(project.newDescription)
-                        .clickSaveButton();
+      .clickSaveButton();
 
-    freestyleProjectPage.getJobDescription().should("have.text", project.newDescription); 
+    freestyleProjectPage.getJobDescription().should("have.text", project.newDescription);
   });
 });
