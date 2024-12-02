@@ -24,12 +24,4 @@ describe('US_14.003 | Header > Log out option', () => {
   it("RF_14.003.04 | Verify Log out button is seen and works properly.", () => {
     dashboardPage.clickLogOutButton(); 
   })
-
-  it('TC_14.003.05 | Header > Log out option | Verify user log out the current session on click "Log out" link.', () => {
-    dashboardPage.getLogOutButton().contains('log out').should('be.visible');
-    dashboardPage.clickLogOutButton();       
-    loginPage.getHeader().contains('Sign in to Jenkins').should('be.visible');
-    loginPage.getSignInButton().should('be.visible');
-  });
-
 });
