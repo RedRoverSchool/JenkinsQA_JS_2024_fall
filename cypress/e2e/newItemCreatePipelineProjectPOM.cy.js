@@ -99,4 +99,26 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
     newJobPage  
       .getUrlConfigurePageField().should('include', project.name)
   })
+
+  it.only('TC_00.002.007 | New Pipeline Project check Item name valid', () => {
+    dashboardPage
+      .clickNewItemMenuLink()
+     for (let i = 0; i < allKeys.projectNameSpecialSymbols.length; i++){
+      newJobPage
+      .clearItemNameField()
+      .verifyItemInvalidNameMessageNotExist()
+      .typeNewItemName(allKeys.projectNameSpecialSymbols[i])
+      .verifyItemInvalidNameMessageExist()
+      .getItemNameInvalidErrorMessage()
+      .should('have.text', `» ‘${allKeys.projectNameSpecialSymbols[i]}’ is an unsafe character`)
+      .and('have.css', 'color', errorMessageColor)
+    }
+    newJobPage
+      .clearItemNameField()
+      .typeNewItemName(allKeys.projectNameSpecialSymbolDot)
+      .verifyItemInvalidNameMessageExist()
+      .getItemNameInvalidErrorMessage()
+      .should('have.text', newItem.itemNameDotWarningMessage)
+      .and('have.css', 'color', errorMessageColor)        
+})
 });
