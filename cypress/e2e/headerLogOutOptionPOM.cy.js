@@ -31,4 +31,14 @@ describe('US_14.003 | Header > Log out option', () => {
     loginPage.getHeader().should('be.visible');
     loginPage.getSignInButton().should('be.visible');
   });
+
+  it('TC_14.003.06 | The logout process should complete within 1 second under normal conditions', () => {
+      const startTime = performance.now(); 
+      dashboardPage.clickLogOutButton();   
+      cy.url().should('include', '/login'); 
+      const endTime = performance.now();   
+      const duration = endTime - startTime;
+      expect(duration).to.be.lessThan(1000);
+      cy.log(`Logout process completed in ${duration} ms`);
+    });
 });
