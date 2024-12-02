@@ -24,5 +24,4 @@ describe('US_14.003 | Header > Log out option', () => {
   it("RF_14.003.04 | Verify Log out button is seen and works properly.", () => {
     dashboardPage.clickLogOutButton(); 
   })
-
 });
