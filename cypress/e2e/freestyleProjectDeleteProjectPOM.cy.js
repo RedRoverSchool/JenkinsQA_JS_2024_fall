@@ -81,6 +81,15 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         dashboardPage.getWelcomeToJenkinsHeadline().should('be.visible');
     })
 
+    it('TC_01.004.15 | Verify user cancels Project deletion', () => {
+
+        dashboardPage.hoverJobTitleLink()
+                     .clickJobTableDropdownChevron()
+                     .clickDeleteProjectDropdownMenuItem()
+                     .clickCancelDeletingButton()
+                     .getJobTable().should('contain.text', project.name).and('be.visible');
+    })
+
       it('TC_01.004.04 | FreestyleProject > Delete Project|Delete a project from the Project Page', () => {
         //Create a project
         dashboardPage.clickNewItemMenuLink()
