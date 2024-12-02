@@ -129,5 +129,11 @@ class FreestyleProjectPage {
             cy.go("back");
         });
     }
+
+    errorAssert() {
+        this.getHeaderOnRename().should('have.text', 'Error');
+        this.getErrorMessageParagraph().should('have.text', 'The new name is the same as the current name.');
+        return this;
+    }
 }
 export default FreestyleProjectPage;
