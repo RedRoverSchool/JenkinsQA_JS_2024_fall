@@ -42,9 +42,9 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
                             .clickCancelButton()
                             .clickDashboardBreadcrumbsLink()
         dashboardPage.getAllJobNames().should('have.text', project.name)
-      });
+    });
 
-      it('TC_01.004.10 | Verify Freestyle Project is deleted from Dashboard page', () => {
+    it('TC_01.004.10 | Verify Freestyle Project is deleted from Dashboard page', () => {
 
         cy.log('Deleting Freestyle project');
         dashboardPage.hoverJobTitleLink()
@@ -53,11 +53,11 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
                      .clickSubmitDeletingButton();
 
         cy.log('Verifying Freestyle Project is deleted from Dashboard page');
-        dashboardPage.getMainPanel().contains(randomItemName).should('not.exist')
+        dashboardPage.getMainPanel().contains(project.name).should('not.exist')
         dashboardPage.getWelcomeToJenkinsHeadline().should('be.visible');
-      })
+    })
 
-      it('TC_01.004.11 | Verify user is able to cancel project deleting', () => {
+    it('TC_01.004.11 | Verify user is able to cancel project deleting', () => {
         dashboardPage.hoverJobTitleLink()
                       .clickProjectChevronIcon(project.name)
                       .clickDeleteProjectDropdownMenuItem();
@@ -68,9 +68,29 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
           .getProjectName()
           .should("have.text", project.name)
           .and("be.visible");
-      }); 
+    });
+      
+    it('TC_01.004.14 | Verify Freestyle Project is deleted from Project page', () => {
 
-      it('TC_01.004.04 | FreestyleProject > Delete Project|Delete a project from the Project Page', () => {
+        dashboardPage.clickJobTitleLink();
+        freestyleProjectPage.getJobHeadline().should('be.visible').and('have.text', project.name);
+        freestyleProjectPage.clickDeleteMenuItem()
+                            .clickYesButton();
+
+        dashboardPage.getMainPanel().should('not.contain.value', project.name);
+        dashboardPage.getWelcomeToJenkinsHeadline().should('be.visible');
+    })
+
+    it('TC_01.004.15 | Verify user cancels Project deletion', () => {
+
+        dashboardPage.hoverJobTitleLink()
+                     .clickJobTableDropdownChevron()
+                     .clickDeleteProjectDropdownMenuItem()
+                     .clickCancelDeletingButton()
+                     .getJobTable().should('contain.text', project.name).and('be.visible');
+    })
+
+    it('TC_01.004.04 | FreestyleProject > Delete Project|Delete a project from the Project Page', () => {
         //Create a project
         dashboardPage.clickNewItemMenuLink()
         newJobPage.typeNewItemName(newJobPageData.projectName)
@@ -110,4 +130,20 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         dashboardPage.getCancelProjectDeletingButton().should('exist')
                                                       .and('not.be.disabled');                         
     });
-})
+
+    it('TC_01.004.12 | Verify confirmation message appears after attempting to delete a project', function () {
+        
+        dashboardPage.clickJobName(project.name);
+
+        freestyleProjectPage.clickDeleteMenuItem();
+
+        freestyleProjectPage.getConfirmationMessageDialog()
+                            .should('be.visible');
+        freestyleProjectPage.getConfirmationMessageTitle()
+                            .should('have.text', confirmationMessage.title);
+        freestyleProjectPage.getConfirmationMessageQuestion()
+                            .should('have.text', `${confirmationMessage.question} ‘${project.name}’?`);
+
+    });
+
+});

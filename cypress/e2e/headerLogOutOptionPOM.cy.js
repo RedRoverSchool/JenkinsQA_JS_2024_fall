@@ -25,4 +25,10 @@ describe('US_14.003 | Header > Log out option', () => {
     dashboardPage.clickLogOutButton(); 
   })
 
+  it('RF_14.003.05 | Header > Log out option | Verify user log out the current session on click "Log out" link.', () => {
+    dashboardPage.getLogOutButton().should('have.text', 'log out');
+    dashboardPage.clickLogOutButton();        
+    loginPage.getHeader().should('be.visible');
+    loginPage.getSignInButton().should('be.visible');
+  });
 });

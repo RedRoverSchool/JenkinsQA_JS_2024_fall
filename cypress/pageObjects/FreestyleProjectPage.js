@@ -23,6 +23,9 @@ class FreestyleProjectPage {
     getNewNameField = () => cy.get('[name="newName"]');
     getRenameButtonSubmit = () => cy.get('button.jenkins-submit-button');
     getBreadcrumbBar = () => cy.get('#breadcrumbBar');
+    getConfirmationMessageDialog = () => cy.get('.jenkins-dialog');
+    getConfirmationMessageTitle = () => cy.get('.jenkins-dialog__title');
+    getConfirmationMessageQuestion = () => cy.get('.jenkins-dialog__contents');
 
     getHeaderOnRename = () => cy.get("div h1");
     getErrorMessageParagraph = () => cy.get('p')
