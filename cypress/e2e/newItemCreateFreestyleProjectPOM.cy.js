@@ -148,5 +148,18 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
 
     });
 
-});
+    it('TC_00.001.05 | Verify a description can be added when creating a new Freestyle Project', function () {
+        
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.name)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        freestyleProjectPage.typeJobDescription(project.description)
+                            .clickSaveButton();
 
+        freestyleProjectPage.getJobDescription()
+                            .should('have.text', project.description);
+
+    });
+
+});
