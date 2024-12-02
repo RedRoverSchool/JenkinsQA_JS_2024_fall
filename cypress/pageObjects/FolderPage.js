@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
+
 import DashboardPage from "./DashboardPage";
 import Header from "./Header";
+import NewJobPage from "./NewJobPage";
 
 class FolderPage extends Header {
     getSaveBtn = () => cy.get(".jenkins-submit-button");
@@ -11,6 +13,9 @@ class FolderPage extends Header {
     getProjectName = () => cy.get('.jenkins-table__link > span');
     getNewNameField = () => cy.get('input[name="newName"]');
     getFolderUrl = () => cy.url({ decode: true });
+    getCreateAJobLink = () => cy.get('a[href="newJob"]');
+
+
 
     clickSaveBtn () {
         this.getSaveBtn().click();
@@ -45,6 +50,11 @@ class FolderPage extends Header {
 
     verifyFolderUrl(folderName) {
         this.getFolderUrl().should('contain', folderName)
+    }
+
+    clickCreateAJobLink () {
+        this.getCreateAJobLink().click()
+        return new NewJobPage();
     }
  
 };
