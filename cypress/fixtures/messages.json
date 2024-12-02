@@ -11,5 +11,17 @@
 
     "searchSettings": {
         "noResultsError": "No results"
-}
+    },
+
+    "renameItem": {
+        "sameNameError": "The new name is the same as the current name.",
+        "itemNameIsAlreadyInUse": "The name “${project2Name}” is already in use.",
+        "emptyNameError": "No name is specified",
+        "specialChars": "!@#$%^*|[]\\:;?/",
+        "specialCharInNameError": "‘${char}’ is an unsafe character",
+        "nameEndsWithDotError": "A name cannot end with ‘.’"
+    }
+
+    
+
 }
