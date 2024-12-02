@@ -13,6 +13,8 @@ class Header {
     getBreadcrumps = () => cy.get(".jenkins-breadcrumbs");
     getSearchAutofillSuggestionList = () => cy.get('li[style]:not([style="display: none;"])');
     getUserNameLink = () => cy.get('[href^="/user"]');
+    getUserDropdownMenu= () => cy.get(".jenkins-dropdown");  
+    getUserDropdownIcon = () => cy.get(".jenkins-dropdown__item__icon");
 
     typeSearchTerm (term) {
         this.getSearchField().type(term);
