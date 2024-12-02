@@ -25,10 +25,10 @@ class DashboardPage {
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
   getWelcomeToJenkinsHeadline = () => cy.get('.empty-state-block h1');
-  getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
   getJobHeadline = () => cy.get('#main-panel h1');
   getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
   getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');
+  getDeleteProjectDialogBox = () => cy.get('dialog.jenkins-dialog');
 
   hoverDashboardDropdownChevron() {
     this.getDashboardBreadcrumb().realHover()

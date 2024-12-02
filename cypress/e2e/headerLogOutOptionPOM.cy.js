@@ -3,11 +3,13 @@
 import DashboardPage from "../pageObjects/DashboardPage"
 import LoginPage from "../pageObjects/LoginPage";
 import dashboardPageData from "../fixtures/dashboardPageData.json"
+import Header from "../pageObjects/Header";
 
 describe('US_14.003 | Header > Log out option', () => {
 
   const dashboardPage = new DashboardPage();
   const loginPage = new LoginPage();
+  const header = new Header(); 
 
   it("TC_14.003.03 | All session-related cookies are cleared", () => {
     dashboardPage.getSessionCookie(dashboardPageData.sessionIdCookie).then((sessionCookie) => {
@@ -17,5 +19,16 @@ describe('US_14.003 | Header > Log out option', () => {
                   expect(sessionCookie).not.to.equal(updatedSessionCookie)
                 });
     });
+  });
+
+  it("RF_14.003.04 | Verify Log out button is seen and works properly.", () => {
+    dashboardPage.clickLogOutButton(); 
+  })
+
+  it('RF_14.003.05 | Header > Log out option | Verify user log out the current session on click "Log out" link.', () => {
+    dashboardPage.getLogOutButton().should('have.text', 'log out');
+    dashboardPage.clickLogOutButton();        
+    loginPage.getHeader().should('be.visible');
+    loginPage.getSignInButton().should('be.visible');
   });
 });
