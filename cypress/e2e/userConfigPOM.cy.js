@@ -3,7 +3,7 @@
 import Header from "../pageObjects/Header";
 import UserPage from "../pageObjects/UserPage";
 import { faker } from "@faker-js/faker";
-import { userDropdownLink } from '../fixtures/dashboardPageData';
+import { userDropdownLink } from '../fixtures/dashboardPageData'; 
 
 const userDescription = faker.lorem.paragraph();
 const header = new Header();
