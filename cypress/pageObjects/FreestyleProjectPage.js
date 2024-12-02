@@ -22,7 +22,8 @@ class FreestyleProjectPage {
     getNewNameField = () => cy.get('[name="newName"]');
     getRenameButtonSubmit = () => cy.get('button.jenkins-submit-button');
     getBreadcrumbBar = () => cy.get('#breadcrumbBar');
-
+    getBuildNowLink = () => cy.contains('a[href*="build"]', "Build Now");
+    getBuildHistoryTableRow = () => cy.get("tr.build-row");
 
     clickSaveButton() {
         this.getSaveButton().click();
@@ -102,6 +103,30 @@ class FreestyleProjectPage {
         this.getRenameButtonSubmit().click();
         return this;
     }
+
+    clickBuildNowLink() {
+        this.getBuildNowLink().click()
+        return this
+    };
+    
+    retrieveBuildNumberAndDate() {
+        let arrayBuildData = []
+        return this.getBuildHistoryTableRow()
+          .each(($row) => {
+            cy.wrap($row)
+              .find("td div")
+              .then(($td) => {
+                arrayBuildData.push({
+                  buildNumber: $td[0].innerText,
+                  buildDate: $td[2].innerText,
+                });
+              });
+          })
+          .then(() => {
+            return arrayBuildData
+          });
+    };
+
 }
 
 export default FreestyleProjectPage;
