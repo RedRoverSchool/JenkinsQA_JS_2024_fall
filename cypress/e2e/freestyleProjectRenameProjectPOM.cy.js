@@ -6,6 +6,7 @@ import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 import Header from "../pageObjects/Header";
 
 import genData from "../fixtures/genData"
+import { fr } from "@faker-js/faker";
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
@@ -101,4 +102,21 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
         .validateSpecialCharacters()
   });
     
+  it('TC_01.002.11 | Rename a project name from the Project Page', () => {
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage.typeNewItemName(project.name)
+              .selectFreestyleProject()
+              .clickOKButton()
+              .clickSaveButton();
+    freestyleProjectPage
+              .clickRenameButton()
+              .clearRenameField()
+              .typeNewName(project.newName)
+              .clickRenameButtonSubmit();
+
+    freestyleProjectPage
+              .getJobHeadline()
+              .should('have.text', project.newName);
+  })
+  
 });
