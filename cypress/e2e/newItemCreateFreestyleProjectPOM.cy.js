@@ -6,6 +6,7 @@ import DashboardPage from '../pageObjects/DashboardPage';
 import NewJobPage from '../pageObjects/NewJobPage';
 import FreestyleProjectPage from '../pageObjects/FreestyleProjectPage';
 import Header from '../pageObjects/Header';
+import FolderPage from '../pageObjects/FolderPage';
 
 import { newItem } from '../fixtures/messages.json'
 import genData from "../fixtures/genData";
@@ -15,6 +16,7 @@ const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const freestyleProjectPage = new FreestyleProjectPage();
 const header = new Header();
+const folderPage = new FolderPage();
 
 const folderName = faker.commerce.product();
 
@@ -159,6 +161,26 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
 
         freestyleProjectPage.getJobDescription()
                             .should('have.text', project.description);
+
+    });
+
+    it('TC_00.001.06 | Verify a new Freestyle Project can be created from a new Folder', function () {
+        
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.folderName)
+                  .selectFolder()
+                  .clickOKButton();
+        folderPage.clickSaveBtn()
+                  .clickCreateAJobLink();
+        newJobPage.typeNewItemName(project.name)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        freestyleProjectPage.clickSaveButton();
+
+        freestyleProjectPage.getJobHeadline()
+                            .should('have.text', project.name);
+        freestyleProjectPage.getProjectInfoSection()
+                            .should('include.text', `${project.folderName}/${project.name}`);
 
     });
 
