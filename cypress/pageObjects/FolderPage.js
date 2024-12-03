@@ -14,6 +14,8 @@ class FolderPage extends Header {
     getNewNameField = () => cy.get('input[name="newName"]');
     getFolderUrl = () => cy.url({ decode: true });
     getCreateAJobLink = () => cy.get('a[href="newJob"]');
+    getDescriptionField = () => cy.get('[name$="description"]');
+    getFolderDescription = () => cy.get('#view-message');
 
 
 
@@ -56,6 +58,11 @@ class FolderPage extends Header {
         this.getCreateAJobLink().click()
         return new NewJobPage();
     }
+
+    typeDescription (description) {
+        this.getDescriptionField().type(description);
+            return this;
+        };
  
 };
 

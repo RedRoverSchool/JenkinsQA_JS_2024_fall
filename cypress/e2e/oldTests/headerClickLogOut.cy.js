@@ -12,4 +12,11 @@ describe.skip('US_14.003| Header > Click Log out', () => {
 
         cy.get('#main-panel h1').should('be.visible').and('have.text', 'Sign in to Jenkins');
     });
+
+    it('TC_14.003.05 | Header > Log out option | Verify user log out the current session on click "Log out" link.', () => {
+        cy.get('[href="/logout"]').should('have.text', 'log out');
+        cy.get('[href="/logout"]').click();       
+        cy.get('h1').contains('Sign in to Jenkins').should('be.visible');
+        cy.get('button.jenkins-button--primary').should('be.visible');
+    });
 })
