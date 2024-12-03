@@ -16,6 +16,7 @@ const header = new Header();
 
 describe("US_01.002 | FreestyleProject > Rename Project", () => {
   let project = genData.newProject();
+  let project2 = genData.newProject();
 
   it.skip("TC_01.002.02 | Rename a project from the Project Page", () => {
     dashboardPage.clickNewItemMenuLink();
@@ -108,13 +109,11 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
   });
 
   it("TC_01.002-01 | User receives an Error when the new name is invalid", () => {
-    let project1Name = faker.commerce.productName();
-    let project2Name = faker.commerce.productName();
-
+  
     cy.log("precondition 1: creating project1");
     dashboardPage.clickNewItemMenuLink();
     newJobPage
-      .typeNewItemName(project1Name)
+      .typeNewItemName(project.longName)
       .selectFreestyleProject()
       .clickOKButton();
     header.clickJenkinsLogo();
@@ -122,13 +121,13 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.log("precondition 2: creating project2");
     dashboardPage.clickNewItemMenuLink();
     newJobPage
-      .typeNewItemName(project2Name)
+      .typeNewItemName(project2.longName)
       .selectFreestyleProject()
       .clickOKButton();
     header.clickJenkinsLogo();
 
     cy.log("step1: check error for the same name");
-    dashboardPage.openProjectPage(project1Name);
+    dashboardPage.openProjectPage(project.longName);
     freestyleProjectPage
       .clickRenameButton()
       .getWarningMessageOnRenamePage()
@@ -147,14 +146,14 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.go("back");
     freestyleProjectPage
       .clearRenameField()
-      .typeRenameField(project2Name)
+      .typeRenameField(project2.longName)
       .clickRenameButtonSubmit()
       .getHeaderOnRename()
       .should("have.text", "Error");
     cy.fixture("messages").then((messages) => {
       const message = messages.renameItem.itemNameIsAlreadyInUse.replace(
         "${project2Name}",
-        project2Name
+        project2.longName
       );
       freestyleProjectPage
         .getErrorMessageParagraph()
@@ -177,7 +176,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     messages.renameItem.specialChars.split("").forEach((char) => {
       freestyleProjectPage
         .clearRenameField()
-        .typeRenameField(project1Name + char)
+        .typeRenameField(project.longName + char)
         .clickRenameButtonSubmit()
         .getHeaderOnRename()
         .should("have.text", "Error");
@@ -196,7 +195,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.log("step6: rename with a value with a dot at the end");
     freestyleProjectPage
       .clearRenameField()
-      .typeRenameField(project1Name + ".")
+      .typeRenameField(project.longName + ".")
       .clickRenameButtonSubmit()
       .getHeaderOnRename()
       .should("have.text", "Error");
