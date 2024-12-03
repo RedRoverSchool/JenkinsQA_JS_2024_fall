@@ -99,9 +99,9 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
      
     });
 
-    it('RF_01.006.05 | Move project from the Dashboard to Folder', () => {
+    it.only('TC_01.006.05 | Move project from the Dashboard to Folder', () => {
         dashboardPage.clickNewItemMenuLink();
-        newJobPage.typeNewItemName(newJobPageData.projectName)
+        newJobPage.typeNewItemName(project.name)
                   .selectFreestyleProject()
                   .clickOKButton()
 
@@ -109,19 +109,19 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         header.clickJenkinsLogo();
 
         dashboardPage.clickNewItemMenuLink();
-        newJobPage.typeNewItemName(newJobPageData.folderName)
+        newJobPage.typeNewItemName(project.folderName)
                   .selectFolder()
                   .clickOKButton()
         header.clickJenkinsLogo();
 
-        dashboardPage.openDropdownForProject(newJobPageData.projectName)
+        dashboardPage.openDropdownForProject(project.name)
                      .clickMoveTheProjectButton()
         freestyleProjectPage.clickMoveMenuItem()
-                     .selectNewProjectDestination(`/${newJobPageData.folderName}`)
-                     .clickMoveButton()
+                            .selectNewProjectDestination(`/${project.folderName}`)
+                            .clickMoveButton()
         header.clickJenkinsLogo()
-              .openProjectPage(newJobPageData.folderName);
+              .openProjectPage(project.folderName);
         
-        folderPage.getProjectName().should('have.text', newJobPageData.projectName)
+        folderPage.getProjectName().should('have.text', project.name)
     });
 });
