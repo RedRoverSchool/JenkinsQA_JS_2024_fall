@@ -31,6 +31,7 @@ class DashboardPage {
   getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
   getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');
   getDeleteProjectDialogBox = () => cy.get('dialog.jenkins-dialog');
+  getAllIconsProjectRow = (projectName) => cy.get(`tr[id$='${projectName}'] svg`);
   getMyViewsLink = () => cy.get('[href="/me/my-views"]');
 
   hoverDashboardDropdownChevron() {
