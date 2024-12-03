@@ -65,7 +65,7 @@ describe("US_06.005 | Organization folder > Delete Organization Folder", () => {
       .should("not.contain.text", project.name);
   });
 
-  it.only('TC_06.005.04 | Delete Organization Folder', () =>{
+  it('TC_06.005.04 | Delete Organization Folder', () =>{
     organizationFolderPage
       .clickSideMenuDeleteLink()
       .clickOKButton();
