@@ -5,6 +5,7 @@ import NewJobPage from "../pageObjects/NewJobPage";
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 import Header from "../pageObjects/Header";
 
+
 import genData from "../fixtures/genData";
 
 const dashboardPage = new DashboardPage();
@@ -32,6 +33,7 @@ describe("US_16.002 | Dashboard > Create View", () => {
     header.clickJenkinsLogo();
   });
 
+
   it("TC_16.002.01 Create view from the Dashboard page", () => {
     dashboardPage.clickAddViewLink()
                  .typeViewName(view.name)
@@ -50,4 +52,5 @@ describe("US_16.002 | Dashboard > Create View", () => {
       header.clickJenkinsLogo;
       dashboardPage.getViewTab(view.name).should("be.visible");
   });
+
 });

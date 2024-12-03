@@ -2,7 +2,8 @@
     "newItem": {
         "emptyNameFieldReminder": "» This field cannot be empty, please enter a valid name",
         "newItemNameInvalidMessage": "» ‘<’ is an unsafe character",
-        "duplicateNotAllowedMessage": "» A job already exists with the name"
+        "duplicateNotAllowedMessage": "» A job already exists with the name",
+        "itemNameDotWarningMessage" : "» “.” is not an allowed name"
     },
 
     "search": {
@@ -11,5 +12,17 @@
 
     "searchSettings": {
         "noResultsError": "No results"
-}
+    },
+
+    "renameItem": {
+        "sameNameError": "The new name is the same as the current name.",
+        "itemNameIsAlreadyInUse": "The name “${project2Name}” is already in use.",
+        "emptyNameError": "No name is specified",
+        "specialChars": "!@#$%^*|[]\\:;?/",
+        "specialCharInNameError": "‘${char}’ is an unsafe character",
+        "nameEndsWithDotError": "A name cannot end with ‘.’"
+    }
+
+    
+
 }

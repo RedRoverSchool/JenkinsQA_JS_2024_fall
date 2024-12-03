@@ -65,6 +65,14 @@ class Header {
         this.getUserNameLink().click();
         return new UserPage()
     }
+
+    verifyAutoCompletionVisible (searchTerm) {
+        this.getSearchAutofillSuggestionList().each(($row) => {
+            cy.wrap($row).invoke('text').should('contain', searchTerm)
+          })
+        return this    
+    };
+    
 };
 
 export default Header;
