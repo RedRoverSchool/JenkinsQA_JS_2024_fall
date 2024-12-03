@@ -26,7 +26,8 @@ class FreestyleProjectPage {
     getConfirmationMessageDialog = () => cy.get('.jenkins-dialog');
     getConfirmationMessageTitle = () => cy.get('.jenkins-dialog__title');
     getConfirmationMessageQuestion = () => cy.get('.jenkins-dialog__contents');
-
+    getBuildNowLink = () => cy.contains('a[href*="build"]', "Build Now");
+    getBuildHistoryTableRow = () => cy.get("tr.build-row");
     getHeaderOnRename = () => cy.get("div h1");
     getErrorMessageParagraph = () => cy.get('p')
 
@@ -132,5 +133,29 @@ class FreestyleProjectPage {
             cy.go("back");
         });
     }
+
+    clickBuildNowLink() {
+        this.getBuildNowLink().click()
+        return this
+    };
+    
+    retrieveBuildNumberAndDate() {
+        let arrayBuildData = []
+        return this.getBuildHistoryTableRow()
+          .each(($row) => {
+            cy.wrap($row)
+              .find("td div")
+              .then(($td) => {
+                arrayBuildData.push({
+                  buildNumber: $td[0].innerText,
+                  buildDate: $td[2].innerText,
+                });
+              });
+          })
+          .then(() => {
+            return arrayBuildData
+          });
+    };
+    
 }
 export default FreestyleProjectPage;
