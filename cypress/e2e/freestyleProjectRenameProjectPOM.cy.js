@@ -102,6 +102,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
   });
 
   it('TC_01.002.07 | Verify duplicate names are rejected when renaming a project', () => {
+
     dashboardPage.clickNewItemMenuLink();
     newJobPage.typeNewItemName(project.name).selectFreestyleProject();
     newJobPage.clickOKButton();
@@ -110,7 +111,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     dashboardPage.clickJobTableDropdownChevron().clickRenameProjectDropdownMenuItem();
     freestyleProjectPage.clickRenameButtonSubmit();
 
-    freestyleProjectPage.errorAssert();
+    freestyleProjectPage.assertRenameError();
 })
     
 });

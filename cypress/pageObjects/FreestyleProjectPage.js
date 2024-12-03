@@ -130,7 +130,7 @@ class FreestyleProjectPage {
         });
     }
 
-    errorAssert() {
+    assertRenameError() {
         this.getHeaderOnRename().should('have.text', 'Error');
         this.getErrorMessageParagraph().should('have.text', 'The new name is the same as the current name.');
         return this;
