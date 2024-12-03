@@ -32,7 +32,7 @@ describe("US_16.002 | Dashboard > Create View", () => {
     header.clickJenkinsLogo();
   });
 
-  it("TC_16.002.01 Create global view from the Dashboard page", () => {
+  it("TC_16.002.01 Create view from the Dashboard page", () => {
     dashboardPage.clickAddViewLink()
                  .typeViewName(view.name)
                  .clickListViewRadio()
