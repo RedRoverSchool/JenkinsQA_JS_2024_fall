@@ -102,8 +102,8 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
     it('RF_01.006.05 | Move project from the Dashboard to Folder', () => {
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(newJobPageData.projectName)
-            .selectFreestyleProject()
-            .clickOKButton()
+                  .selectFreestyleProject()
+                  .clickOKButton()
 
         freestyleProjectPage.clickSaveButton();
         header.clickJenkinsLogo();
@@ -124,5 +124,4 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         
         folderPage.getProjectName().should('have.text', newJobPageData.projectName)
     });
-
 });
