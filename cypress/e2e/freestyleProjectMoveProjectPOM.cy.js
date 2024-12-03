@@ -125,7 +125,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
      
     });
 
-    it.only('RF_01.006.05 | Move project from the Dashboard to Folder', () => {
+    it('RF_01.006.05 | Move project from the Dashboard to Folder', () => {
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(newJobPageData.projectName)
             .selectFreestyleProject()
