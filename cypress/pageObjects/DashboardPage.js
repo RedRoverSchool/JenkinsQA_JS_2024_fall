@@ -3,7 +3,6 @@
 import NewJobPage from "./NewJobPage";
 import ManageJenkinsPage from "./ManageJenkinsPage";
 import LoginPage from "./LoginPage"
-import FreestyleProjectPage from "./FreestyleProjectPage";
 import MyViewsPage from "./MyViewsPage";
 
 class DashboardPage {
@@ -27,7 +26,6 @@ class DashboardPage {
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
   getWelcomeToJenkinsHeadline = () => cy.get('.empty-state-block h1');
-  getWelcomeToJenkins = () => cy.get('.empty-state-block h1');
   getMoveTheProject = () => cy.get('a[href*="move"]');
   getJobHeadline = () => cy.get('#main-panel h1');
   getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
@@ -142,7 +140,7 @@ class DashboardPage {
 
   clickMoveTheProjectButton() {
     this.getMoveTheProject().click()
-    return FreestyleProjectPage
+    return this;
   }
   clickRenameProjectDropdownMenuItem() {
     this.getRenameProjectDropdownMenuItem().click();
