@@ -3,6 +3,7 @@
 import NewJobPage from "./NewJobPage";
 import ManageJenkinsPage from "./ManageJenkinsPage";
 import LoginPage from "./LoginPage"
+import MyViewsPage from "./MyViewsPage";
 
 class DashboardPage {
 
@@ -25,10 +26,13 @@ class DashboardPage {
   getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
   getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
   getWelcomeToJenkinsHeadline = () => cy.get('.empty-state-block h1');
+  getMoveTheProject = () => cy.get('a[href*="move"]');
   getJobHeadline = () => cy.get('#main-panel h1');
   getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
   getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');
   getDeleteProjectDialogBox = () => cy.get('dialog.jenkins-dialog');
+  getAllIconsProjectRow = (projectName) => cy.get(`tr[id$='${projectName}'] svg`);
+  getMyViewsLink = () => cy.get('[href="/me/my-views"]');
 
   hoverDashboardDropdownChevron() {
     this.getDashboardBreadcrumb().realHover()
@@ -135,9 +139,18 @@ class DashboardPage {
     return this
   }
 
+  clickMoveTheProjectButton() {
+    this.getMoveTheProject().click()
+    return this;
+  }
   clickRenameProjectDropdownMenuItem() {
     this.getRenameProjectDropdownMenuItem().click();
     return this;
+  }
+
+  clickMyViewsLink() {
+    this.getMyViewsLink().click();
+    return new MyViewsPage();
   }
 
 };

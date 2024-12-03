@@ -66,8 +66,15 @@ class Header {
         this.getUserNameLink().click();
         return new UserPage()
     }
-
-    tabAndClickLogoutButton() {
+    
+    verifyAutoCompletionVisible (searchTerm) {
+        this.getSearchAutofillSuggestionList().each(($row) => {
+            cy.wrap($row).invoke('text').should('contain', searchTerm)
+          })
+        return this    
+    };
+    
+tabAndClickLogoutButton() {
         const getLogoutButton = 'a[href="/logout"]';
     
         for (let attempts = 0; attempts < 10; attempts++) {
@@ -82,7 +89,6 @@ class Header {
         };
         return new LoginPage();
       }
-
 };
 
 export default Header;
