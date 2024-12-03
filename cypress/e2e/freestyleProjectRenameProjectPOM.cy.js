@@ -3,19 +3,20 @@
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
-
-import { faker } from '@faker-js/faker';
+import Header from "../pageObjects/Header";
 
 import genData from "../fixtures/genData"
+import { fr } from "@faker-js/faker";
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const freestyleProjectPage = new FreestyleProjectPage();
+const header = new Header();
 
 describe("US_01.002 | FreestyleProject > Rename Project", () => {
-  const initialProjectName = faker.lorem.words(); 
-  const renamedProjectName = faker.lorem.words();
+
   let project = genData.newProject();
+
   it.skip("TC_01.002.02 | Rename a project from the Project Page", () => {
     dashboardPage.clickNewItemMenuLink();
     newJobPage
@@ -38,15 +39,15 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
   it('TC-01.002.06| Rename a project name from the Dashboard page', () => {
     
     dashboardPage.clickNewItemMenuLink();
-    newJobPage.typeNewItemName(initialProjectName).selectFreestyleProject();
+    newJobPage.typeNewItemName(project.name).selectFreestyleProject();
     newJobPage.clickOKButton();
     freestyleProjectPage.clickSaveButton().clickDashboardBreadcrumbsLink();
 
     dashboardPage.clickJobTableDropdownChevron().clickRenameProjectDropdownMenuItem();
     freestyleProjectPage.getNewNameField().click();
-    freestyleProjectPage.clearRenameField().typeRenameField(renamedProjectName);
+    freestyleProjectPage.clearRenameField().typeRenameField(project.newName);
     freestyleProjectPage.clickRenameButtonSubmit();
-    freestyleProjectPage.getJobHeadline().should('have.text', renamedProjectName);
+    freestyleProjectPage.getJobHeadline().should('have.text', project.newName);
   })
 
   it("TC_01.002.04 | Rename a project name from the Dashboard page", () => {
@@ -77,5 +78,45 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
         .getJobTitleLink()
         .should("contain", project.newName);
     });
+
+  it('TC_01.002.10 | Receive an Error when the new name is invalid', () => {
+
+    cy.log("Creating Freestyle Project");
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage
+        .typeNewItemName(project.name)
+        .selectFreestyleProject()
+        .clickOKButton()
+    freestyleProjectPage
+        .typeJobDescription(project.description)
+        .clickSaveButton();
+    header.clickJenkinsLogo()
+
+    cy.log("Steps")
+    dashboardPage
+        .openDropdownForProject(project.name)
+
+    dashboardPage.clickRenameFolderDropdownMenuItem()
+
+    freestyleProjectPage
+        .validateSpecialCharacters()
+  });
     
+  it('TC_01.002.11 | Rename a project name from the Project Page', () => {
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage.typeNewItemName(project.name)
+              .selectFreestyleProject()
+              .clickOKButton()
+              .clickSaveButton();
+    freestyleProjectPage
+              .clickRenameButton()
+              .clearRenameField()
+              .typeNewName(project.newName)
+              .clickRenameButtonSubmit();
+
+    freestyleProjectPage
+              .getJobHeadline()
+              .should('have.text', project.newName);
+  })
+  
 });

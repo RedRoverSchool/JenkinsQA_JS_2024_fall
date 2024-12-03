@@ -11,5 +11,12 @@
         "manage/",
         "me/my-views/view/all/"
     ],
-    "sessionIdCookie": "JSESSIONID"
+    "sessionIdCookie": "JSESSIONID",
+    
+    "userDropdownLink": [
+        "Build",
+        "Configure",
+        "My Views",
+        "Credentials"
+    ]
 }
