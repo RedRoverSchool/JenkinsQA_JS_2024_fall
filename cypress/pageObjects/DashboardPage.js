@@ -3,6 +3,7 @@
 import NewJobPage from "./NewJobPage";
 import ManageJenkinsPage from "./ManageJenkinsPage";
 import LoginPage from "./LoginPage"
+import MyViewsPage from "./MyViewsPage";
 
 class DashboardPage {
 
@@ -29,6 +30,7 @@ class DashboardPage {
   getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
   getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');
   getDeleteProjectDialogBox = () => cy.get('dialog.jenkins-dialog');
+  getMyViewsLink = () => cy.get('[href="/me/my-views"]');
 
   hoverDashboardDropdownChevron() {
     this.getDashboardBreadcrumb().realHover()
@@ -138,6 +140,11 @@ class DashboardPage {
   clickRenameProjectDropdownMenuItem() {
     this.getRenameProjectDropdownMenuItem().click();
     return this;
+  }
+
+  clickMyViewsLink() {
+    this.getMyViewsLink().click();
+    return new MyViewsPage();
   }
 
 };
