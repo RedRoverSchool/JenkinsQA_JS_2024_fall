@@ -19,7 +19,7 @@ describe.skip('US_13.003 | User > Config', ()=>{
         cy.get('#description').should('contains', /new description/);
     })
 
-    it('TC_13.003.03 | User > Config > Change the Appearance of user interface', () => {
+    it('TC_13.003.03 | Change the Appearance of user interface', () => {
         cy.get('#page-header .jenkins-menu-dropdown-chevron').click({force: true});
         cy.get(`a[href="/user/admin/configure"]`).click();
         cy.get(':nth-child(1) > .help-sibling > .app-theme-picker__item > label').click();
