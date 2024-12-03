@@ -12,7 +12,7 @@ const header = new Header();
 describe('US_08.001 | Build history > Start to build a project', () => {
 
     newInstance.filter(item => item !== 'Folder' && item !== 'Organization Folder' && item != 'Multibranch Pipeline')
-               .forEach((item, i) => {
+               .forEach(item => {
                      it(`TC_08.001.01 | Verify build status icon for "Not built" ${item} is shown on "Dashboard" page`, () => {
                         dashBoardPage.clickNewItemMenuLink();
                         newJobPage.clearItemNameField()
