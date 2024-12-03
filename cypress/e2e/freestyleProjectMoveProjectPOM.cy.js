@@ -124,4 +124,35 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         
         folderPage.getProjectName().should('have.text', project.name);
     });
+
+    it('TC_01.006.10 | Verify a project is moved to an existing folder from the Project page', () => {
+
+        cy.log('Creating a Freestyle project');
+        dashboardPage.clickCreateJobLink();
+        newJobPage.typeNewItemName(project.name)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        freestyleProjectPage.clickSaveButton();
+        header.clickJenkinsLogo();
+    
+        cy.log('Creating a Folder');
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.folderName)
+                  .selectFolder()
+                  .clickOKButton();
+        folderPage.clickSaveBtn();
+        header.clickJenkinsLogo();
+
+        cy.log('Moving the Freestyle project into the Folder');
+        dashboardPage.openProjectPage(project.name);
+        cy.url({ decode: true }).should('include', project.name);
+        freestyleProjectPage.clickMoveMenuItem()
+                            .selectNewProjectDestination(`/${project.folderName}`)
+                            .clickMoveButton();
+        header.clickJenkinsLogo();
+    
+        cy.log('Verifying that the project was moved to the folder');
+        dashboardPage.openProjectPage(project.folderName);
+        folderPage.getProjectName().should('contain.text', project.name).and('be.visible');
+    });
 });
