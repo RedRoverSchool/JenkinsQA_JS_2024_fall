@@ -101,6 +101,19 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     freestyleProjectPage
         .validateSpecialCharacters()
   });
+
+  it('TC_01.002.07 | Verify duplicate names are rejected when renaming a project', () => {
+
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage.typeNewItemName(project.name).selectFreestyleProject();
+    newJobPage.clickOKButton();
+    freestyleProjectPage.clickSaveButton().clickDashboardBreadcrumbsLink();
+
+    dashboardPage.clickJobTableDropdownChevron().clickRenameProjectDropdownMenuItem();
+    freestyleProjectPage.clickRenameButtonSubmit();
+
+    freestyleProjectPage.assertRenameError();
+})
     
   it('TC_01.002.11 | Rename a project name from the Project Page', () => {
     dashboardPage.clickNewItemMenuLink();

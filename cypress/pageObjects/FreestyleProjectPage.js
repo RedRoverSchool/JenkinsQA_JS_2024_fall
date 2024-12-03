@@ -134,6 +134,12 @@ class FreestyleProjectPage {
         });
     }
 
+    assertRenameError() {
+        this.getHeaderOnRename().should('have.text', 'Error');
+        this.getErrorMessageParagraph().should('have.text', 'The new name is the same as the current name.');
+        return this;
+    }
+
     clickBuildNowLink() {
         this.getBuildNowLink().click()
         return this
