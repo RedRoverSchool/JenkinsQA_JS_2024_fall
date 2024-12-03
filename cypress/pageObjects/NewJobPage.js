@@ -72,15 +72,18 @@ class NewJobPage {
         }).then(() => this);
         return this;   
     }
-    
-     chooseRandomItemFromList() {
-        this.getAllItemsList().then((items) => {
-            const randomIndex = Math.floor(Math.random() * items.length);
-            cy.wrap(items).eq(randomIndex).click(); 
-        }).then(() => this);
-        return this;   
+
+    verifyItemInvalidNameMessageExist() {
+        this.getItemNameInvalidErrorMessage()
+        .should('not.have.class', 'input-message-disabled');
+        return this;
     }
 
+    verifyItemInvalidNameMessageNotExist() {
+        this.getItemNameInvalidErrorMessage()
+        .should('have.class', 'input-message-disabled');
+        return this;
+    }          
 };
 
 export default NewJobPage;

@@ -30,6 +30,16 @@ const pipelinePage = new PipelinePage();
 let searchTermNoMatches = faker.string.alpha(10)
 let project = genData.newProject()
 
+function createFreestyleProject (jobName) {
+  dashboardPage.clickNewItemMenuLink()
+  newJobPage
+    .typeNewItemName(jobName)
+    .selectFreestyleProject()
+    .clickOKButton()
+  freestyleProjectPage
+    .clickSaveButton()
+};
+
 describe('US_14.002 | Header > Search Box', () => {
 
   it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search",() => {
@@ -161,6 +171,36 @@ describe('US_14.002 | Header > Search Box', () => {
       .typeSearchTerm(project.name.slice(0,4))
       .getSearchAutofillSuggestionList().each(($row) => {
         cy.wrap($row).invoke('text').should('contain', project.name.slice(0,4))
+      })
+  });
+
+  it("TC_14.002.16 | Finds a build by its number", () => {
+    cy.log('spy on build history call')
+    cy.intercept("GET", encodeURI(`/job/${project.name}/buildHistory/**`)).as(
+      "buildHistory"
+    );
+    cy.log("create a job and build it")
+    createFreestyleProject(project.name)
+    freestyleProjectPage
+      .clickBuildNowLink()
+    freestyleProjectPage
+      .clickBuildNowLink()
+
+    cy.log('wait till build history call is completed')
+    cy.wait("@buildHistory")
+
+    freestyleProjectPage
+      .retrieveBuildNumberAndDate().then((array) => {
+        array.forEach((el) => {
+          header
+            .typeSearchTerm(`${project.name} ${el.buildNumber}`)
+            .verifyAutoCompletionVisible(`${project.name} ${el.buildNumber}`)
+            .searchTerm()  
+          searchResults
+            .getTitle()
+              .should('contain', el.buildNumber)
+          cy.url().should('include', encodeURI(`/${project.name}/${el.buildNumber.slice(1)}`))   
+        })
       })
   });
 

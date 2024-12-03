@@ -25,4 +25,20 @@ describe('US_14.003 | Header > Log out option', () => {
     dashboardPage.clickLogOutButton(); 
   })
 
+  it('RF_14.003.05 | Header > Log out option | Verify user log out the current session on click "Log out" link.', () => {
+    dashboardPage.getLogOutButton().should('have.text', 'log out');
+    dashboardPage.clickLogOutButton();        
+    loginPage.getHeader().should('be.visible');
+    loginPage.getSignInButton().should('be.visible');
+  });
+
+  it('TC_14.003.06 | The logout process should complete within 1 second under normal conditions', () => {
+      const startTime = performance.now(); 
+      dashboardPage.clickLogOutButton();   
+      cy.url().should('include', '/login'); 
+      const endTime = performance.now();   
+      const duration = endTime - startTime;
+      expect(duration).to.be.lessThan(1000);
+      cy.log(`Logout process completed in ${duration} ms`);
+    });
 });

@@ -99,4 +99,29 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
      
     });
 
+    it('TC_01.006.05 | Move project from the Dashboard to Folder', () => {
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.name)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+
+        freestyleProjectPage.clickSaveButton();
+        header.clickJenkinsLogo();
+
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.folderName)
+                  .selectFolder()
+                  .clickOKButton();
+        header.clickJenkinsLogo();
+
+        dashboardPage.openDropdownForProject(project.name)
+                     .clickMoveTheProjectButton();
+        freestyleProjectPage.clickMoveMenuItem()
+                            .selectNewProjectDestination(`/${project.folderName}`)
+                            .clickMoveButton();
+        header.clickJenkinsLogo()
+              .openProjectPage(project.folderName);
+        
+        folderPage.getProjectName().should('have.text', project.name);
+    });
 });
