@@ -3,6 +3,7 @@
 import SearchResultsPage from "./SearchResultsPage";
 import DashboardPage from './DashboardPage';
 import UserPage from "./UserPage";
+import LoginPage from "./LoginPage";
 class Header {
 
     getSearchField = () => cy.get("#search-box");
@@ -65,7 +66,7 @@ class Header {
         this.getUserNameLink().click();
         return new UserPage()
     }
-
+    
     verifyAutoCompletionVisible (searchTerm) {
         this.getSearchAutofillSuggestionList().each(($row) => {
             cy.wrap($row).invoke('text').should('contain', searchTerm)
@@ -73,6 +74,21 @@ class Header {
         return this    
     };
     
+tabAndClickLogoutButton() {
+        const getLogoutButton = 'a[href="/logout"]';
+    
+        for (let attempts = 0; attempts < 10; attempts++) {
+          cy.realPress("Tab");
+    
+          cy.focused().then(($focusedElement) => {
+            if ($focusedElement.is(getLogoutButton)) {
+              cy.realPress("Enter");
+              return;
+            };
+          });
+        };
+        return new LoginPage();
+      }
 };
 
 export default Header;
