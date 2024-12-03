@@ -3,7 +3,6 @@
 import NewJobPage from "./NewJobPage";
 import ManageJenkinsPage from "./ManageJenkinsPage";
 import LoginPage from "./LoginPage"
-import MyViewsPage from "./MyViewsPage";
 
 class DashboardPage {
 
@@ -30,7 +29,13 @@ class DashboardPage {
   getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
   getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');
   getDeleteProjectDialogBox = () => cy.get('dialog.jenkins-dialog');
-  getMyViewsLink = () => cy.get('[href="/me/my-views"]');
+  getAddViewLink = () => cy.get('[href="/newView"]');
+  getViewNameInput = () => cy.get('input#name');
+  getListViewRadio = () => cy.get('[for="hudson.model.ListView"]');
+  getCreateViewButton = () => cy.get('button#ok');
+  getSubmitViewCreationButton = () => cy.get('button[name="Submit"]');
+  getCurrentViewBreadcrumbsItem = () => cy.get('.jenkins-breadcrumbs__list-item').eq(1);
+  getViewTab = (viewName) => cy.get("div.tab").contains(viewName);
 
   hoverDashboardDropdownChevron() {
     this.getDashboardBreadcrumb().realHover()
@@ -142,9 +147,29 @@ class DashboardPage {
     return this;
   }
 
-  clickMyViewsLink() {
-    this.getMyViewsLink().click();
-    return new MyViewsPage();
+  clickAddViewLink() {
+    this.getAddViewLink().click();
+    return this;
+  }
+
+  typeViewName(viewName) {
+    this.getViewNameInput().type(viewName)
+    return this;
+  }
+
+  clickListViewRadio() {
+    this.getListViewRadio().click()
+    return this;
+  }
+
+  clickCreateViewButton() {
+    this.getCreateViewButton().click({force:true})
+    return this;
+  }
+
+  clickSubmitViewCreationButton(){
+    this.getSubmitViewCreationButton().click({force:true})
+    return this
   }
 
 };
