@@ -100,7 +100,7 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
       .getUrlConfigurePageField().should('include', project.name)
   })
 
-  it.only('TC_00.002.007 | New Pipeline Project check Item name valid', () => {
+  it('TC_00.002.007 | New Pipeline Project check Item name valid', () => {
     dashboardPage
       .clickNewItemMenuLink()
      for (let i = 0; i < allKeys.projectNameSpecialSymbols.length; i++){
