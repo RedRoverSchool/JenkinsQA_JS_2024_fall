@@ -59,7 +59,7 @@ class FolderPage extends Header {
     }
 
     typeDescription (description) {
-        this.getDescriptionField().type(description);
+        this.getDescriptionField().type(description, {delay: 0});
             return this;
         };
  

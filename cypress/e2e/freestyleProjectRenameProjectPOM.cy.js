@@ -107,9 +107,22 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
 
     freestyleProjectPage.getJobHeadline().should("have.text", project.newName);
   });
+ 
 
+  it('TC_01.002.07 | Verify duplicate names are rejected when renaming a project', () => {
+
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage.typeNewItemName(project.name).selectFreestyleProject();
+    newJobPage.clickOKButton();
+    freestyleProjectPage.clickSaveButton().clickDashboardBreadcrumbsLink();
+
+    dashboardPage.clickJobTableDropdownChevron().clickRenameProjectDropdownMenuItem();
+    freestyleProjectPage.clickRenameButtonSubmit();
+
+    freestyleProjectPage.assertRenameError();
+  })
+     
   it("TC_01.002-01 | User receives an Error when the new name is invalid", () => {
-  
     cy.log("precondition 1: creating project1");
     dashboardPage.clickNewItemMenuLink();
     newJobPage
