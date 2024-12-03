@@ -26,6 +26,7 @@ class FreestyleProjectPage {
     getConfirmationMessageDialog = () => cy.get('.jenkins-dialog');
     getConfirmationMessageTitle = () => cy.get('.jenkins-dialog__title');
     getConfirmationMessageQuestion = () => cy.get('.jenkins-dialog__contents');
+    getWarningMessageOnRenamePage = () => cy.get('.warning')
     getBuildNowLink = () => cy.contains('a[href*="build"]', "Build Now");
     getBuildHistoryTableRow = () => cy.get("tr.build-row");
     getHeaderOnRename = () => cy.get("div h1");
