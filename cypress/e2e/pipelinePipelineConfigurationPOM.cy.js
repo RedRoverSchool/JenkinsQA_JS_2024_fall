@@ -5,11 +5,9 @@ import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import PipelinePage from "../pageObjects/PipelinePage";
 
-
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const pipelinePage = new PipelinePage();
-
 
 describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
 
@@ -18,6 +16,7 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
   const newPipelineDescription = faker.lorem.paragraph()
 
     it('TC_02.004.03 | Modify the description field for the pipeline', () => {
+      
       dashboardPage.clickNewItemMenuLink()
       newJobPage.typeNewItemName(randomItemName)
                 .selectPipelineProject()
@@ -28,7 +27,8 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
                   .clearPipelineDescriptionField()
                   .typePipelineDescription(newPipelineDescription)
                   .clickOnSaveBtn()
-                  .getPipelineJobDescription()
+      
+      pipelinePage.getPipelineJobDescription()
                   .should('contain.text', newPipelineDescription)
     })
 
