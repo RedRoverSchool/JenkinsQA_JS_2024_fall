@@ -29,6 +29,8 @@ class DashboardPage extends BasePage {
   getSubmitViewCreationButton = () => cy.get('button[name="Submit"]');//make sure it's a correct button name
   getCurrentViewBreadcrumbsItem = () => cy.get('.jenkins-breadcrumbs__list-item').eq(1);
   getViewTab = (viewName) => cy.get("div.tab").contains(viewName);
+  getSortingArrowOfNameColumn = () => cy.get('th[initialsortdir="down"] span.sortarrow');
+  getAllItemNamesFromNameColumn = () => cy.get('table#projectstatus tbody tr a span');
 
 
   selectNewItemFromDashboardChevron() {
@@ -140,6 +142,11 @@ class DashboardPage extends BasePage {
     this.getSubmitViewCreationButton().click({force:true})
     return this
 
+  }
+
+  clickSortingArrowOfNameColumn() {
+    this.getSortingArrowOfNameColumn().click()
+    return this
   }
 
 };

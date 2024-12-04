@@ -10,6 +10,7 @@ class MyViewsPage extends DashboardPage{
   getCreateButton = () => cy.get("button#ok");
   getCurrentViewBreadcrumbsItem = () => cy.get(".jenkins-breadcrumbs__list-item").eq(3);
   getMyViewsBreadcrumbsItem = () => cy.get(".jenkins-breadcrumbs__list-item").contains("My Views");
+  getMyViewsRadio = () => cy.get('label[for="hudson.model.MyView"]');
 
   clickAddNewViewLink() {
     this.getAddNewViewLink().click();
@@ -32,6 +33,11 @@ class MyViewsPage extends DashboardPage{
 
   clickMyViewsBreadcrumbsItem() {
     this.getMyViewsBreadcrumbsItem().click();
+    return this;
+  }
+
+  clickMyViewRadio() {
+    this.getMyViewsRadio().click();
     return this;
   }
 
