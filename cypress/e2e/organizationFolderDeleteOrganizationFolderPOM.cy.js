@@ -64,4 +64,14 @@ describe("US_06.005 | Organization folder > Delete Organization Folder", () => {
       .getJobHeadline()
       .should("not.contain.text", project.name);
   });
+
+  it('TC_06.005.04 | Delete Organization Folder', () =>{
+    organizationFolderPage
+      .clickSideMenuDeleteLink()
+      .clickOKButton();
+    dashboardPage
+      .getJobHeadline()
+      .and('not.contain', 'No jobs found');
+  })
+
 });
