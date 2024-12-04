@@ -95,7 +95,7 @@ describe("US_01.001 | FreestyleProject > Add description", () => {
       .clickSaveButton();
     freestyleProjectPage.getJobHeadline()
       .should("have.text", project.name);
-    freestyleProjectPage.clickConfigureLink();
+    freestyleProjectPage.clickConfigureLMenuOption();
     cy.url().should('include', '/configure');
     freestyleProjectPage.typeJobDescription(project.newDescription)
       .clickSaveButton();
