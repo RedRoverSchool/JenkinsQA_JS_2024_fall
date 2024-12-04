@@ -53,4 +53,26 @@ describe("US_16.002 | Dashboard > Create View", () => {
       dashboardPage.getViewTab(view.name).should("be.visible");
   });
 
+  it("TC_16.002.02 Sort items in the view", () => {
+    dashboardPage.clickAddViewLink()
+                 .typeViewName(view.name)
+                 .clickListViewRadio()
+                 .clickCreateViewButton()
+                 .clickJobCheckboxViewConfigure(project.name)
+                 .clickJobCheckboxViewConfigure(folder.name)
+                 .clickSubmitViewCreationButton()
+    dashboardPage.getJobsFromNameColumnInTheView().then($elements => {
+      const elementsArray = [...$elements].map(el => el.innerText.trim());
+      const sortedArray = [...elementsArray].sort((a, b) => a.localeCompare(b));
+      expect(elementsArray).to.deep.equal(sortedArray);
+      });
+    dashboardPage.clickSortJobsByNameButton();
+    dashboardPage.getJobsFromNameColumnInTheView().then($elements => {
+      const elementsArray = [...$elements].map(el => el.innerText.trim());
+      const sortedArray = [...elementsArray].sort((a, b) => b.localeCompare(a));
+      expect(elementsArray).to.deep.equal(sortedArray);
+      });
+
+  });
+
 });
