@@ -19,4 +19,5 @@ describe("US_00.004 | New item > Create Folder", () => {
     cy.get("button.jenkins-dropdown__item").click();
     cy.get(".jenkins-button--primary").click();
   });
+  
 });

@@ -165,5 +165,22 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         cy.get('button[name="Submit"]').click()
         cy.get('div[id="main-panel"]').should('contain', 'is an unsafe character')
     });
+    it.only('TC_04.001.10_A|Rename folder from drop-down menu', () => {
+
+        let oldName = 'Folder_1';
+        let newName = 'Folder_2'
+
+        cy.get('span').contains('New Item').click()
+        cy.get('input[name="name"]').type(oldName)
+        cy.get('.com_cloudbees_hudson_plugins_folder_Folder').click()
+        cy.get('.jenkins-button--primary.jenkins-buttons-row--equal-width').click()
+        cy.get('.jenkins-submit-button').click()
+        cy.get('button[data-href="http://localhost:8080/job/Folder_1/"]').realHover().click()
+        cy.get('a[class="jenkins-dropdown__item "]').contains('Rename').click()
+        cy.get('input[checkdependson="newName"]').clear().type(newName).should('have.value', newName);
+        cy.get('button[formnovalidate]').click();
+
+        cy.get('h1').should('include.text', newName);
+    });
 })
 
