@@ -2,8 +2,7 @@
 
 import NewJobPage from "./NewJobPage";
 import ManageJenkinsPage from "./ManageJenkinsPage";
-import LoginPage from "./LoginPage"
-import MyViewsPage from "./MyViewsPage";
+import LoginPage from "./LoginPage";
 
 class DashboardPage {
 
@@ -39,6 +38,9 @@ class DashboardPage {
   getSubmitViewCreationButton = () => cy.get('button[name="Submit"]');
   getCurrentViewBreadcrumbsItem = () => cy.get('.jenkins-breadcrumbs__list-item').eq(1);
   getViewTab = (viewName) => cy.get("div.tab").contains(viewName);
+  getJobCheckboxViewConfigure = (jobName) => cy.get('label.attach-previous').contains(jobName);
+  getSortJobsByNameButton = () => cy.get('[initialsortdir="down"] .sortarrow');
+  getJobsFromNameColumnInTheView = () => cy.get('.jenkins-table__link');
 
   hoverDashboardDropdownChevron() {
     this.getDashboardBreadcrumb().realHover()
@@ -178,6 +180,15 @@ class DashboardPage {
     this.getSubmitViewCreationButton().click({force:true})
     return this
 
+  }
+
+  clickJobCheckboxViewConfigure(jobName) {
+    this.getJobCheckboxViewConfigure(jobName).click({force:true})
+    return this
+  }
+  clickSortJobsByNameButton() {
+    this.getSortJobsByNameButton().click()
+    return this
   }
 
 };
