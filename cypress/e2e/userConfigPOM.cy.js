@@ -42,4 +42,12 @@ describe('US_13.003 | User > Config', () => {
       .should('have.length', userDropdownLink.length)
       .and('be.visible');
   });
+
+   it('TC_13.003.03 | Change the Appearance of user interface', () => {
+      header.clickUserDropdownLink();
+      header.clickUserConfigureItem();
+      userPage.clickAppearanceDark();
+      userPage.clickOnSaveBtn();
+      userPage.getDarkTheme().should('equal', 'dark');
+  });
 })
