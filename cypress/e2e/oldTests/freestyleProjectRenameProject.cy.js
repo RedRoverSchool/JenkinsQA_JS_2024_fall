@@ -280,4 +280,3 @@ it('TC-01.002.06| Rename a project name from the Dashboard page', () => {
     cy.get('.job-index-headline').should('contain', 'Test_2')
   })
 });
-
