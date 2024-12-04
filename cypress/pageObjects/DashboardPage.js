@@ -1,0 +1,185 @@
+/// <reference types="cypress" />
+
+import NewJobPage from "./NewJobPage";
+import ManageJenkinsPage from "./ManageJenkinsPage";
+import LoginPage from "./LoginPage"
+import MyViewsPage from "./MyViewsPage";
+
+class DashboardPage {
+
+  getDashboardBreadcrumb = () => cy.get('a[href="/"].model-link');
+  getDashboardBreadcrumbChevron = () => cy.get('a[href="/"] .jenkins-menu-dropdown-chevron');
+  getNewItemLink = () => cy.get('a[href="/view/all/newJob"]');
+  getCreateJobButton = () => cy.get('a[href="newJob"]').contains("Create a job");
+  getMainPanel = () => cy.get("div#main-panel");
+  getJobTable = () => cy.get("#projectstatus");
+  getJobTitleLink = () => cy.get(".model-link.inside");
+  getManageJenkins = () => cy.get('a[href="/manage"]');
+  getProjectName = () => cy.get('*.jenkins-table__link span');
+  getProjectChevronIcon = (projectName) => cy.get(`span:contains('${projectName}') + .jenkins-menu-dropdown-chevron`);
+  getJobTableDropdownChevron = () => cy.get('.jenkins-table__link > .jenkins-menu-dropdown-chevron');
+  getJobTableDropdownItem = () => cy.get('.jenkins-dropdown__item ');
+  getAllJobNames = () => cy.get('.jenkins-table__link span')
+  getLogOutButton = () => cy.get('a[href="/logout"]')
+  getDeleteProjectDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item ').contains('Delete Project');
+  getDeleteOrganizationFolderDropdownMenuItem = () => cy.get('[class="jenkins-dropdown__item "]').contains('Delete Organization Folder');
+  getCancelProjectDeletingButton = () => cy.get('button[data-id="cancel"]');
+  getSubmitProjectDeletingButton = () => cy.get('button[data-id="ok"]');
+  getWelcomeToJenkinsHeadline = () => cy.get('.empty-state-block h1');
+  getMoveTheProject = () => cy.get('a[href*="move"]');
+  getJobHeadline = () => cy.get('#main-panel h1');
+  getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
+  getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');
+  getDeleteProjectDialogBox = () => cy.get('dialog.jenkins-dialog');
+  getAllIconsProjectRow = (projectName) => cy.get(`tr[id$='${projectName}'] svg`);
+  getAddViewLink = () => cy.get('[href="/newView"]');
+  getViewNameInput = () => cy.get('input#name');
+  getListViewRadio = () => cy.get('[for="hudson.model.ListView"]');
+  getCreateViewButton = () => cy.get('button#ok');
+  getSubmitViewCreationButton = () => cy.get('button[name="Submit"]');
+  getCurrentViewBreadcrumbsItem = () => cy.get('.jenkins-breadcrumbs__list-item').eq(1);
+  getViewTab = (viewName) => cy.get("div.tab").contains(viewName);
+
+  hoverDashboardDropdownChevron() {
+    this.getDashboardBreadcrumb().realHover()
+    return this
+  }
+
+  clickDashboardDropdownChevron() {
+    this.getDashboardBreadcrumbChevron().click()
+    return this
+  }
+
+  selectNewItemFromDashboardChevron() {
+    this.getJobTableDropdownItem().each(($els) => {
+      let eText = $els.text().trim()
+      if (eText == 'New Item') { cy.wrap($els).click() }
+  });
+    return new NewJobPage()
+  }
+  
+  clickNewItemMenuLink () {
+    this.getNewItemLink().click({ force: true });
+    return new NewJobPage();
+  }
+
+  clickJobTitleLink () {
+    this.getJobTitleLink().click();
+  }
+
+  clickManageJenkins () {
+    this.getManageJenkins().click();
+    return new ManageJenkinsPage();
+  }
+
+  openProjectPage (projectName) {
+    this.getProjectName().contains(projectName).click();
+  }
+
+  clickLogOutButton() {
+    this.getLogOutButton().click()
+    return new LoginPage()
+  }
+
+  getSessionCookie(cookieName) {
+    return cy.getCookies().then((cookies) => {
+      return (cookies.find((cookie) => cookie.name.includes(cookieName))).value;
+    });
+  }
+  
+  openDropdownForProject (projectName) {
+    this.getProjectName().contains(projectName)
+      .trigger("mouseover").should("be.visible");
+    this.getProjectChevronIcon(projectName)
+      .click({ force: true });
+    return this;
+  }
+  
+  clickJobName (name) {
+    this.getJobTable().contains(name).click()
+    return new NewJobPage()
+  }
+
+  hoverJobTitleLink() {
+    this.getJobTitleLink().trigger('mouseover')
+    return this
+  }
+
+  clickProjectChevronIcon(projectName) {
+    this.getProjectChevronIcon(projectName).click({ force: true })
+    return this
+  }
+
+  clickJobTableDropdownChevron() {
+    this.getJobTableDropdownChevron().click({ force: true })
+    return this
+  }
+
+  clickDeleteProjectDropdownMenuItem() {
+    this.getDeleteProjectDropdownMenuItem().click()
+    return this
+  }
+
+  clickCancelDeletingButton() {
+    this.getCancelProjectDeletingButton().click();
+    return this;
+  }
+
+  clickSubmitDeletingButton() {
+    this.getSubmitProjectDeletingButton().click();
+    return this;
+  }
+
+  clickDeleteOrganizationFolderDropdownMenuItem() {
+    this.getDeleteOrganizationFolderDropdownMenuItem().click();
+    return this;
+  }
+
+  clickCreateJobLink() {
+    this.getCreateJobButton().click();
+    return this;
+  }
+
+  clickRenameFolderDropdownMenuItem() {
+    this.getRenameFolderDropdownMenuItem().click();
+    return this
+  }
+
+  clickMoveTheProjectButton() {
+    this.getMoveTheProject().click()
+    return this;
+  }
+  clickRenameProjectDropdownMenuItem() {
+    this.getRenameProjectDropdownMenuItem().click();
+    return this;
+  }
+
+  clickAddViewLink() {
+    this.getAddViewLink().click();
+    return this;
+  }
+
+  typeViewName(viewName) {
+    this.getViewNameInput().type(viewName)
+    return this;
+  }
+
+  clickListViewRadio() {
+    this.getListViewRadio().click()
+    return this;
+  }
+
+  clickCreateViewButton() {
+    this.getCreateViewButton().click({force:true})
+    return this;
+  }
+
+  clickSubmitViewCreationButton(){
+    this.getSubmitViewCreationButton().click({force:true})
+    return this
+
+  }
+
+};
+
+export default DashboardPage;
