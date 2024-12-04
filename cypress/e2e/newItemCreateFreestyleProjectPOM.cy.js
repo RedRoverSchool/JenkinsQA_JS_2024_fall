@@ -170,7 +170,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         newJobPage.typeNewItemName(project.folderName)
                   .selectFolder()
                   .clickOKButton();
-        folderPage.clickSaveBtn()
+        folderPage.clickSaveButton()
                   .clickCreateAJobLink();
         newJobPage.typeNewItemName(project.name)
                   .selectFreestyleProject()
