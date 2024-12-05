@@ -79,20 +79,19 @@ describe("US_16.002 | Dashboard > Create View", () => {
                 .typeViewName(view.name)
                 .clickMyViewRadio()
                 .clickCreateButton();
+    
+    cy.log("Hitting on sorting arrow to sort in desc order")
+       dashboardPage.clickSortingArrowOfNameColumn();
 
-    dashboardPage.clickSortingArrowOfNameColumn();
-
-    cy.log(
-        "getting an array of all names, sorting the array in desc order, compare initial and sorted arrays"
-      );
+    cy.log("getting an array of all names, sorting the array in desc order, compare initial and sorted arrays");
       dashboardPage.getAllItemNamesFromNameColumn().then(($cells) => {
         const textValues = $cells
             .map((index, cell) => Cypress.$(cell).text())
             .get()
             .map((value) => value.toLowerCase());
-        console.log(textValues);
+        cy.log(textValues);
         const sortedTextValues = [...textValues].sort().reverse();
-        console.log(sortedTextValues);
+        cy.log(sortedTextValues);
         expect(textValues).to.deep.equal(sortedTextValues);
       });
   });
