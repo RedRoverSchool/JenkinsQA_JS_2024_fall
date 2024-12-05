@@ -4,7 +4,6 @@ import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import FolderPage from "../pageObjects/FolderPage";
 import Header from "../pageObjects/Header";
-
 import genData from "../fixtures/genData";
 
 const dashboardPage = new DashboardPage();
@@ -42,5 +41,16 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         folderPage.clearNewNameField()
             .typeNewFolderName(newFolderName.name)
             .getNewNameField().should('have.value', newFolderName.name)
-    })
+    });
+
+    it('TC_04.001.03| Verify that error message is displayed when an invalid folder name is entered in the Rename Folder field', () => {
+        dashboardPage.openDropdownForItem(folderName.name)
+            .clickRenameFolderDropdownMenuItem()
+        folderPage.clearNewNameField()
+            .typeNewFolderName(newFolderName.name +"*")
+            .clickRenameButton()
+
+        folderPage.getFolderNameOnMainPanel()
+            .should('contain', 'is an unsafe character')
+    });
 });
