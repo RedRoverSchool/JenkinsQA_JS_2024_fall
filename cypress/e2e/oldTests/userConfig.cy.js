@@ -1,5 +1,10 @@
 /// <reference types="cypress" />
 describe.skip('US_13.003 | User > Config', ()=>{
+
+    let username = 'username';
+    let password = 'password';
+    let email = 'test@mail.com';
+
     it('TC_13.003.01 | Edit the profile description from the account settings page by clicking on your username' , ()=>{
         cy.get('[href^="/user"]').click()
         cy.get('#description-link').click()
@@ -26,4 +31,15 @@ describe.skip('US_13.003 | User > Config', ()=>{
         cy.get('.jenkins-button').contains('Save').click();
         cy.get('html').should('have.attr', 'data-theme', 'dark');
       })
+
+    it('TC_13.001.01 | Create new User via Manage Jenkins left side menu', () => {
+        cy.get('a[href="/manage"]').click();
+        cy.get('a[href="securityRealm/"]').click();
+        cy.get('a[href="addUser"]').click();
+        cy.get('#username').type('username');
+        cy.get('.setting-main').eq("1").type('password');
+        cy.get('.setting-main').eq("2").type('password');
+        cy.get('.setting-main').eq("4").type('email');
+        cy.get('.jenkins-button').eq("0").click({forse:true});
+    })
 })
