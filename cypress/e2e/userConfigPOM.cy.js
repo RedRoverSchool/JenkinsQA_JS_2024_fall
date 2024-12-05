@@ -54,7 +54,7 @@ describe('US_13.003 | User > Config', () => {
       userPage.getDarkTheme().should('equal', 'dark');
   });
 
-  it('TC_13.003.05 | User Config Change Jenkins Appearance to Dark Theme', () => {
+  it('TC_13.003.06 | User Config Change Jenkins Appearance to Dark Theme', () => {
       header.clickUserDropdownLink()
         .clickAppearanceLink();
     
