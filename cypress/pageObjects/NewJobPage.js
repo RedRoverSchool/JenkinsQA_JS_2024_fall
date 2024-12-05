@@ -74,7 +74,7 @@ class NewJobPage {
     }
     verifyToggleWork(){
         this.getToggleSelecto().should('be.checked');
-        return this
+        return this;
     }
     clickOnDesabledToggle(){
         this.getToggleSelecto().uncheck({force:true});
