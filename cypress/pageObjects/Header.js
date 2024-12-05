@@ -117,7 +117,7 @@ class Header {
     }
 
     clickAppearanceLink() {
-        this.getDropdownAppearanceLink().click()
+        this.getDropdownAppearanceLink().click({ force: true })
         return this;
     }
 };
