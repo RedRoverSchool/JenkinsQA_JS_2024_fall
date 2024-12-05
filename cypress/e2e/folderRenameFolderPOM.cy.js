@@ -19,17 +19,17 @@ describe('US_04.001 | Folder > Rename Folder', () => {
     beforeEach(() => {
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(folderName.name).selectFolder().clickOKButton()
-        folderPage.clickSaveBtn()
+        folderPage.clickSaveButton()
         header.clickJenkinsLogo();
     });
 
     it('TC_04.001.02 | Rename folder from drop-down menu', () => {
 
-        dashboardPage.openDropdownForProject(folderName.name)
+        dashboardPage.openDropdownForItem(folderName.name)
             .clickRenameFolderDropdownMenuItem()
         folderPage.clearNewNameField()
             .typeNewFolderName(newFolderName.name)
-            .clickSaveBtn()
+            .clickRenameButton()
         folderPage.verifyFolderUrl(newFolderName.name)
 
         folderPage.getFolderNameOnMainPanel()
@@ -37,7 +37,7 @@ describe('US_04.001 | Folder > Rename Folder', () => {
     });
 
     it('TC_04.001.06 | Successfully enter a valid folder name in the special field', () => {
-        dashboardPage.openDropdownForProject(folderName.name)
+        dashboardPage.openDropdownForItem(folderName.name)
             .clickRenameFolderDropdownMenuItem()
         folderPage.clearNewNameField()
             .typeNewFolderName(newFolderName.name)

@@ -1,59 +1,32 @@
 /// <reference types="cypress" />
+import BasePage from "./basePage";
 
-import DashboardPage from "./DashboardPage";
+class FreestyleProjectPage extends BasePage {
 
-class FreestyleProjectPage {
-
-    getSaveButton = () => cy.get('button[name="Submit"]');
-    getJobHeadline = () => cy.get("#main-panel h1");
-    getJobDescription = () => cy.get('[id="description"]');
+    getJobDescription = () => cy.get('[id="description"]');// please rename to getProjectDescription since we are inside a project
+    getJobDescriptionField = () => cy.get('textarea[name="description"]');// please rename to getProjectDescriptionield since we are inside a project
     getJobDescriptionField = () => cy.get('textarea[name="description"]');
-    getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
     getAddDescriptionButton = () => cy.get('[href="editDescription"]');
-    getMoveMenuItem = () => cy.get('a[href$="/move"]');
     getProjectDestination = () => cy.get('select[name="destination"]');
-    getMoveButton = () => cy.get('button[name="Submit"]');
     getProjectInfoSection = () => cy.get('#main-panel');
-    getDashboardLink = () => cy.get('a[href="/"].model-link');
-    getConfigureLink = () => cy.get('a[href$="configure"]');
-    getDeleteMenuItem = () => cy.get('a[data-title="Delete Project"]');
-    getCancelButton = () => cy.get('button[data-id="cancel"]');
-    getYesButton = () => cy.get('button[data-id="ok"]');
-    getRenameButton = () => cy.get('[href*="rename"]');
+    getDeleteMenuItem = () => cy.get('a[data-title="Delete Project"]');// please rename to getDeleteProjectMenuOption since the option name is "Delete Project"
     getNewNameField = () => cy.get('[name="newName"]');
-    getRenameButtonSubmit = () => cy.get('button.jenkins-submit-button');
-    getBreadcrumbBar = () => cy.get('#breadcrumbBar');
     getConfirmationMessageDialog = () => cy.get('.jenkins-dialog');
     getConfirmationMessageTitle = () => cy.get('.jenkins-dialog__title');
     getConfirmationMessageQuestion = () => cy.get('.jenkins-dialog__contents');
-    getWarningMessageOnRenamePage = () => cy.get('.warning')
-    getBuildNowLink = () => cy.contains('a[href*="build"]', "Build Now");
+    getWarningMessageOnRenamePage = () => cy.get('.warning');
     getBuildHistoryTableRow = () => cy.get("tr.build-row");
     getHeaderOnRename = () => cy.get("div h1");
-    getErrorMessageParagraph = () => cy.get('p')
+    getErrorMessageParagraph = () => cy.get('p');
 
-    clickSaveButton() {
-        this.getSaveButton().click();
-        return this;
-    }
 
     typeJobDescription(jobDescription) {
         this.getJobDescriptionField().clear().type(jobDescription);
         return this;
     }
 
-    clickDashboardBreadcrumbsLink() {
-        this.getDashboardBreadcrumbsLink().click();
-        return new DashboardPage();
-    }
-
     clickAddDescriptionButton() {
         this.getAddDescriptionButton().click();
-        return this;
-    }
-
-    clickMoveMenuItem() {
-        this.getMoveMenuItem().click();
         return this;
     }
 
@@ -62,38 +35,13 @@ class FreestyleProjectPage {
         return this;
     }
 
-    clickMoveButton() {
-        this.getMoveButton().click();
+    clickDeleteMenuItem () {
+        this.getDeleteMenuItem().click();
         return this;
-    }
-
-    clickConfigureLink() {
-        this.getConfigureLink().click();
-        return this;
-    }
-
-    clickDeleteMenuItem() {
-        this.getDeleteMenuItem().click()
-        return this
-    }
-
-    clickCancelButton() {
-        this.getCancelButton().click()
-        return this
-    }
-
-    clickYesButton() {
-        this.getYesButton().click()
-        return new DashboardPage();
     }
 
     clearJobDescriptionField() {
         this.getJobDescriptionField().clear();
-        return this;
-    }
-
-    clickRenameButton() {
-        this.getRenameButton().click();
         return this;
     }
 
@@ -106,13 +54,9 @@ class FreestyleProjectPage {
         this.getNewNameField().clear();
         return this;
     }
+
     typeRenameField(ProjectName) {
         this.getNewNameField().type(ProjectName);
-        return this;
-    }
-
-    clickRenameButtonSubmit() {
-        this.getRenameButtonSubmit().click();
         return this;
     }
 
@@ -122,7 +66,7 @@ class FreestyleProjectPage {
         specialChars.forEach((char) => {
             // Clear, type the new name, and click Save
             this.getNewNameField().clear().type(`Rename${char}Folder`);
-            this.getSaveButton().click();
+            this.getRenameButton().click();
 
             // Assertions for error messages
             this.getHeaderOnRename().should("have.text", "Error");
@@ -141,11 +85,6 @@ class FreestyleProjectPage {
         return this;
     }
 
-    clickBuildNowLink() {
-        this.getBuildNowLink().click()
-        return this
-    };
-    
     retrieveBuildNumberAndDate() {
         let arrayBuildData = []
         return this.getBuildHistoryTableRow()
@@ -163,6 +102,5 @@ class FreestyleProjectPage {
             return arrayBuildData
           });
     };
-    
 }
 export default FreestyleProjectPage;
