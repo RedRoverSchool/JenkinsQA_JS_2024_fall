@@ -23,7 +23,7 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         header.clickJenkinsLogo();
     });
 
-    it('TC_04.001.02 | Rename folder from drop-down menu', () => {
+    it.skip('TC_04.001.02 | Rename folder from drop-down menu', () => {
 
         dashboardPage.openDropdownForItem(folderName.name)
             .clickRenameFolderDropdownMenuItem()

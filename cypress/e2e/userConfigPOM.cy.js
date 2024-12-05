@@ -46,7 +46,7 @@ describe('US_13.003 | User > Config', () => {
       .and('be.visible');
   });
 
-   it.skip('TC_13.003.03 | Change the Appearance of user interface', () => {
+   it('TC_13.003.03 | Change the Appearance of user interface', () => {
       header.clickUserDropdownLink();
       header.clickUserConfigureItem();
       userPage.clickAppearanceDark();
