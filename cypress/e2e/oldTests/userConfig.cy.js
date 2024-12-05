@@ -1,6 +1,10 @@
 /// <reference types="cypress" />
 describe.skip('US_13.003 | User > Config', ()=>{
 
+    let username = 'username';
+    let password = 'password';
+    let email = 'email';
+
     it('TC_13.003.01 | Edit the profile description from the account settings page by clicking on your username' , ()=>{
         cy.get('[href^="/user"]').click()
         cy.get('#description-link').click()
@@ -32,10 +36,10 @@ describe.skip('US_13.003 | User > Config', ()=>{
         cy.get('a[href="/manage"]').click();
         cy.get('a[href="securityRealm/"]').click();
         cy.get('a[href="addUser"]').click();
-        cy.get('#username').type('text');
-        cy.get('.setting-main').eq("1").type('text1');
-        cy.get('.setting-main').eq("2").type('text1');
-        cy.get('.setting-main').eq("4").type('test1@mail.com');
+        cy.get('#username').type('username');
+        cy.get('.setting-main').eq("1").type('password');
+        cy.get('.setting-main').eq("2").type('password');
+        cy.get('.setting-main').eq("4").type('email');
         cy.get('.jenkins-button').eq("0").click({forse:true});
     })
 })
