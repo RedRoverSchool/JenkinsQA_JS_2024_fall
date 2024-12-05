@@ -21,6 +21,7 @@ class Header {
     getDashboardBreadcrumbChevron = () => cy.get('a[href="/"] .jenkins-menu-dropdown-chevron');
     getBreadcrumbsFolderName = () => cy.get(':nth-child(3) > .model-link');
     getBreadcrumbsFolderDropdownMenu = () => cy.get(':nth-child(3) > .model-link > .jenkins-menu-dropdown-chevron');
+    getDropdownAppearanceLink = () => cy.get('a[href*="appearance"]');
     
     typeSearchTerm (term) {
         this.getSearchField().type(term);
@@ -112,6 +113,11 @@ class Header {
             };
           });
         };
+        return this;
+    }
+
+    clickAppearanceLink() {
+        this.getDropdownAppearanceLink().click()
         return this;
     }
 };
