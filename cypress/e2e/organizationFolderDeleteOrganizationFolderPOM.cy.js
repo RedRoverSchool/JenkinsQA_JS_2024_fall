@@ -30,7 +30,7 @@ describe("US_06.005 | Organization folder > Delete Organization Folder", () => {
   it("TC_06.005.01 | Delete Organization Folder from a sidebar menu", () => {
     organizationFolderPage
       .clickSideMenuDeleteLink()
-      .clickOKButton();
+      .clickYesButton();
 
     organizationFolderPage
       .getJobHeadline()
@@ -42,7 +42,7 @@ describe("US_06.005 | Organization folder > Delete Organization Folder", () => {
       .selectBreadcrumbsFolderDropdownMenu()
       .clickBreadcrumbsFolderDropdownMenu()
       .clickDropdownMenuDeleteLink()
-      .clickOKButton();
+      .clickYesButton();
 
     organizationFolderPage
       .getJobHeadline()
@@ -51,11 +51,11 @@ describe("US_06.005 | Organization folder > Delete Organization Folder", () => {
 
   it("TC_06.005.03 | Delete Organization Folder from project status table on Dashboard page", () => {
     header
-      .clickJenkinsLogo();  
+      .clickJenkinsLogo();
     dashboardPage
       .clickJobTableDropdownChevron()
       .clickDeleteOrganizationFolderDropdownMenuItem()
-      .clickSubmitDeletingButton();
+      .clickYesButton()
 
     dashboardPage
       .getJobHeadline()
@@ -64,4 +64,14 @@ describe("US_06.005 | Organization folder > Delete Organization Folder", () => {
       .getJobHeadline()
       .should("not.contain.text", project.name);
   });
+
+  it('TC_06.005.04 | Delete Organization Folder', () =>{
+    organizationFolderPage
+      .clickSideMenuDeleteLink()
+      .clickYesButton();
+    dashboardPage
+      .getJobHeadline()
+      .and('not.contain', 'No jobs found');
+  })
+
 });

@@ -8,5 +8,10 @@ class LoginPage
         return (cookies.find((cookie) => cookie.name.includes(cookieName))).value;
       });
    }   
+
+   verifyRedirectionToLoginPage() {
+      cy.url().should("include", "/login");
+      return this;
+    }
 }
 export default LoginPage

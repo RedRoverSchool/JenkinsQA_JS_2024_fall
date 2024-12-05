@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
+import BasePage from "./basePage"
 
-class PipelinePage {
+class PipelinePage extends BasePage { 
 
     getPipelineSaveBtn = () => cy.get('.jenkins-submit-button');
     getPipelineDescriptionField = () => cy.get('textarea[name="description"]')
     getConfigurePipelineMenuButton = () => cy.get('a[href$="configure"]')
     getPipelineJobDescription = () => cy.get('#description')
+
 
     clickOnSaveBtn() {
         this.getPipelineSaveBtn().click()
@@ -26,8 +28,6 @@ class PipelinePage {
         this.getPipelineDescriptionField().clear()
         return this
     }
-
-
 }
 
 export default PipelinePage;

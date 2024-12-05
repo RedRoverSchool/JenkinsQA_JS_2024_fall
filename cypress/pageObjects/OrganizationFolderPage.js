@@ -1,31 +1,16 @@
 /// <reference types="cypress" />
+import FolderPage from "../pageObjects/FolderPage";
 
-class OrganizationFolderPage {
+class OrganizationFolderPage extends FolderPage {
 
- 
-    getSaveButton = () => cy.get('button[name="Submit"]');
-    getOKButton = () => cy.get('button').contains('Yes');
     getSideMenuDeleteLink = () => cy.get('[class="task "]').contains("Delete Organization Folder");
-    getJobHeadline = () => cy.get('#main-panel h1');
-    getBreadcrumbsFolderName = () => cy.get(':nth-child(3) > .model-link');
-    getBreadcrumbsFolderDropdownMenu = () => cy.get(':nth-child(3) > .model-link > .jenkins-menu-dropdown-chevron');
-    getDropdownMenuDeleteLink = () =>  cy.get('.jenkins-dropdown > [href$="elete"]');
-    getConfigureNavBar = () => cy.get('a[href$="/configure"].task-link');
-    getDisplayNameInput = () => cy.get('input[name="_.displayNameOrNull"]');
-    getDescriptionInput = () => cy.get('textarea[name="_.description"]');
-    getDescription = () => cy.get("#view-message");
+    getDropdownMenuDeleteLink = () => cy.get('.jenkins-dropdown > [href$="elete"]');
+    getDisplayNameInput = () => cy.get('input[name="_.displayNameOrNull"]');//please review locators we have in FreestyleProject for desription, and if it duplicates, please delete this
+    getDescriptionInput = () => cy.get('textarea[name="_.description"]');//please review locators we have in FreestyleProject for desription, and if it duplicates, please delete this
+    getDescription = () => cy.get("#view-message");//please review locators we have in FreestyleProject for desription, and if it duplicates, please delete this
     getDisplayName = () => cy.get("h1");
     getFolderName = () => cy.get("#main-panel");
-    
-    clickSaveButton() {
-        this.getSaveButton().click();
-        return this;
-    }
 
-    clickOKButton() {
-        this.getOKButton().click();
-        return this;
-    }
 
     clickSideMenuDeleteLink() {
         this.getSideMenuDeleteLink().click();
@@ -42,13 +27,8 @@ class OrganizationFolderPage {
         return this; 
     }
     
-    clickDropdownMenuDeleteLink() {
+    clickDropdownMenuDeleteLink() {//please rename to clickDeleteDropdownOption
         this.getDropdownMenuDeleteLink().click();
-        return this;
-    }
-
-    clickConfigureNavBar() {
-        this.getConfigureNavBar().click();
         return this;
     }
 

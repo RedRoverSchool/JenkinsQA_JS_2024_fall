@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
+import DashboardPage from "../pageObjects/DashboardPage";
 
-class ManageJenkinsPage {
+class ManageJenkinsPage extends DashboardPage{
 
     getSettingsSearchField = () => cy.get('#settings-search-bar');
     getNoResultsErrorMessage = () => cy.get('.jenkins-search__results__no-results-label');

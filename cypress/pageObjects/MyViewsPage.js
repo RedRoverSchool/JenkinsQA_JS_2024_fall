@@ -1,12 +1,13 @@
 /// <reference types="cypress" />
+import DashboardPage from "../pageObjects/DashboardPage";
 
-class MyViewsPage {
+class MyViewsPage extends DashboardPage{
+
   getAddNewViewLink = () => cy.get('a[title="New View"]');
   getViewTab = (viewName) => cy.get("div.tab").contains(viewName);
   getViewNameInput = () => cy.get("input#name");
   getIncludeGlobalViewButton = () => cy.get('label[for="hudson.model.ProxyView"]');
   getCreateButton = () => cy.get("button#ok");
-  getOkButton = () => cy.get('button[name="Submit"]');
   getCurrentViewBreadcrumbsItem = () => cy.get(".jenkins-breadcrumbs__list-item").eq(3);
   getMyViewsBreadcrumbsItem = () => cy.get(".jenkins-breadcrumbs__list-item").contains("My Views");
 
@@ -28,10 +29,7 @@ class MyViewsPage {
     this.getCreateButton().click();
     return this;
   }
-  clickOkButton() {
-    this.getOkButton().click({ force: true });
-    return this;
-  }
+
   clickMyViewsBreadcrumbsItem() {
     this.getMyViewsBreadcrumbsItem().click();
     return this;
