@@ -43,4 +43,16 @@ describe('US_04.001 | Folder > Rename Folder', () => {
             .typeNewFolderName(newFolderName.name)
             .getNewNameField().should('have.value', newFolderName.name)
     })
+
+    it('TC_04.001.03| Verify that error message is displayed when an invalid folder name is entered in the Rename Folder field', () => {
+        dashboardPage.openDropdownForProject(folderName.name)
+            .clickRenameFolderDropdownMenuItem()
+        folderPage.clearNewNameField()
+            .typeNewFolderName(newFolderName.name +"*")
+            .clickSaveBtn()
+        folderPage.getFolderNameOnMainPanel()
+            .should('contain', 'is an unsafe character')
+        
+       
+    });
 });

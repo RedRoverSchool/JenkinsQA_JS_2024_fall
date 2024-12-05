@@ -7,7 +7,7 @@ import NewJobPage from "./NewJobPage";
 class FolderPage extends Header {
     getSaveBtn = () => cy.get(".jenkins-submit-button");
     getTitleConfiguration = () => cy.get("#side-panel h1");
-    getFolderNameOnMainPanel = () => cy.get("#main-panel h1");
+    getFolderNameOnMainPanel = () => cy.get("#main-panel");
     getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
     getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
     getNewNameField = () => cy.get('input[name="newName"]');
