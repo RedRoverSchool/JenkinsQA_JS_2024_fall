@@ -8,7 +8,6 @@ class PipelinePage extends BasePage {
     getConfigurePipelineMenuButton = () => cy.get('a[href$="configure"]')
     getPipelineJobDescription = () => cy.get('#description')
 
-
     clickOnSaveBtn() {
         this.getPipelineSaveBtn().click()
         return this
