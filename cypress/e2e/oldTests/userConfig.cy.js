@@ -3,7 +3,7 @@ describe.skip('US_13.003 | User > Config', ()=>{
 
     let username = 'username';
     let password = 'password';
-    let email = 'email';
+    let email = 'test@email';
 
     it('TC_13.003.01 | Edit the profile description from the account settings page by clicking on your username' , ()=>{
         cy.get('[href^="/user"]').click()
