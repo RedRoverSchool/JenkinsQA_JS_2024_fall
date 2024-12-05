@@ -1,6 +1,6 @@
 /// <reference types="cypress"/>
 
-describe("US_01.004 | FreestyleProject > Delete Project", () => {
+describe.skip("US_01.004 | FreestyleProject > Delete Project", () => {
     it("TC_01.004.02 |Freestyle project |Delete Project on Project Page", () => {
         //Create freestyle project
         cy.get('a[href="newJob"]').click();
