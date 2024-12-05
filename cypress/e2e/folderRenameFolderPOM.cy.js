@@ -45,11 +45,11 @@ describe('US_04.001 | Folder > Rename Folder', () => {
     })
 
     it('TC_04.001.03| Verify that error message is displayed when an invalid folder name is entered in the Rename Folder field', () => {
-        dashboardPage.openDropdownForProject(folderName.name)
+        dashboardPage.openDropdownForItem(folderName.name)
             .clickRenameFolderDropdownMenuItem()
         folderPage.clearNewNameField()
             .typeNewFolderName(newFolderName.name +"*")
-            .clickSaveBtn()
+            .clickRenameButton()
         folderPage.getFolderNameOnMainPanel()
             .should('contain', 'is an unsafe character')
         
