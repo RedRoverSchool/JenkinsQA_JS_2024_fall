@@ -18,8 +18,8 @@ class NewJobPage {
     getBreadcrumbsListItem = () => cy.get("[aria-current='page']");
     configurePagePipelineButton = () => cy.get('button[data-section-id="pipeline"]');
     getEmptyNameFieldReminder = () => cy.get('div[class$="validation-message"]');
-  
-
+    getToggleSelecto = () => cy.get('#enable-disable-project');
+    
     typeNewItemName (prjName) {
         this.getJobNameField().type(prjName);
         return this;
@@ -72,7 +72,14 @@ class NewJobPage {
         }).then(() => this);
         return this;   
     }
-    
+    verifyToggleWork(){
+        this.getToggleSelecto().should('be.checked');
+        return this
+    }
+    clickOnDesabledToggle(){
+        this.getToggleSelecto().uncheck({force:true});
+        return this
+    }
 };
 
 export default NewJobPage;
