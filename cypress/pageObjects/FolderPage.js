@@ -5,7 +5,6 @@ import NewJobPage from "./NewJobPage";
 class FolderPage extends BasePage {
 
     getTitleConfiguration = () => cy.get("#side-panel h1");
-
     getFolderNameOnMainPanel = () => cy.get("#main-panel");
     getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
     getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
@@ -16,8 +15,6 @@ class FolderPage extends BasePage {
     getCreateAJobLink = () => cy.get('a[href="newJob"]');
     getDescriptionField = () => cy.get('[name$="description"]');
     getFolderDescription = () => cy.get('#view-message');
-
-
 
     verifyTitleConfigurationIsVisible () {
         this.getTitleConfiguration()
