@@ -9,7 +9,7 @@ import BasePage from "../pageObjects/basePage";
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const pipelinePage = new PipelinePage();
-const BasePage = new BasePage();
+const basePage = new BasePage();
 
 describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
 
