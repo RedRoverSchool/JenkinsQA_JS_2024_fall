@@ -43,7 +43,7 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         folderPage.clearNewNameField()
             .typeNewFolderName(newFolderName.name)
             .getNewNameField().should('have.value', newFolderName.name)
-    })
+    });
 
     it('TC_04.001.03| Verify that error message is displayed when an invalid folder name is entered in the Rename Folder field', () => {
 
