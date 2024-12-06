@@ -59,8 +59,8 @@ describe('US_13.003 | User > Config', () => {
     userPage.clickAppearanceLink()
       .clickAppearanceDarkTheme()
       .clickSaveButton();
-    header.clickJenkinsLogo()
-    
-    dashboardPage.getBackGroundTheme().should('have.css', 'color-scheme', 'dark')
+    header.clickJenkinsLogo();
+
+    dashboardPage.getBackGroundTheme().should('have.css', 'color-scheme', 'dark');
   });
 })
