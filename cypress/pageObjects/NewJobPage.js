@@ -17,6 +17,7 @@ class NewJobPage extends BasePage{
     getBreadcrumbsListItem = () => cy.get("[aria-current='page']");
     configurePagePipelineButton = () => cy.get('button[data-section-id="pipeline"]');
     getEmptyNameFieldReminder = () => cy.get('div[class$="validation-message"]');
+  
 
     typeNewItemName (itemName) {
         this.getItemNameField().type(itemName);
