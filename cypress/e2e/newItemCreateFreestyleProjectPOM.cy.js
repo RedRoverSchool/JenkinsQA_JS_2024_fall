@@ -17,69 +17,82 @@ const header = new Header();
 
 const folderName = faker.commerce.product();
 
-describe('US_00.001 | New item > Create Freestyle Project', function () {
-    let project = genData.newProject();
 
-    it('TC_00.001.19 | New freestyle project is created if user enter projects name, choose project type and save it', () => {
+describe("US_00.001 | New item > Create Freestyle Project", function () {
+  let project = genData.newProject();
 
-        dashboardPage.clickNewItemMenuLink();
-        newJobPage.typeNewItemName(folderName)
-            .selectFreestyleProject()
-            .clickOKButton();
-        freestyleProjectPage.clickSaveButton();
+  it("TC_00.001.19 | New freestyle project is created if user enter projects name, choose project type and save it", () => {
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage
+      .typeNewItemName(folderName)
+      .selectFreestyleProject()
+      .clickOKButton();
+    freestyleProjectPage.clickSaveButton();
 
-        cy.url().should('include', folderName);
-        freestyleProjectPage.getJobHeadline()
-            .should('be.visible')
-            .and('have.text', folderName);
+    cy.url().should("include", folderName);
+    freestyleProjectPage
+      .getJobHeadline()
+      .should("be.visible")
+      .and("have.text", folderName);
+  });
 
-    });
+  it('TC_00.001.10 | Create Freestyle Project using the "New Item" button', () => {
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage
+      .typeNewItemName(folderName)
+      .selectFreestyleProject()
+      .clickOKButton();
 
+    freestyleProjectPage.clickSaveButton();
+    header.clickJenkinsLogo();
 
-    it('TC_00.001.10 | Create Freestyle Project using the "New Item" button', () => {
-        
-        dashboardPage.clickNewItemMenuLink();
-        newJobPage.typeNewItemName(folderName)
-            .selectFreestyleProject()
-            .clickOKButton();
+    dashboardPage.getProjectName().should("contain", folderName);
+  });
 
-        freestyleProjectPage.clickSaveButton();
-        header.clickJenkinsLogo();
+  it("TC_00.001.13 | Verify that duplicate names are not allowed during project creation", () => {
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage
+      .typeNewItemName(folderName)
+      .selectFreestyleProject()
+      .clickOKButton();
+    freestyleProjectPage.clickSaveButton();
+    header.clickDashboardBtn();
 
-        dashboardPage.getProjectName().should('contain', folderName);
+    dashboardPage.clickNewItemMenuLink();
 
-    });
+    newJobPage
+      .typeNewItemName(folderName)
+      .getItemNameInvalidErrorMessage()
+      .should(
+        "contain.text",
+        `${newItem.duplicateNotAllowedMessage} ‘${folderName}’`
+      );
 
-    it('TC_00.001.13 | Verify that duplicate names are not allowed during project creation', () => {
-        
-        dashboardPage.clickNewItemMenuLink();
-        newJobPage.typeNewItemName(folderName)
-            .selectFreestyleProject()
-            .clickOKButton();
-        freestyleProjectPage.clickSaveButton();
-        header.clickDashboardBtn();
-   
-        dashboardPage.clickNewItemMenuLink();
+    newJobPage.getOKButton().should("be.disabled");
+  });
 
-        newJobPage.typeNewItemName(folderName)
-            .getItemNameInvalidErrorMessage()
-                .should('contain.text', `${newItem.duplicateNotAllowedMessage} ‘${folderName}’`);
-        
-        newJobPage.getOKButton().should('be.disabled');
+  it("TC_00.001.11 | Create Freestyle Project by clicking on Create a Job", function () {
+    dashboardPage.clickCreateJobLink();
+    newJobPage
+      .typeNewItemName(project.name)
+      .selectFreestyleProject()
+      .clickOKButton()
+      .clickSaveButton();
 
-    });
+    freestyleProjectPage
+      .getJobHeadline()
+      .should("be.visible")
+      .and("have.text", project.name);
+  });
 
-    it("TC_00.001.11 | Create Freestyle Project by clicking on Create a Job", function () {
-        dashboardPage.clickCreateJobLink();
-        newJobPage
-            .typeNewItemName(project.name)
-            .selectFreestyleProject()
-            .clickOKButton()
-            .clickSaveButton();
-
-        freestyleProjectPage
-            .getJobHeadline()
-            .should("be.visible")
-            .and("have.text", project.name);
-    });
+  it("TC_00.001.015_A | User can create and save new job Freestyle project", () => {
+    dashboardPage.clickNewItemMenuLink();
+    newJobPage
+      .typeNewItemName(project.name)
+      .selectFreestyleProject()
+      .clickOKButton();
+    freestyleProjectPage.clickSaveButton();
+    cy.url().should("include", project.name);
+    freestyleProjectPage.getJobHeadline().and("have.text", project.name);
+  });
 });
