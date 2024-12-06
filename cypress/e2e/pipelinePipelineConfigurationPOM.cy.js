@@ -35,7 +35,7 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
     })
 
     it('TC_02.004.02 | Pipeline > Pipeline Configuration >Enable/disable the project with the help of Enable/Disable toggle', () => { 
-      basePage.clickNewItemMenuLink()
+      basePage.clickNewItemMenuLink();
       newJobPage.typeNewItemName(randomItemName)
                 .selectPipelineProject()
                 .clickOKButton();
