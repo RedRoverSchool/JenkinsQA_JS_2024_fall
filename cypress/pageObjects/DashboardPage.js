@@ -18,7 +18,7 @@ class DashboardPage extends BasePage {
   getDeleteOrganizationFolderDropdownMenuItem = () => cy.get('[class="jenkins-dropdown__item "]').contains('Delete Organization Folder');
   getWelcomeToJenkinsHeadline = () => cy.get('.empty-state-block h1');
   getMoveTheProject = () => cy.get('a[href*="move"]');
-  getRenameFolderDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');//please rename to getRenameDropdownOption
+  getRenameDropdownOption = () => cy.get('a.jenkins-dropdown__item ').contains('Rename');
   getRenameProjectDropdownMenuItem = () => cy.get('a.jenkins-dropdown__item').contains('Rename');//duplicate to getRenameFolderDropdownMenuItem, may be deleted
   getDeleteProjectDialogBox = () => cy.get('dialog.jenkins-dialog');
   getAllIconsProjectRow = (projectName) => cy.get(`tr[id$='${projectName}'] svg`);
@@ -29,6 +29,8 @@ class DashboardPage extends BasePage {
   getSubmitViewCreationButton = () => cy.get('button[name="Submit"]');//make sure it's a correct button name
   getCurrentViewBreadcrumbsItem = () => cy.get('.jenkins-breadcrumbs__list-item').eq(1);
   getViewTab = (viewName) => cy.get("div.tab").contains(viewName);
+  getSortingArrowOfNameColumn = () => cy.get('th[initialsortdir="down"] span.sortarrow');
+  getAllItemNamesFromNameColumn = () => cy.get('table#projectstatus tbody tr a span');
 
 
   selectNewItemFromDashboardChevron() {
@@ -101,8 +103,8 @@ class DashboardPage extends BasePage {
     return this;
   }
 
-  clickRenameFolderDropdownMenuItem() {//please rename to  clickRenameDropdownOption, so it can be reused
-    this.getRenameFolderDropdownMenuItem().click();
+  clickRenameDropdownOption() {
+    this.getRenameDropdownOption().click();
     return this
   }
 
@@ -140,6 +142,11 @@ class DashboardPage extends BasePage {
     this.getSubmitViewCreationButton().click({force:true})
     return this
 
+  }
+
+  clickSortingArrowOfNameColumn() {
+    this.getSortingArrowOfNameColumn().click()
+    return this
   }
 
 };

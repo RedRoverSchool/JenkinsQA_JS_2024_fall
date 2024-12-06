@@ -87,7 +87,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.log("Steps");
     dashboardPage.openDropdownForItem(project.name);
 
-    dashboardPage.clickRenameFolderDropdownMenuItem();
+    dashboardPage.clickRenameDropdownOption();
 
     freestyleProjectPage.validateSpecialCharacters();
   });

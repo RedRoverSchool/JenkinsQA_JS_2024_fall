@@ -5,15 +5,16 @@ import NewJobPage from "./NewJobPage";
 class FolderPage extends BasePage {
 
     getTitleConfiguration = () => cy.get("#side-panel h1");
-    getFolderNameOnMainPanel = () => cy.get("#main-panel h1");
+    getFolderNameOnMainPanel = () => cy.get("#main-panel");
+    getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
+    getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
+
     getNewNameField = () => cy.get('input[name="newName"]');
     getFolderUrl = () => cy.url({ decode: true });
     getProjectName = () => cy.get('*.jenkins-table__link span');//probably rename to getFolderName or see BasePage
     getCreateAJobLink = () => cy.get('a[href="newJob"]');
     getDescriptionField = () => cy.get('[name$="description"]');
     getFolderDescription = () => cy.get('#view-message');
-
-
 
     verifyTitleConfigurationIsVisible () {
         this.getTitleConfiguration()
