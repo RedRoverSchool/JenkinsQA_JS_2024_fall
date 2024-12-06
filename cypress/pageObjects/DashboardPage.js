@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import { th } from "@faker-js/faker";
 import NewJobPage from "./NewJobPage";
 import BasePage from "./basePage";
 
@@ -31,6 +32,8 @@ class DashboardPage extends BasePage {
   getViewTab = (viewName) => cy.get("div.tab").contains(viewName);
   getSortingArrowOfNameColumn = () => cy.get('th[initialsortdir="down"] span.sortarrow');
   getAllItemNamesFromNameColumn = () => cy.get('table#projectstatus tbody tr a span');
+  getBuildNowDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item').contains('Build Now');
+  getNotificationBar = () => cy.get('#notification-bar');
 
 
   selectNewItemFromDashboardChevron() {
@@ -147,6 +150,11 @@ class DashboardPage extends BasePage {
   clickSortingArrowOfNameColumn() {
     this.getSortingArrowOfNameColumn().click()
     return this
+  }
+
+  clickBuildNowDropdownMenuItem() {
+    this.getBuildNowDropdownMenuItem().click();
+    return this;
   }
 
 };

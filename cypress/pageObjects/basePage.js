@@ -18,6 +18,7 @@ class BasePage extends Header {
     getOKButton = () => cy.findByRole('button',{ name: /OK/ });//y.get('#ok-button').contains('OK');
 
     getJobHeadline = () => cy.get("#main-panel h1");// please rename to getItemTitle since we have it in multiple places
+    getBuildHistoryRows = () => cy.get('#buildHistory td[class="build-row-cell"]');
 
     
     clickNewItemMenuOption () {
