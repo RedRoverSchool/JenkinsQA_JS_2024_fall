@@ -34,4 +34,17 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
                   .should('contain.text', newPipelineDescription)
     })
 
+    it('TC_02.004.02 | Pipeline > Pipeline Configuration >Enable/disable the project with the help of Enable/Disable toggle', () => { 
+      basePage.clickNewItemMenuLink();
+      newJobPage.typeNewItemName(randomItemName)
+                .selectPipelineProject()
+                .clickOKButton();
+      pipelinePage
+                .typePipelineDescription(pipelineDescription)
+                .clickOnToggle()
+                .clickOnSaveBtn()
+                .getStatusDisabledText().should('exist')
+                .and('have.css', 'color', 'rgb(254, 130, 10)'); 
+  }) 
+
 })
