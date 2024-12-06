@@ -18,8 +18,8 @@ describe('US_04.001 | Folder > Rename Folder', () => {
     beforeEach(() => {
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(folderName.name).selectFolder().clickOKButton();
-        folderPage.clickSaveButton();
-        header.clickJenkinsLogo();
+        folderPage.clickSaveButton()
+                  .clickJenkinsLogo();
     });
 
     it('TC_04.001.02 | Rename folder from drop-down menu', () => {
