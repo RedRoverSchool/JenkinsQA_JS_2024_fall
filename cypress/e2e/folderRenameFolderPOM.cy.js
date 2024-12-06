@@ -19,11 +19,11 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(folderName.name).selectFolder().clickOKButton();
         folderPage.clickSaveButton();
-        header.clickJenkinsLogo();
     });
 
     it('TC_04.001.02 | Rename folder from drop-down menu', () => {
 
+        header.clickJenkinsLogo()
         dashboardPage.openDropdownForItem(folderName.name)
             .clickRenameDropdownOption();
         folderPage.clearNewNameField()
@@ -36,6 +36,8 @@ describe('US_04.001 | Folder > Rename Folder', () => {
     });
 
     it('TC_04.001.06 | Successfully enter a valid folder name in the special field', () => {
+
+        header.clickJenkinsLogo()
         dashboardPage.openDropdownForItem(folderName.name)
             .clickRenameDropdownOption()
         folderPage.clearNewNameField()
@@ -44,6 +46,8 @@ describe('US_04.001 | Folder > Rename Folder', () => {
     });
 
     it('TC_04.001.03| Verify that error message is displayed when an invalid folder name is entered in the Rename Folder field', () => {
+
+        header.clickJenkinsLogo()
         dashboardPage.openDropdownForItem(folderName.name)
             .clickRenameDropdownOption()
         folderPage.clearNewNameField()
@@ -52,5 +56,18 @@ describe('US_04.001 | Folder > Rename Folder', () => {
 
         folderPage.getFolderNameOnMainPanel()
             .should('contain', 'is an unsafe character')
+    });
+
+    it('TC_04.001.04 |Verify to rename the folder from drop-down menu of the folder element in the breadcrumbs', () => {
+       
+        header.getBreadcrumbBar().should('contain', folderName.name)
+        header.hoverBreadcrumbsFolderName()
+              .getBreadcrumbsFolderDropdownMenu().click()
+        dashboardPage.getRenameProjectDropdownMenuItem().click()
+        
+        folderPage.clearNewNameField()
+                 .typeNewFolderName(newFolderName.name)
+                 .getNewNameField()
+                 .should('have.value', newFolderName.name)
     });
 });
