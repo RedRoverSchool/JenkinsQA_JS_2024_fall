@@ -34,23 +34,17 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
                   .should('contain.text', newPipelineDescription)
     })
 
-    it.only ('TC_02.004.02 | Pipeline > Pipeline Configuration >Enable/disable the project with the help of Enable/Disable toggle', () => { 
-      dashboardPage.clickCreateJobLink();
-      newJobPage
-        .typeNewItemName(randomItemName)
-        .selectPipelineProject()
-        .clickOKButton();
-       // .verifyToggleWork()
-       // .clickOnDesabledToggle();
-      //cy.wait(500);
+    it.('TC_02.004.02 | Pipeline > Pipeline Configuration >Enable/disable the project with the help of Enable/Disable toggle', () => { 
+      basePage.clickNewItemMenuLink()
+      newJobPage.typeNewItemName(randomItemName)
+                .selectPipelineProject()
+                .clickOKButton()
       pipelinePage
-        .clickOnToggle()
-        
-        .clickSaveButton();
-      //pipelinePage
-       // .getStatusDisabledText().should('exist')
-       // .and('have.css', 'color', 'rgb(254, 130, 10)');     
-  
+                .typePipelineDescription(pipelineDescription)
+                .clickOnToggle()
+                .clickOnSaveBtn()
+                .getStatusDisabledText().should('exist')
+                .and('have.css', 'color', 'rgb(254, 130, 10)'); 
   }) 
 
 })
