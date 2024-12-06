@@ -77,6 +77,11 @@ class Header {
         return this;
     }
 
+    hoverBreadcrumbsFolderName () {
+        this.getBreadcrumbsFolderName().realHover();
+        return this;
+    }
+
     clickDashboardDropdownChevron () {
         this.getDashboardBreadcrumbChevron().click();
         return this;
