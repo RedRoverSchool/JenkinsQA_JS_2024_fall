@@ -121,4 +121,4 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
       .should('have.text', newItem.itemNameDotWarningMessage)
       .and('have.css', 'color', errorMessageColor)        
 })
-  });
+});
