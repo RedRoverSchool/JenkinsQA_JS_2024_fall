@@ -27,9 +27,9 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     freestyleProjectPage.clickSaveButton().clickDashboardBreadcrumbsLink();
     dashboardPage.openProjectPage(project.name);
     freestyleProjectPage
-      .clickRenameButton()
+      .clickRenameMenuOption()
       .typeNewName(project.newName)
-      .clickSaveButton();
+      .clickRenameButton();
     cy.url({ decode: true }).should("include", project.newName);
     freestyleProjectPage.getJobHeadline().should("have.text", project.newName);
     freestyleProjectPage.clickDashboardBreadcrumbsLink();
@@ -48,7 +48,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
       .clickRenameProjectDropdownMenuItem();
     freestyleProjectPage.getNewNameField().click();
     freestyleProjectPage.clearRenameField().typeRenameField(project.newName);
-    freestyleProjectPage.clickRenameButtonSubmit();
+    freestyleProjectPage.clickRenameButton();
     freestyleProjectPage.getJobHeadline().should("have.text", project.newName);
   });
 
@@ -65,7 +65,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
       .clickJobTableDropdownChevron()
       .clickRenameProjectDropdownMenuItem();
     //Rename job
-    freestyleProjectPage.typeNewName(project.newName).clickSaveButton();
+    freestyleProjectPage.typeNewName(project.newName).clickRenameButton();
     //Checks
     freestyleProjectPage.getJobHeadline().should("contain", project.newName);
     freestyleProjectPage.clickDashboardBreadcrumbsLink();
@@ -85,9 +85,9 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     header.clickJenkinsLogo();
 
     cy.log("Steps");
-    dashboardPage.openDropdownForProject(project.name);
+    dashboardPage.openDropdownForItem(project.name);
 
-    dashboardPage.clickRenameFolderDropdownMenuItem();
+    dashboardPage.clickRenameDropdownOption();
 
     freestyleProjectPage.validateSpecialCharacters();
   });
@@ -100,10 +100,10 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
       .clickOKButton()
       .clickSaveButton();
     freestyleProjectPage
-      .clickRenameButton()
+      .clickRenameMenuOption()
       .clearRenameField()
       .typeNewName(project.newName)
-      .clickRenameButtonSubmit();
+      .clickRenameButton();
 
     freestyleProjectPage.getJobHeadline().should("have.text", project.newName);
   });
@@ -117,7 +117,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     freestyleProjectPage.clickSaveButton().clickDashboardBreadcrumbsLink();
 
     dashboardPage.clickJobTableDropdownChevron().clickRenameProjectDropdownMenuItem();
-    freestyleProjectPage.clickRenameButtonSubmit();
+    freestyleProjectPage.clickRenameButton();
 
     freestyleProjectPage.assertRenameError();
   })
@@ -142,13 +142,13 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.log("step1: check error for the same name");
     dashboardPage.openProjectPage(project.longName);
     freestyleProjectPage
-      .clickRenameButton()
+      .clickRenameMenuOption()
       .getWarningMessageOnRenamePage()
       .should("have.text", messages.renameItem.sameNameError);
 
     cy.log("step2: rename the project with the same name");
     freestyleProjectPage
-      .clickRenameButtonSubmit()
+      .clickRenameButton()
       .getHeaderOnRename()
       .should("have.text", "Error");
     freestyleProjectPage
@@ -160,7 +160,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     freestyleProjectPage
       .clearRenameField()
       .typeRenameField(project2.longName)
-      .clickRenameButtonSubmit()
+      .clickRenameButton()
       .getHeaderOnRename()
       .should("have.text", "Error");
     cy.fixture("messages").then((messages) => {
@@ -177,7 +177,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     cy.go("back");
     freestyleProjectPage
       .clearRenameField()
-      .clickRenameButtonSubmit()
+      .clickRenameButton()
       .getHeaderOnRename()
       .should("have.text", "Error");
     freestyleProjectPage
@@ -190,7 +190,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
       freestyleProjectPage
         .clearRenameField()
         .typeRenameField(project.longName + char)
-        .clickRenameButtonSubmit()
+        .clickRenameButton()
         .getHeaderOnRename()
         .should("have.text", "Error");
       cy.fixture("messages").then((messages) => {
@@ -209,7 +209,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     freestyleProjectPage
       .clearRenameField()
       .typeRenameField(project.longName + ".")
-      .clickRenameButtonSubmit()
+      .clickRenameButton()
       .getHeaderOnRename()
       .should("have.text", "Error");
     freestyleProjectPage

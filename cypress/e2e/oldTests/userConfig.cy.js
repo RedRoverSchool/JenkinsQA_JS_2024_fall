@@ -1,5 +1,8 @@
 /// <reference types="cypress" />
 describe.skip('US_13.003 | User > Config', ()=>{
+
+    const userName = 'UserName';
+
     it('TC_13.003.01 | Edit the profile description from the account settings page by clicking on your username' , ()=>{
         cy.get('[href^="/user"]').click()
         cy.get('#description-link').click()
@@ -26,4 +29,16 @@ describe.skip('US_13.003 | User > Config', ()=>{
         cy.get('.jenkins-button').contains('Save').click();
         cy.get('html').should('have.attr', 'data-theme', 'dark');
       })
+
+      it('TC_13.003.06 | Rename user', () => {
+        cy.get('[href^="/user"]').click();
+        cy.get('[href$="configure"]').click();
+        cy.get('.jenkins-input').first().clear();
+        cy.get('.jenkins-input').first().type(userName);
+        cy.get('.jenkins-submit-button').click();
+        cy.get('#breadcrumbBar').should('not.contain', 'Configure');
+        cy.get('[href^="/user"]').first().should('contain', userName);
+        cy.get('h1').should('contain', userName);
+        cy.get('#breadcrumbBar').should('contain', userName);
+    })
 })
