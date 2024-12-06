@@ -25,8 +25,8 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
   it("TC_00.002.01 | Special characters are not allowed in the project name", () => {
     dashboardPage
       .clickNewItemMenuLink()
-      .typeNewItemName(projectNameInvalid);
-    newJobPage.getItemNameInvalidErrorMessage()
+    newJobPage.typeNewItemName(projectNameInvalid)
+      .getItemNameInvalidErrorMessage()
       .should("have.text", newItem.newItemNameInvalidMessage)
       .and("have.css", "color", errorMessageColor);
   });
@@ -35,7 +35,7 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
 
     dashboardPage
       .clickNewItemMenuLink()
-      .typeNewItemName(randomItemName)
+    newJobPage.typeNewItemName(randomItemName)
       .selectPipelineProject()
 
     newJobPage.getPipelineSelectedState()
@@ -55,7 +55,7 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
 
     cy.log('Precondition: create Pipeline project');
     dashboardPage.clickNewItemMenuLink()
-      .typeNewItemName(randomItemName)
+    newJobPage.typeNewItemName(randomItemName)
       .selectPipelineProject()
       .clickOKButton();
     header.clickJenkinsLogo();
@@ -113,8 +113,30 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
     cy.wait(500);
     newJobPage.clickSaveButton();
     pipelinePage
-      .getStatusDisаbledText().should('exist')
+      .getStatusDisabledText().should('exist')
       .and('have.css', 'color', 'rgb(254, 130, 10)');     
 
 }) 
-});
+
+  it('TC_00.002.007 | New Pipeline Project check Item name valid', () => {
+    dashboardPage
+      .clickNewItemMenuLink()
+     for (let i = 0; i < allKeys.projectNameSpecialSymbols.length; i++){
+      newJobPage
+      .clearItemNameField()
+      .verifyItemInvalidNameMessageNotExist()
+      .typeNewItemName(allKeys.projectNameSpecialSymbols[i])
+      .verifyItemInvalidNameMessageExist()
+      .getItemNameInvalidErrorMessage()
+      .should('have.text', `» ‘${allKeys.projectNameSpecialSymbols[i]}’ is an unsafe character`)
+      .and('have.css', 'color', errorMessageColor)
+    }
+    newJobPage
+      .clearItemNameField()
+      .typeNewItemName(allKeys.projectNameSpecialSymbolDot)
+      .verifyItemInvalidNameMessageExist()
+      .getItemNameInvalidErrorMessage()
+      .should('have.text', newItem.itemNameDotWarningMessage)
+      .and('have.css', 'color', errorMessageColor)        
+})
+  });

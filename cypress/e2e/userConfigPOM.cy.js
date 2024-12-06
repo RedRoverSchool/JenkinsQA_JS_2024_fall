@@ -17,7 +17,7 @@ describe('US_13.003 | User > Config', () => {
         header.clickUserConfigureItem();
         userPage.clearUserDescription();
         userPage.typeUserDescription(userDescription).invokeTextUserDescription();
-        userPage.clickOnSaveBtn();
+        userPage.clickSaveButton();
         userPage.getUserAvatar().should('be.visible');
         userPage.getUserDescription().should('have.text', userDescription);
     })
@@ -28,9 +28,10 @@ describe('US_13.003 | User > Config', () => {
           .clickEditDescriptionBtn()
           .clearUserDescriptionOnStatus()
           .typeUserDescriptionOnStatus(userDescription)
-          .clickOnSaveBtn();
+          .clickSaveButton();
         userPage.getUserDescription().should("have.text", userDescription);
       });
+
     it("TC_13.003.05 | User can access account settings in the dropdown menu next to the username", () => {
       header.clickUserDropdownLink();
       header.getUserDropdownMenu().find('a').should('have.length', userDropdownLink.length);
@@ -41,5 +42,13 @@ describe('US_13.003 | User > Config', () => {
       header.getUserDropdownIcon()
       .should('have.length', userDropdownLink.length)
       .and('be.visible');
+  });
+
+   it.skip('TC_13.003.03 | Change the Appearance of user interface', () => {
+      header.clickUserDropdownLink();
+      header.clickUserConfigureItem();
+      userPage.clickAppearanceDark();
+      userPage.clickSaveButton();
+      userPage.getDarkTheme().should('equal', 'dark');
   });
 })

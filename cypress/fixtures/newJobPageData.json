@@ -8,5 +8,7 @@
                     "Multi-configuration project",
                     "Folder",
                     "Multibranch Pipeline", 
-                    "Organization Folder"]
+                    "Organization Folder"],
+    "projectNameSpecialSymbols": "!@#$%^&*|:?><][;/",
+    "projectNameSpecialSymbolDot" : "."
 }

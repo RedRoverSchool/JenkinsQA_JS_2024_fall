@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
+import Header from "../pageObjects/Header";
 
-class SearchResultsPage {
+class SearchResultsPage extends Header{
 
     getTitle = () => cy.get('div#main-panel h1');
     getNoMatchesErrorMessage = () => cy.get('.error');

@@ -9,7 +9,7 @@ import UserPage from "../pageObjects/UserPage";
 import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import FolderPage from "../pageObjects/FolderPage";
-import PipelinePage from "../pageObjects/PipelinePage"
+import PipelinePage from "../pageObjects/PipelinePage";
 
 import headerData from "../fixtures/headerData.json";
 import searchResultsData from "../fixtures/searchResultsData.json";
@@ -30,11 +30,21 @@ const pipelinePage = new PipelinePage();
 let searchTermNoMatches = faker.string.alpha(10)
 let project = genData.newProject()
 
+function createFreestyleProject (jobName) {
+  dashboardPage.clickNewItemMenuLink()
+  newJobPage
+    .typeNewItemName(jobName)
+    .selectFreestyleProject()
+    .clickOKButton()
+  freestyleProjectPage
+    .clickSaveButton()
+};
+
 describe('US_14.002 | Header > Search Box', () => {
 
   it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search",() => {
     dashboardPage.clickNewItemMenuLink()
-      .typeNewItemName(newJobPageData.projectName)
+    newJobPage.typeNewItemName(newJobPageData.projectName)
       .selectFreestyleProject()
       .clickOKButton();
     freestyleProjectPage.typeJobDescription(configurePageData.projectDescription)
@@ -80,7 +90,7 @@ describe('US_14.002 | Header > Search Box', () => {
     header.clickUserDropdownLink()
        .clickUserConfigureItem();
     userPage.checkCheckBox()
-       .clickOnSaveBtn();
+       .clickSaveButton();
 
     header.typeSearchTerm(headerData.search.input.upperCaseMatchForManage);
 
@@ -121,13 +131,13 @@ describe('US_14.002 | Header > Search Box', () => {
       .typeNewItemName("New Folder TC_14.002.15_A")
       .selectFolder()
       .clickOKButton();
-    folderPage.clickSaveBtn()  
+    folderPage.clickSaveButton()  
       .clickNewItemMenuOption();
     newJobPage
       .typeNewItemName("Project TC_14.002.15_A")
       .selectPipelineProject()
       .clickOKButton();
-    pipelinePage.clickOnSaveBtn();
+    pipelinePage.clickSaveButton;
     header.getJenkinsLogo()
     header.typeSearchTerm("Pro")
       .clickFirstOptionFromACBox()
@@ -154,13 +164,43 @@ describe('US_14.002 | Header > Search Box', () => {
       .typeNewItemName(project.name)
       .selectFolder() 
       .clickOKButton()
-    folderPage.clickSaveBtn()  
+    folderPage.clickSaveButton()
 
     cy.log('start search')
     header
       .typeSearchTerm(project.name.slice(0,4))
       .getSearchAutofillSuggestionList().each(($row) => {
         cy.wrap($row).invoke('text').should('contain', project.name.slice(0,4))
+      })
+  });
+
+  it("TC_14.002.16 | Finds a build by its number", () => {
+    cy.log('spy on build history call')
+    cy.intercept("GET", encodeURI(`/job/${project.name}/buildHistory/**`)).as(
+      "buildHistory"
+    );
+    cy.log("create a job and build it")
+    createFreestyleProject(project.name)
+    freestyleProjectPage
+      .clickBuildNowMenuOption()
+    freestyleProjectPage
+      .clickBuildNowMenuOption()
+
+    cy.log('wait till build history call is completed')
+    cy.wait("@buildHistory")
+
+    freestyleProjectPage
+      .retrieveBuildNumberAndDate().then((array) => {
+        array.forEach((el) => {
+          header
+            .typeSearchTerm(`${project.name} ${el.buildNumber}`)
+            .verifyAutoCompletionVisible(`${project.name} ${el.buildNumber}`)
+            .searchTerm()  
+          searchResults
+            .getTitle()
+              .should('contain', el.buildNumber)
+          cy.url().should('include', encodeURI(`/${project.name}/${el.buildNumber.slice(1)}`))   
+        })
       })
   });
 
