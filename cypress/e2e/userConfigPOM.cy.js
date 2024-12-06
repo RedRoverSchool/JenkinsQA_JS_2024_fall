@@ -2,12 +2,14 @@
 
 import Header from "../pageObjects/Header";
 import UserPage from "../pageObjects/UserPage";
+import DashboardPage from "../pageObjects/DashboardPage";
 import { faker } from "@faker-js/faker";
 import { userDropdownLink } from '../fixtures/dashboardPageData'; 
 
 const userDescription = faker.lorem.paragraph();
 const header = new Header();
 const userPage = new UserPage();
+const dashboardPage = new DashboardPage();
 
 
 describe('US_13.003 | User > Config', () => {
@@ -50,5 +52,15 @@ describe('US_13.003 | User > Config', () => {
       userPage.clickAppearanceDark();
       userPage.clickSaveButton();
       userPage.getDarkTheme().should('equal', 'dark');
+  });
+
+  it('TC_13.003.06 | Change Jenkins theme from Default to Dark(System)', () => {
+    header.clickUserDropdownLink()
+      .clickAppearanceLink();
+
+    userPage.clickAppearanceDarkTheme()
+      .clickSaveButton();
+    header.clickJenkinsLogo()
+    dashboardPage.getBackGroundTheme().should('have.css', 'color-scheme', 'dark')
   });
 })

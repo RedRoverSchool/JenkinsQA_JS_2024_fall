@@ -31,7 +31,7 @@ class DashboardPage extends BasePage {
   getViewTab = (viewName) => cy.get("div.tab").contains(viewName);
   getSortingArrowOfNameColumn = () => cy.get('th[initialsortdir="down"] span.sortarrow');
   getAllItemNamesFromNameColumn = () => cy.get('table#projectstatus tbody tr a span');
-
+  getBackGroundTheme = () => cy.get('#main-panel');
 
   selectNewItemFromDashboardChevron() {
     this.getJobTableDropdownItem().each(($els) => {
