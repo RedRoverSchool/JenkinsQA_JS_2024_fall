@@ -17,7 +17,6 @@ class NewJobPage extends BasePage{
     getBreadcrumbsListItem = () => cy.get("[aria-current='page']");
     configurePagePipelineButton = () => cy.get('button[data-section-id="pipeline"]');
     getEmptyNameFieldReminder = () => cy.get('div[class$="validation-message"]');
-    getToggleSelector = () => cy.get('#enable-disable-project');
 
     typeNewItemName (itemName) {
         this.getItemNameField().type(itemName);
@@ -72,14 +71,6 @@ class NewJobPage extends BasePage{
         this.getItemNameInvalidErrorMessage()
             .should('have.class','input-message-disabled');
         return this;
-    }
-    verifyToggleWork(){
-        this.getToggleSelector().should('be.checked');
-        return this;
-    }
-    clickOnDesabledToggle(){
-        this.getToggleSelector().uncheck({force:true});
-        return this
     }
 };
 

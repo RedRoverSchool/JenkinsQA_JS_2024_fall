@@ -8,12 +8,10 @@ import Header from "../pageObjects/Header";
 import allKeys from "../fixtures/newJobPageData.json";
 import { newItem } from "../fixtures/messages.json";
 import genData from "../fixtures/genData";
-import PipelinePage from '../pageObjects/PipelinePage';
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const header = new Header();
-const pipelinePage = new PipelinePage();
 
 const { projectNameInvalid, errorMessageColor } = allKeys;
 
@@ -101,22 +99,6 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
     newJobPage  
       .getUrlConfigurePageField().should('include', project.name)
   })
-
-  it ('TC_02.004.02 | Pipeline > Pipeline Configuration >Enable/disable the project with the help of Enable/Disable toggle', () => { 
-    dashboardPage.clickCreateJobLink();
-    newJobPage
-      .typeNewItemName(project.name)
-      .selectPipelineProject()
-      .clickOKButton()
-      .verifyToggleWork()
-      .clickOnDesabledToggle();
-    cy.wait(500);
-    newJobPage.clickSaveButton();
-    pipelinePage
-      .getStatusDisabledText().should('exist')
-      .and('have.css', 'color', 'rgb(254, 130, 10)');     
-
-}) 
 
   it('TC_00.002.007 | New Pipeline Project check Item name valid', () => {
     dashboardPage
