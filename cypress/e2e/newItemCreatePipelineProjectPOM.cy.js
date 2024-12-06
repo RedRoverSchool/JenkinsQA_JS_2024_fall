@@ -103,6 +103,7 @@ describe("US_00.002 | New Item > Create Pipeline Project", () => {
   })
 
   it ('TC_02.004.02 | Pipeline > Pipeline Configuration >Enable/disable the project with the help of Enable/Disable toggle', () => { 
+   
     dashboardPage.clickCreateJobLink();
     newJobPage
       .typeNewItemName(project.name)
