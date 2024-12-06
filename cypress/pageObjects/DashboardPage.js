@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-import { th } from "@faker-js/faker";
 import NewJobPage from "./NewJobPage";
 import BasePage from "./basePage";
 
