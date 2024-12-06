@@ -14,6 +14,7 @@ class UserPage extends DashboardPage{
     getDarkTheme = () => cy.get('html').invoke('attr', 'data-theme');
     getAppearanceDarkTheme = () => cy.get('label[for = "radio-block-0"]');
     getSaveButton = () => cy.get("button[name='Submit']");
+    getAppearanceButton = () => cy.get('a[href*="appearance"]');
 
     checkCheckBox() {
         this.getInsensitiveSearchCheckBox().check({ force: true })
@@ -64,6 +65,11 @@ class UserPage extends DashboardPage{
         this.getSaveButton().click()
         return this;
     }
-}
+
+    clickAppearanceLink() {
+        this.getAppearanceButton().click();
+        return this;
+    }
+};
 
 export default UserPage;

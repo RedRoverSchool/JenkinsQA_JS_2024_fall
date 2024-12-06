@@ -55,12 +55,12 @@ describe('US_13.003 | User > Config', () => {
   });
 
   it('TC_13.003.06 | Change Jenkins theme from Default to Dark(System)', () => {
-    header.clickUserDropdownLink()
-      .clickAppearanceLink();
-
-    userPage.clickAppearanceDarkTheme()
+    header.clickUserName();
+    userPage.clickAppearanceLink()
+      .clickAppearanceDarkTheme()
       .clickSaveButton();
     header.clickJenkinsLogo()
+    
     dashboardPage.getBackGroundTheme().should('have.css', 'color-scheme', 'dark')
   });
 })
