@@ -12,7 +12,6 @@ class Header {
     getUserDropdownIcon = () => cy.get(".jenkins-dropdown__item__icon");
     getSearchAutofillSuggestionList = () => cy.get('li[style]:not([style="display: none;"])');
     getLogOutButton = () => cy.get('a[href="/logout"]');
-
     getBreadcrumps = () => cy.get(".jenkins-breadcrumbs");
     getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
     getDashboardLink = () => cy.get('a[href="/"].model-link');
