@@ -68,7 +68,7 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
       pipelinePage.getPipelineScriptDropdownOption().should('be.selected').and('be.visible');  
     });
 
-    it.only('TC_02.004.05 | Verify the choice of linking the pipeline to a Jenkinsfile stored in source control', () => {
+    it('TC_02.004.05 | Verify the choice of linking the pipeline to a Jenkinsfile stored in source control', () => {
 
       dashboardPage.clickCreateJobLink();
       newJobPage.typeNewItemName(project.name)
@@ -83,7 +83,7 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
                   .clickPipelineMenuOption();
     
       cy.log('Verifying that the "Pipeline script from SCM" is selected and the "Repository URL" is visible');           
-      pipelinePage.getPipelineScriptFromSCMDropdownOption()
+      pipelinePage.getDefinitionDropdown()
                   .find('option:selected')
                   .should('contain.text', 'Pipeline script from SCM')
                   .and('be.visible');

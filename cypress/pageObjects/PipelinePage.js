@@ -14,9 +14,9 @@ class PipelinePage extends BasePage {
     getScriptEditorDropdown = () => cy.get('.samples > select');
     getScriptEditorInputField = () => cy.get('.ace_content');
     getPipelineMenuOption = () => cy.get('button[data-section-id="pipeline"]');
-    getPipelineScriptFromSCMDropdownOption = () => cy.get(':nth-child(9) > :nth-child(2) > .jenkins-select > .jenkins-select__input');
+    getDefinitionDropdown = () => cy.get(':nth-child(9) > :nth-child(2) > .jenkins-select > .jenkins-select__input');
     getSCMDropdown = () => cy.get(':nth-child(9) > .jenkins-select > .jenkins-select__input');
-    getRepositoryURLInputField =() => cy.get('input[name="_.url"]');
+    getRepositoryURLInputField =() => cy.get('input[name="_.url"]').first();
 
     clickSaveButton() {
         this.getSaveButton().click()
@@ -59,7 +59,7 @@ class PipelinePage extends BasePage {
     }
 
     selectPipelineScriptFromSCMDropdownOption() {
-        this.getPipelineScriptFromSCMDropdownOption().select('Pipeline script from SCM')
+        this.getDefinitionDropdown().select('Pipeline script from SCM')
         return this
     }
     
@@ -69,7 +69,7 @@ class PipelinePage extends BasePage {
     }
     
     typeRepositoryURL(url) {
-      this.getRepositoryURLInputField().type(url, {force: true})
+      this.getRepositoryURLInputField().first().type(url)
     }
 }
 
