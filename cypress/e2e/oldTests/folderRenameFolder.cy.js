@@ -165,7 +165,7 @@ describe.skip('US_04.001 | Folder > Rename Folder', () => {
         cy.get('button[name="Submit"]').click()
         cy.get('div[id="main-panel"]').should('contain', 'is an unsafe character')
     });
-    it.only('TC_04.001.10|Rename folder from drop-down menu', () => {
+    it('TC_04.001.10|Rename folder from drop-down menu', () => {
 
         let oldName = 'Folder_1';
         let newName = 'Folder_2'
