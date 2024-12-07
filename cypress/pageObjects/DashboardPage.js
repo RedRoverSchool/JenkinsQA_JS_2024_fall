@@ -9,7 +9,7 @@ class DashboardPage extends BasePage {
   getJobTable = () => cy.get("#projectstatus");
   getJobTitleLink = () => cy.get(".model-link.inside");
   getManageJenkins = () => cy.get('a[href="/manage"]');
-  getProjectName = () => cy.get('*.jenkins-table__link span');//please rename to getItemName, so it can be reused
+  getItemName = () => cy.get('*.jenkins-table__link span');//__DONE__ please rename to getItemName, so it can be reused
   getItemChevronIcon = (itemName) => cy.get(`span:contains('${itemName}') + .jenkins-menu-dropdown-chevron`);
   getJobTableDropdownChevron = () => cy.get('.jenkins-table__link > .jenkins-menu-dropdown-chevron');
   getJobTableDropdownItem = () => cy.get('.jenkins-dropdown__item ');
@@ -53,7 +53,7 @@ class DashboardPage extends BasePage {
   }
 
   openProjectPage (projectName) {
-    this.getProjectName().contains(projectName).click();
+    this.getItemName().contains(projectName).click();
   }
 
   getSessionCookie(cookieName) {
@@ -63,7 +63,7 @@ class DashboardPage extends BasePage {
   }
 
   openDropdownForItem (projectName) {
-    this.getProjectName().contains(projectName)
+    this.getItemName().contains(projectName)
       .trigger("mouseover").should("be.visible");
     this.getItemChevronIcon(projectName)
       .click({ force: true });
