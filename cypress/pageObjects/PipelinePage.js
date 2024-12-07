@@ -14,6 +14,9 @@ class PipelinePage extends BasePage {
     getScriptEditorDropdown = () => cy.get('.samples > select');
     getScriptEditorInputField = () => cy.get('.ace_content');
     getPipelineMenuOption = () => cy.get('button[data-section-id="pipeline"]');
+    getPipelineScriptFromSCMDropdownOption = () => cy.get(':nth-child(9) > :nth-child(2) > .jenkins-select > .jenkins-select__input');
+    getSCMDropdown = () => cy.get(':nth-child(9) > .jenkins-select > .jenkins-select__input');
+    getRepositoryURLInputField =() => cy.get('input[name="_.url"]');
 
     clickSaveButton() {
         this.getSaveButton().click()
@@ -55,6 +58,19 @@ class PipelinePage extends BasePage {
         return this
     }
 
+    selectPipelineScriptFromSCMDropdownOption() {
+        this.getPipelineScriptFromSCMDropdownOption().select('Pipeline script from SCM')
+        return this
+    }
+    
+    selectGitOption() {
+        this.getSCMDropdown().select('Git')
+        return this
+    }
+    
+    typeRepositoryURL(url) {
+      this.getRepositoryURLInputField().type(url)
+    }
 }
 
 export default PipelinePage;
