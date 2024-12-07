@@ -69,7 +69,7 @@ class PipelinePage extends BasePage {
     }
     
     typeRepositoryURL(url) {
-      this.getRepositoryURLInputField().type(url)
+      this.getRepositoryURLInputField().type(url, {force: true})
     }
 }
 

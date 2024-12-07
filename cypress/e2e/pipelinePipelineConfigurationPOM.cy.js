@@ -68,7 +68,7 @@ describe('US_02.004 | Pipeline > Pipeline Configuration', () => {
       pipelinePage.getPipelineScriptDropdownOption().should('be.selected').and('be.visible');  
     });
 
-    it('TC_02.004.05 | Verify the choice of linking the pipeline to a Jenkinsfile stored in source control', () => {
+    it.only('TC_02.004.05 | Verify the choice of linking the pipeline to a Jenkinsfile stored in source control', () => {
 
       dashboardPage.clickCreateJobLink();
       newJobPage.typeNewItemName(project.name)
