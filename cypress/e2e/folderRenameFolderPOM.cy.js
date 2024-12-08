@@ -70,7 +70,7 @@ describe('US_04.001 | Folder > Rename Folder', () => {
                  .should('have.value', newFolderName.name)
     });
 
-    it('TC_04.001.05 | Rename folder from drop-down menu', () => {
+    it("TC_04.001.05 | Rename folder from drop-down menu", () => {
         dashboardPage.openDropdownForItem(folderName.name)
             .clickRenameDropdownOption();
         folderPage.clearNewNameField()
