@@ -24,4 +24,33 @@ describe("US_04.004 | Folder > Add or Edit Description of a Folder", () => {
             .getFolderDescription().should('be.visible')
             .and('have.text', folder.longDescription);
     });
-})
+    it('TC_04.004-02  Folder > Add or Edit Description of a Folder | Edit existing description', () => {
+        
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(folder.name)
+            .selectFolder()
+            .clickOKButton();
+          
+        folderPage
+            .clickSaveBtn()
+            
+            .clickaddDescriptionBtn()
+            .typeDescription(folder.description)
+            .clickSaveBtn()
+            
+            .clickeditDescriptionBtn()
+            .clearDescription()
+            .typeEditDescription(folder.newDescription)
+            .clickSaveBtn()  
+            
+            .getFolderDescriptionField()
+             .should('be.visible');
+           
+    });
+ })
+    
+
+
+
+
+

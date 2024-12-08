@@ -4,6 +4,7 @@ import DashboardPage from "./DashboardPage";
 import Header from "./Header";
 import NewJobPage from "./NewJobPage";
 
+
 class FolderPage extends Header {
     getSaveBtn = () => cy.get(".jenkins-submit-button");
     getTitleConfiguration = () => cy.get("#side-panel h1");
@@ -14,9 +15,11 @@ class FolderPage extends Header {
     getFolderUrl = () => cy.url({ decode: true });
     getProjectName = () => cy.get('*.jenkins-table__link span');
     getCreateAJobLink = () => cy.get('a[href="newJob"]');
-    getDescriptionField = () => cy.get('[name$="description"]');
+    getDescriptionField = () => cy.get('textarea[name="description"]');
     getFolderDescription = () => cy.get('#view-message');
-
+    getFolderAddDescription = () => cy.get('a#description-link');
+    getFolderEditDescription = () => cy.get('a[href="editDescription"]');
+    getFolderDescriptionField = () => cy.get('div#description');
 
     clickSaveBtn () {
         this.getSaveBtn().click();
@@ -61,8 +64,26 @@ class FolderPage extends Header {
     typeDescription (description) {
         this.getDescriptionField().type(description);
             return this;
-        };
- 
-};
+    };
+   
+    typeEditDescription (newDescription) {
+            this.getDescriptionField().type(newDescription);
+                return this;
+    };
+    clearDescription (description) {
+        this.getDescriptionField().clear('description', {delay: 0});
+        return this
+        }
+    clickaddDescriptionBtn(){
+        this.getFolderAddDescription().click()
+            return this;
+        }
+    clickeditDescriptionBtn(){
+        this.getFolderEditDescription().click()
+            return this
+        }
+    } 
+
+
 
 export default FolderPage;
