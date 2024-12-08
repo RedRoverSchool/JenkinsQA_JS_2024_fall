@@ -69,4 +69,15 @@ describe('US_04.001 | Folder > Rename Folder', () => {
                  .getNewNameField()
                  .should('have.value', newFolderName.name)
     });
+
+    it('TC_04.001.05 | Rename folder from drop-down menu', () => {
+        dashboardPage.openDropdownForItem(folderName.name)
+            .clickRenameDropdownOption();
+        folderPage.clearNewNameField()
+            .typeNewFolderName(newFolderName.name)
+            .clickRenameButton()
+
+        folderPage.getFolderNameOnMainPanel()
+            .should('include.text', `${newFolderName.name}`);
+    });
 });
