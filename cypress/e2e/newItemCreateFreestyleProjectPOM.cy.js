@@ -49,7 +49,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         freestyleProjectPage.clickSaveButton();
         header.clickJenkinsLogo();
 
-        dashboardPage.getProjectName().should('contain', folderName);
+        dashboardPage.getItemName().should('contain', folderName);
 
     });
 
