@@ -65,7 +65,7 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
         dashboardPage.getCancelButton().should("be.visible");
 
         dashboardPage.clickCancelButton()
-          .getProjectName()
+          .getItemName()
           .should("have.text", project.name)
           .and("be.visible");
     });

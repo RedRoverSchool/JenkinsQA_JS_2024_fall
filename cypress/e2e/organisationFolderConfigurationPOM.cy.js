@@ -50,7 +50,7 @@ describe("US_06.001 | Organisation folder > Configuration", () => {
         cy.url().should("match", new RegExp(`${encodedOrgFolderName}\/?$`));
 
         header.clickJenkinsLogo();
-        dashboardPage.getProjectName().contains(displayName).should("be.visible");
+        dashboardPage.getItemName().contains(displayName).should("be.visible");
     });
 
 

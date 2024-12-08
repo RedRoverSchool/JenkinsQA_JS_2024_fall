@@ -11,7 +11,7 @@ class FolderPage extends BasePage {
 
     getNewNameField = () => cy.get('input[name="newName"]');
     getFolderUrl = () => cy.url({ decode: true });
-    getProjectName = () => cy.get('*.jenkins-table__link span');//probably rename to getFolderName or see BasePage
+    getItemName = () => cy.get('*.jenkins-table__link span');
     getCreateAJobLink = () => cy.get('a[href="newJob"]');
     getDescriptionField = () => cy.get('[name$="description"]');
     getFolderDescription = () => cy.get('#view-message');
@@ -45,6 +45,11 @@ class FolderPage extends BasePage {
         this.getDescriptionField().type(description, {delay: 0});
         return this;
     };
+
+    clickItemName (itemName) {
+        this.getItemName().contains(itemName).click();
+        return this;
+    }
 };
 
 export default FolderPage;

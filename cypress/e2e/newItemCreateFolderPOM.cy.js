@@ -26,7 +26,7 @@ describe("US_00.004 | New item > Create Folder", () => {
         folderPage.getBreadcrumps()
             .should('contain.text', folder.name);
         folderPage.clickJenkinsLogo();
-        dashboardPage.getProjectName(folder.name)
+        dashboardPage.getItemName(folder.name)
             .should('be.visible');
     });
 });
