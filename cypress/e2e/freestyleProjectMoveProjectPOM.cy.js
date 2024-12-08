@@ -151,7 +151,8 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
             .clickMoveButton()
             .clickDashboardBreadcrumbsLink();
 
-        dashboardPage.getJobTitleLink().contains(project.name).should('exist');
+        dashboardPage.getJobTitleLink().contains(project.name)
+            .should('have.text', project.name).and('be.visible');
     })
 
     it('TC_01.006.10 | Verify a project is moved to an existing folder from the Project page', () => {
