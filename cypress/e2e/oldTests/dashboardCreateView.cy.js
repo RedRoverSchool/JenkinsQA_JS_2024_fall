@@ -21,7 +21,7 @@ describe('US_16.002 | Dashboard > Create View', () => {
         cy.get(btnSubmit).click()
         cy.visit('http://localhost:8080/')
 
-        // creating new 'My View'
+        // creating 'My View' view
         cy.get(btnNewView).click()
         cy.get('#name').type(viewName)
         cy.get(selectMyView).click()
@@ -29,7 +29,7 @@ describe('US_16.002 | Dashboard > Create View', () => {
 
         // assertions
         cy.url().should('eq', `http://localhost:8080/view/${viewName}/`)
-        cy.get('.tabBar>.active').should('have.text', viewName)
+        cy.get('.tabBar > .active').should('have.text', viewName)
     })
 
 })
