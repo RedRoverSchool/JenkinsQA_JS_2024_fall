@@ -15,7 +15,7 @@ describe('US_16.002 | Dashboard > Create View', () => {
 
     it('TC_16.002.06 | Dashboard > Create View | Create "My View" from Dashboard', () => {
         
-        // creating new item
+        cy.log('pre-conditions: creating new item')
         cy.get(btnNewItem).click()
         cy.get('#name').type(itemName)
         cy.get(selectFreeStyleProject).click()
@@ -23,13 +23,13 @@ describe('US_16.002 | Dashboard > Create View', () => {
         cy.get(btnSubmit).click()
         cy.visit('http://localhost:8080/')
 
-        // creating 'My View' view
+        cy.log('creating new view')
         cy.get(btnNewView).click()
         cy.get('#name').type(viewName)
         cy.get(selectMyView).click()
         cy.get('#ok').click()
 
-        // assertions
+        cy.log('assertions')
         cy.url().should('eq', `http://localhost:8080/view/${viewName}/`)
         cy.get('.tabBar > .active').should('have.text', viewName)
     })
