@@ -96,4 +96,16 @@ describe("US_16.002 | Dashboard > Create View", () => {
       });
   });
 
+  it("TC_16.002.04 | Only selected jobs are displayed in the view after it is saved", () => {
+    
+    dashboardPage.clickAddViewLink()
+    myViewsPage.typeViewName(view.name)
+               .clickListViewRadio()
+               .clickCreateButton()
+               .clickListJobCheckbox(project.name)
+               .clickOKButton()
+
+    dashboardPage.getItemName().should('have.text', project.name)         
+  });
+
 });
