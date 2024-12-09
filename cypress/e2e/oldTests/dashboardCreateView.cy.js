@@ -1,10 +1,12 @@
 /// <reference types="cypress"/>
 
 import { faker } from '@faker-js/faker';
+
 const itemName = faker.commerce.productName();
 const viewName = faker.word.noun();
 
 describe('US_16.002 | Dashboard > Create View', () => {
+
     const btnNewItem = '[href="/view/all/newJob"]'
     const btnSubmit = '[name="Submit"]'
     const btnNewView = '[href="/newView"]'
