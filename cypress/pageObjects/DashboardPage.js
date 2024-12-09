@@ -9,7 +9,7 @@ class DashboardPage extends BasePage {
   getJobTable = () => cy.get("#projectstatus");
   getJobTitleLink = () => cy.get(".model-link.inside");
   getManageJenkins = () => cy.get('a[href="/manage"]');
-  getItemName = () => cy.get('*.jenkins-table__link span');//__DONE__ please rename to getItemName, so it can be reused
+  getItemName = () => cy.get('*.jenkins-table__link span');
   getItemChevronIcon = (itemName) => cy.get(`span:contains('${itemName}') + .jenkins-menu-dropdown-chevron`);
   getJobTableDropdownChevron = () => cy.get('.jenkins-table__link > .jenkins-menu-dropdown-chevron');
   getJobTableDropdownItem = () => cy.get('.jenkins-dropdown__item ');

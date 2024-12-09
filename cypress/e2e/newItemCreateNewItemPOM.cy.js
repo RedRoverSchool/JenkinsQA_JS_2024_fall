@@ -6,6 +6,7 @@ import Header from "../pageObjects/Header";
 import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import FreestyleProjectPage from '../pageObjects/FreestyleProjectPage';
+import PipelinePage from '../pageObjects/PipelinePage';
 
 import allKeys from "../fixtures/newJobPageData.json";
 import {newItem} from "../fixtures/messages.json";
@@ -14,6 +15,7 @@ const header = new Header();
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const freestyleProjectPage = new FreestyleProjectPage();
+const pipelinePage = new PipelinePage();
 
 const { projectName, projectNameInvalid, errorMessageColor } = allKeys;
 
@@ -169,7 +171,7 @@ describe("US_00.000 | New Item > Create New item", () => {
                   .clickOKButton();
 
         newJobPage.getUrlConfigurePageField().should('include', '/configure');
-        newJobPage.configurePagePipelineButton().should('be.visible');
+        pipelinePage.getPipelineMenuOption().should('be.visible');
     })
 
     it('TC_00.000.13 | Verify that after saving, new item is present on dashboard', () => {

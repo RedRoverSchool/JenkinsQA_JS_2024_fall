@@ -102,7 +102,7 @@ describe("US_16.002 | Dashboard > Create View", () => {
     myViewsPage.typeViewName(view.name)
                .clickListViewRadio()
                .clickCreateButton()
-               .clickListJobCheckbox(project.name)
+               .selectJobCheckbox(project.name)
                .clickOKButton()
 
     dashboardPage.getItemName().should('have.text', project.name)         
