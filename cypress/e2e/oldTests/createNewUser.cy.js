@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('TC_13.001.01 | Create new User', () => {
+describe('US_13.001 | Create new User', () => {
 
   const userName = 'UserName';
   const password = 'Password';
@@ -11,9 +11,9 @@ describe('TC_13.001.01 | Create new User', () => {
     cy.get('a[href="securityRealm/"]').click();
     cy.get('a[href="addUser"]').click();
     cy.get('#username').type(userName);
-    cy.get('.setting-main').eq("1").type(password);
-    cy.get('.setting-main').eq("2").type(password);
-    cy.get('.setting-main').eq("4").type(email);
+    cy.get('input[name="password1"]').should('be.visible').type(password);
+    cy.get('input[name="password2"]').type(password);
+    cy.get('input[name="email"]').type(email);
     cy.get('.jenkins-button').eq("0").click({forse:true});
   })
 
