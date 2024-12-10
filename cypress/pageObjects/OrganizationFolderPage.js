@@ -10,6 +10,9 @@ class OrganizationFolderPage extends FolderPage {
     getDescription = () => cy.get("#view-message");//please review locators we have in FreestyleProject for desription, and if it duplicates, please delete this
     getDisplayName = () => cy.get("h1");
     getFolderName = () => cy.get("#main-panel");
+    getPreviewDescriptionLink = () => cy.get("a[previewendpoint$='previewDescription']");
+    getHidePreviewLink = () => cy.get('a.textarea-hide-preview');
+    getPreviewDescriptionField = () => cy.get('div.textarea-preview');
 
 
     clickSideMenuDeleteLink() {
@@ -42,6 +45,28 @@ class OrganizationFolderPage extends FolderPage {
         return this;
     };
 
+    checkPreviewDescriptionBeforeClick() {
+        this.getPreviewDescriptionLink()
+                .should('be.visible')
+                .and('have.css', 'color', 'rgb(0, 111, 230)')
+                .and('have.text', 'Preview');
+        this.getPreviewDescriptionField()
+                .should('not.be.visible')
+        this.getHidePreviewLink()
+                .should('not.be.visible')
+       return this;
+   };
+
+    clickPreviewDescriptionLink() {
+        this.getPreviewDescriptionLink().click();
+        return this; 
+    };
+
+    clickHidePreviewLink() {
+        this.getHidePreviewLink().click();
+        return this; 
+    };
+    
 }
 
 export default OrganizationFolderPage;
