@@ -25,6 +25,7 @@ describe('US_13.001 | Create new User', () => {
 
     cy.contains('User name is already taken').should('not.exist');
     cy.contains("Password didn't match").should('not.exist');
+    cy.contains('"null" is prohibited as a full name for security reasons').should('not.exist');
   })
 
 
