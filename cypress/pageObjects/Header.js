@@ -21,6 +21,7 @@ class Header {
     getDashboardBreadcrumbChevron = () => cy.get('a[href="/"] .jenkins-menu-dropdown-chevron');
     getBreadcrumbsFolderName = () => cy.get(':nth-child(3) > .model-link');
     getBreadcrumbsFolderDropdownMenu = () => cy.get(':nth-child(3) > .model-link > .jenkins-menu-dropdown-chevron');
+    getHeader = () => cy.get('#page-header');
     
     typeSearchTerm (term) {
         this.getSearchField().type(term);
