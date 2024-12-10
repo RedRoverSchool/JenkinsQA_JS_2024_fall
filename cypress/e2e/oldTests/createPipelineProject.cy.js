@@ -17,7 +17,7 @@ describe('US_00.002 | New Item > Create Pipeline Project #14', () => {
         cy.get(`button[href="/job/${projectname}/doDelete"]`).click();
         cy.get('button[data-id="ok"]').click()
     })
-  it('TC_00.002.16 | New Item > Create  a new Pipeline Project', () => {
+  it.only('TC_00.002.16 | New Item > Create  a new Pipeline Project', () => {
         cy.contains('span[class="task-link-text"]', 'New Item').click({force:true})
         cy.get('.org_jenkinsci_plugins_workflow_job_WorkflowJob').click()
         cy.get('.jenkins-input').type('Olga Project')

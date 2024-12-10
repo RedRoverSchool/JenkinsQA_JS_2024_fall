@@ -15,7 +15,7 @@ const freestyleProjectPage = new FreestyleProjectPage();
 const header = new Header();
 const myViewsPage = new MyViewsPage();
 
-describe.skip("US_16.002 | Dashboard > Create View", () => {
+describe("US_16.002 | Dashboard > Create View", () => {
   let project = genData.newProject();
   let folder = genData.newProject();
   let view = genData.newProject();
