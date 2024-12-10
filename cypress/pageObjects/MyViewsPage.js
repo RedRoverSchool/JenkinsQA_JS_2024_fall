@@ -11,6 +11,7 @@ class MyViewsPage extends DashboardPage{
   getCurrentViewBreadcrumbsItem = () => cy.get(".jenkins-breadcrumbs__list-item").eq(3);
   getMyViewsBreadcrumbsItem = () => cy.get(".jenkins-breadcrumbs__list-item").contains("My Views");
   getMyViewsRadio = () => cy.get('label[for="hudson.model.MyView"]');
+  getCheckboxForJob = () => cy.get('.listview-jobs .jenkins-checkbox')
 
   clickAddNewViewLink() {
     this.getAddNewViewLink().click();
@@ -41,6 +42,10 @@ class MyViewsPage extends DashboardPage{
     return this;
   }
 
+  selectJobCheckbox(itemName) {
+    this.getCheckboxForJob().contains(itemName).click()
+    return this
+  }
 }
 
 export default MyViewsPage;

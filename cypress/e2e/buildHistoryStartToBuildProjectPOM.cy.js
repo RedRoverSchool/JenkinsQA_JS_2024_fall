@@ -42,7 +42,7 @@ describe('US_08.001 | Build history > Start to build a project', () => {
                                         .should('not.have.class', 'jenkins-notification--hidden')
                                         .and('contain.text', 'Build Now: Done.');
 
-                        dashBoardPage.openProjectPage(`New ${item}`)
+                        dashBoardPage.clickItemName(`New ${item}`)
                         dashBoardPage.getBuildHistoryRows()
                                 .should('have.length', 1)
                                 .contains('1')

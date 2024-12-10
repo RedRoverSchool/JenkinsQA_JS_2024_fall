@@ -25,7 +25,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
       .selectFreestyleProject()
       .clickOKButton();
     freestyleProjectPage.clickSaveButton().clickDashboardBreadcrumbsLink();
-    dashboardPage.openProjectPage(project.name);
+    dashboardPage.clickItemName(project.name);
     freestyleProjectPage
       .clickRenameMenuOption()
       .typeNewName(project.newName)
@@ -140,7 +140,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     header.clickJenkinsLogo();
 
     cy.log("step1: check error for the same name");
-    dashboardPage.openProjectPage(project.longName);
+    dashboardPage.clickItemName(project.longName);
     freestyleProjectPage
       .clickRenameMenuOption()
       .getWarningMessageOnRenamePage()
