@@ -19,6 +19,7 @@ describe("US_16.002 | Dashboard > Create View", () => {
   let project = genData.newProject();
   let folder = genData.newProject();
   let view = genData.newProject();
+  let newView = genData.newProject();
 
   beforeEach(() => {
     dashboardPage.clickNewItemMenuLink();
@@ -106,6 +107,44 @@ describe("US_16.002 | Dashboard > Create View", () => {
                .clickOKButton()
 
     dashboardPage.getItemName().should('have.text', project.name)         
+  });
+
+  it('TC_16.002.07 | Verify the possibility to configure different column sets for different views', () => {
+
+    cy.log('Creating the 1st View');
+    dashboardPage.clickAddViewLink();
+    myViewsPage.typeViewName(view.name)
+               .clickListViewRadio()
+               .clickCreateButton()
+               .selectJobCheckbox(project.name)
+               .selectJobCheckbox(folder.name)
+               .clickAddColumnButton()
+               .selectGitBranchesMenuItem()
+               .clickOKButton();
+
+    cy.log('Creating the 2nd View');
+    dashboardPage.clickAddViewLink();
+    myViewsPage.typeViewName(newView.name)
+               .clickListViewRadio()
+               .clickCreateButton()
+               .selectJobCheckbox(project.name)
+               .selectJobCheckbox(folder.name)
+               .clickDeleteWeatherColumnButton()
+               .clickAddColumnButton()
+               .selectProjectDescriptionMenuItem()
+               .clickOKButton();
+
+    cy.log('Verifying that the 1st View contains the "Weather" column, includes the "Git branches" column, but lacks the "Description" column');
+    dashboardPage.clickViewLink(view.name);
+    dashboardPage.getWeatherColumn().should('be.visible').and('contain.text', 'W');
+    dashboardPage.getGitBranchesColumn().should('be.visible').and('contain.text', 'Git Branches');
+    dashboardPage.getDescriptionColumn().should('not.exist');
+
+    cy.log('Verifying that the 2nd View does not contain the "Weather" column, includes the "Description" column, but lacks the "Git branches" column');
+    dashboardPage.clickViewLink(newView.name);
+    dashboardPage.getWeatherColumn().should('not.exist');
+    dashboardPage.getDescriptionColumn().should('be.visible').and('contain.text', 'Description');
+    dashboardPage.getGitBranchesColumn().should('not.exist');
   });
 
 });
