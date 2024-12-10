@@ -33,7 +33,7 @@ class DashboardPage extends BasePage {
   getAllItemNamesFromNameColumn = () => cy.get('table#projectstatus tbody tr a span');
   getBuildNowDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item').contains('Build Now');
   getNotificationBar = () => cy.get('#notification-bar');
-  getGitBranchesColumn = () => cy.contains('.sortheader', 'Git Branches');
+  getLastStableColumn = () => cy.contains('.sortheader', 'Last Stable');
   getWeatherColumn = () => cy.get('a[href="#"]').contains('W');
   getDescriptionColumn =() => cy.get('a[href="#"]').contains('Description');
 
@@ -159,7 +159,7 @@ class DashboardPage extends BasePage {
     return this;
   }
 
-  clickViewLink(viewName) {
+  clickViewTab(viewName) {
     this.getViewTab(viewName).click()
     return this;
   }

@@ -14,10 +14,8 @@ class MyViewsPage extends DashboardPage{
   getCheckboxForJob = () => cy.get('.listview-jobs .jenkins-checkbox');
   getListViewRadio = () => cy.get('label[for="hudson.model.ListView"]');
   getAddColumnButton = () => cy.findByRole('button', { name: /Add column/ });
-  getGitBranchesMenuItem = () => cy.contains('button.jenkins-dropdown__item ', 'Git Branches');
-  getOKButton = () => cy.findByRole('button', { name: /OK/ });
+  getColumnDropdownOption = () => cy.get('button.jenkins-dropdown__item ');
   getDeleteWeatherColumnButton = () => cy.get('div[descriptorid="hudson.views.WeatherColumn"] button[title="Delete"]');
-  getProjectDescriptionMenuItem = () => cy.contains('button.jenkins-dropdown__item ', 'Project description');
 
   clickAddNewViewLink() {
     this.getAddNewViewLink().click();
@@ -63,23 +61,13 @@ class MyViewsPage extends DashboardPage{
     return this;
   }
 
-  selectGitBranchesMenuItem() {
-    this.getGitBranchesMenuItem().contains('Git Branches').click();
-    return this;
-  }
-
-  clickOKButton() {
-    this.getOKButton().click()
-    return this
-  }
-
   clickDeleteWeatherColumnButton() {
     this.getDeleteWeatherColumnButton().click()
     return this
   }
 
-  selectProjectDescriptionMenuItem() {
-    this.getProjectDescriptionMenuItem().contains('Project description').click();
+  selectColumnDropdownOption(columnName) {
+    this.getColumnDropdownOption().contains(columnName).click();
     return this;
   }
 

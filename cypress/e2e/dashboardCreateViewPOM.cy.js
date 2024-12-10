@@ -6,7 +6,7 @@ import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 import Header from "../pageObjects/Header";
 import MyViewsPage from "../pageObjects/MyViewsPage";
 
-
+import myViewsPageData from "../fixtures/myViewsPageData.json";
 import genData from "../fixtures/genData";
 
 const dashboardPage = new DashboardPage();
@@ -119,7 +119,7 @@ describe("US_16.002 | Dashboard > Create View", () => {
                .selectJobCheckbox(project.name)
                .selectJobCheckbox(folder.name)
                .clickAddColumnButton()
-               .selectGitBranchesMenuItem()
+               .selectColumnDropdownOption(myViewsPageData.columnName.lastStable)
                .clickOKButton();
 
     cy.log('Creating the 2nd View');
@@ -131,20 +131,20 @@ describe("US_16.002 | Dashboard > Create View", () => {
                .selectJobCheckbox(folder.name)
                .clickDeleteWeatherColumnButton()
                .clickAddColumnButton()
-               .selectProjectDescriptionMenuItem()
+               .selectColumnDropdownOption(myViewsPageData.columnName.projectDescription)
                .clickOKButton();
 
-    cy.log('Verifying that the 1st View contains the "Weather" column, includes the "Git branches" column, but lacks the "Description" column');
-    dashboardPage.clickViewLink(view.name);
+    cy.log('Verifying that the 1st View contains the "Weather" column, includes the "Last Stable" column, but lacks the "Description" column');
+    dashboardPage.clickViewTab(view.name);
     dashboardPage.getWeatherColumn().should('be.visible').and('contain.text', 'W');
-    dashboardPage.getGitBranchesColumn().should('be.visible').and('contain.text', 'Git Branches');
+    dashboardPage.getLastStableColumn().should('be.visible').and('contain.text', 'Last Stable');
     dashboardPage.getDescriptionColumn().should('not.exist');
 
-    cy.log('Verifying that the 2nd View does not contain the "Weather" column, includes the "Description" column, but lacks the "Git branches" column');
-    dashboardPage.clickViewLink(newView.name);
+    cy.log('Verifying that the 2nd View does not contain the "Weather" column, includes the "Description" column, but lacks the "Last Stable" column');
+    dashboardPage.clickViewTab(newView.name);
     dashboardPage.getWeatherColumn().should('not.exist');
     dashboardPage.getDescriptionColumn().should('be.visible').and('contain.text', 'Description');
-    dashboardPage.getGitBranchesColumn().should('not.exist');
+    dashboardPage.getLastStableColumn().should('not.exist');
   });
 
 });
