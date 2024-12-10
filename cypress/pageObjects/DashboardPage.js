@@ -52,7 +52,7 @@ class DashboardPage extends BasePage {
     return this;
   }
 
-  openProjectPage (projectName) {
+  clickItemName (projectName) {
     this.getItemName().contains(projectName).click();
   }
 
