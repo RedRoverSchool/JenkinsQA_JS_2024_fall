@@ -1,13 +1,15 @@
 /// <reference types="cypress" />
 import DashboardPage from "../pageObjects/DashboardPage";
+import ConfigurePage from "./ConfigurePage";
 
 class ManageJenkinsPage extends DashboardPage{
 
     getSettingsSearchField = () => cy.get('#settings-search-bar');
     getNoResultsErrorMessage = () => cy.get('.jenkins-search__results__no-results-label');
-    getSearchResultList = () => cy.get('.jenkins-search__results > *');
-    getXButtonSearchField = () => cy.get('.jenkins-search__shortcut');
+    getSearchResultList = () => cy.get('.jenkins-search__results > *');    
+    getXButtonSearchField = () => cy.get('.jenkins-search__shortcut');   
     getUsersIcon = () => cy.get('a[href="securityRealm/"]');
+    getMenuItems = () => cy.get('.jenkins-section__items dl dt'); 
 
     typeSearchWord(word) {
         this.getSettingsSearchField().type(word);
@@ -32,6 +34,11 @@ class ManageJenkinsPage extends DashboardPage{
     clickUsersIcon() {
         this.getUsersIcon().click({force: true});
         return this;
+    }
+
+    clickSearchResult(word) {
+        this.getSearchResultList().contains(`${word}`).click({force: true});
+        return new ConfigurePage();
     }
 };
 

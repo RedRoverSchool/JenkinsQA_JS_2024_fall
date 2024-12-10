@@ -7,13 +7,15 @@ import ManageJenkinsPage from "../pageObjects/ManageJenkinsPage";
 
 import messages from "../fixtures/messages.json";
 import searchResultsData from "../fixtures/searchResultsData.json"
+import ConfigurePage from "../pageObjects/ConfigurePage";
 
 const dashboardPage = new DashboardPage();
 const manageJenkinsPage = new ManageJenkinsPage();
-
+const configurePage = new ConfigurePage();
 
 const randomSearchWord = faker.animal.type() + faker.finance.accountNumber(3)   
 const listOfPossibleSearchResults = ["System", "Tools", "Security", "Credentials", "Credential Providers"]
+
 
 describe('US_09.001 | Manage Jenkins > Search settings', () =>{
 
@@ -59,4 +61,26 @@ describe('US_09.001 | Manage Jenkins > Search settings', () =>{
             .should('have.css', 'opacity', '0')
             .and('have.value', '')
     });
-});
+    it('TC_09.001_6 | Verify go to required page by click on required item on search suggestion dropdown.', () => {
+        dashboardPage.clickManageJenkins();
+       
+        let menuItems = [];
+        manageJenkinsPage.getMenuItems()
+          .each(($el) => {
+                menuItems.push($el.text().trim());
+          })
+          .then(() => {
+            cy.wrap(menuItems)
+              .then((array) => {       
+                    array.forEach((dropDownItem) => {
+                        if (dropDownItem !== 'Reload Configuration from Disk') {
+                            manageJenkinsPage.typeSearchWord(dropDownItem)    
+                                             .clickSearchResult(dropDownItem);
+                            cy.contains(`${dropDownItem}`).should('exist');
+                            configurePage.clickBreadcrumbsManageJenkins(); 
+                        }                  
+                    });                
+              });       
+            });    
+           });                
+});   
