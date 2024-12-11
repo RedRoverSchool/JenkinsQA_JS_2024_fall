@@ -11,7 +11,11 @@ class MyViewsPage extends DashboardPage{
   getCurrentViewBreadcrumbsItem = () => cy.get(".jenkins-breadcrumbs__list-item").eq(3);
   getMyViewsBreadcrumbsItem = () => cy.get(".jenkins-breadcrumbs__list-item").contains("My Views");
   getMyViewsRadio = () => cy.get('label[for="hudson.model.MyView"]');
-  getCheckboxForJob = () => cy.get('.listview-jobs .jenkins-checkbox')
+  getCheckboxForJob = () => cy.get('.listview-jobs .jenkins-checkbox');
+  getListViewRadio = () => cy.get('label[for="hudson.model.ListView"]');
+  getAddColumnButton = () => cy.findByRole('button', { name: /Add column/ });
+  getColumnDropdownOption = () => cy.get('button.jenkins-dropdown__item ');
+  getDeleteWeatherColumnButton = () => cy.get('div[descriptorid="hudson.views.WeatherColumn"] button[title="Delete"]');
 
   clickAddNewViewLink() {
     this.getAddNewViewLink().click();
@@ -46,6 +50,27 @@ class MyViewsPage extends DashboardPage{
     this.getCheckboxForJob().contains(itemName).click()
     return this
   }
+
+  clickListViewRadio() {
+    this.getListViewRadio().click();
+    return this;
+  }
+
+  clickAddColumnButton() {
+    this.getAddColumnButton().click();
+    return this;
+  }
+
+  clickDeleteWeatherColumnButton() {
+    this.getDeleteWeatherColumnButton().click()
+    return this
+  }
+
+  selectColumnDropdownOption(columnName) {
+    this.getColumnDropdownOption().contains(columnName).click();
+    return this;
+  }
+
 }
 
 export default MyViewsPage;

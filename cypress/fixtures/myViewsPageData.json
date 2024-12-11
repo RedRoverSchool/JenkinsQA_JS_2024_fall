@@ -1,0 +1,15 @@
+{
+    "columnName": {
+        "status": "Status",
+        "weather": "Weather",
+        "name_1": "Name",
+        "lastSuccess" : "Last Success",
+        "lastFailure" : "Last Failure",
+        "lastStable" : "Last Stable",
+        "lastDuration" : "Last Duration",
+        "buildButton" : "Build Button",
+        "gitBranches" : "Git Branches",
+        "name_2" : "Name",
+        "projectDescription" : "Project description"
+    }
+}

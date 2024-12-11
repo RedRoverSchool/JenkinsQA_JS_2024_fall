@@ -53,5 +53,37 @@ describe("US_06.001 | Organisation folder > Configuration", () => {
         dashboardPage.getItemName().contains(displayName).should("be.visible");
     });
 
+    
+    it("TC_06.001.02 | Can see a Preview of the added Description by clicking on the Preview button", () => {
+        cy.log('create a new org folder')
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage
+            .typeNewItemName(orgFolderName)
+            .selectOrganizationFolder()
+            .clickOKButton();
+        
+        cy.log('before clicking Preview link')
+        organizationFolderPage
+            .typeDescription(description)
+            .checkPreviewDescriptionBeforeClick();
+            
+        cy.log('after clicking Preview link')
+        organizationFolderPage
+            .clickPreviewDescriptionLink()
+            .getHidePreviewLink()
+            .should('be.visible')
+            .and('have.css', 'color', 'rgb(0, 111, 230)')
+            .and('have.text', 'Hide preview');
+        organizationFolderPage
+            .getPreviewDescriptionField()
+            .should('be.visible')
+            .and('have.text', description);
+
+        cy.log('after clicking Hide preview')
+        organizationFolderPage
+            .clickHidePreviewLink()
+            .checkPreviewDescriptionBeforeClick()
+    });
+
 
 });
