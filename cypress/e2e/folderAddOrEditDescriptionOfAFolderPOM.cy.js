@@ -19,7 +19,7 @@ describe("US_04.004 | Folder > Add or Edit Description of a Folder", () => {
             .selectFolder()
             .clickOKButton();
         folderPage.typeDescription(folder.longDescription)
-            .clickSaveBtn()
+            .clickSaveButton()
 
             .getFolderDescription().should('be.visible')
             .and('have.text', folder.longDescription);

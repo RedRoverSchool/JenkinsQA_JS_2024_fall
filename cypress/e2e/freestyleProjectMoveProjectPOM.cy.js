@@ -44,7 +44,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         const randomFolderNumber = faker.number.int({ min: 1, max: 5 });
         const selectedFolder = `${newJobPageData.folderName} ` + randomFolderNumber
         dashboardPage.openProjectPage(newJobPageData.projectName)
-        freestyleProjectPage.clickMoveMenuItem()
+        freestyleProjectPage.clickMoveMenuOption()
             .selectNewProjectDestination(`/${selectedFolder}`)
             .clickMoveButton();
 
@@ -56,7 +56,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         newJobPage.typeNewItemName(project.name)
             .selectFolder()
             .clickOKButton();
-        folderPage.clickSaveBtn()
+        folderPage.clickSaveButton()
             .clickDashboardBreadcrumbsLink();
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(project.newName)
@@ -64,7 +64,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
             .clickOKButton();
         freestyleProjectPage.clickSaveButton();
         cy.url({ decode: true }).should('include', `/${project.newName}`)
-        freestyleProjectPage.clickMoveMenuItem()
+        freestyleProjectPage.clickMoveMenuOption()
             .selectNewProjectDestination(`/${project.name}`)
             .clickMoveButton();
 
@@ -86,17 +86,16 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         freestyleProjectPage.clickSaveButton();
         header.clickJenkinsLogo();    
     
-    dashboardPage.openProjectPage(project.name);
-    freestyleProjectPage.clickMoveMenuItem()
-                        .selectNewProjectDestination(`Jenkins » ${folder.name}`)
-                        .clickMoveButton();
-    header.clickJenkinsLogo();
+        dashboardPage.openProjectPage(project.name);
+        freestyleProjectPage.clickMoveMenuOption()
+                            .selectNewProjectDestination(`Jenkins » ${folder.name}`)
+                            .clickMoveButton();
+        header.clickJenkinsLogo();
 
-    dashboardPage.openProjectPage(folder.name);
-    folderPage.getProjectName()
-              .contains(project.name)
-              .should('be.visible');
-     
+        dashboardPage.openProjectPage(folder.name);
+        folderPage.getProjectName()
+            .contains(project.name)
+            .should('be.visible');
     });
 
     it('TC_01.006.05 | Move project from the Dashboard to Folder', () => {
@@ -114,14 +113,45 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
                   .clickOKButton();
         header.clickJenkinsLogo();
 
-        dashboardPage.openDropdownForProject(project.name)
+        dashboardPage.openDropdownForItem(project.name)
                      .clickMoveTheProjectButton();
-        freestyleProjectPage.clickMoveMenuItem()
+        freestyleProjectPage.clickMoveMenuOption()
+                            .selectNewProjectDestination(`/${project.folderName}`)
+                            .clickMoveButton()
+                            .clickJenkinsLogo();
+        dashboardPage.openProjectPage(project.folderName);
+        
+        folderPage.getProjectName().should('have.text',project.name);
+    });
+
+    it('TC_01.006.10 | Verify a project is moved to an existing folder from the Project page', () => {
+
+        cy.log('Creating a Freestyle project');
+        dashboardPage.clickCreateJobLink();
+        newJobPage.typeNewItemName(project.name)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        freestyleProjectPage.clickSaveButton();
+        header.clickJenkinsLogo();
+    
+        cy.log('Creating a Folder');
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.folderName)
+                  .selectFolder()
+                  .clickOKButton();
+        folderPage.clickSaveButton();
+        header.clickJenkinsLogo();
+
+        cy.log('Moving the Freestyle project into the Folder');
+        dashboardPage.openProjectPage(project.name);
+        cy.url({ decode: true }).should('include', project.name);
+        freestyleProjectPage.clickMoveMenuOption()
                             .selectNewProjectDestination(`/${project.folderName}`)
                             .clickMoveButton();
-        header.clickJenkinsLogo()
-              .openProjectPage(project.folderName);
-        
-        folderPage.getProjectName().should('have.text', project.name);
+        header.clickJenkinsLogo();
+    
+        cy.log('Verifying that the project was moved to the folder');
+        dashboardPage.openProjectPage(project.folderName);
+        folderPage.getProjectName().should('contain.text', project.name).and('be.visible');
     });
 });

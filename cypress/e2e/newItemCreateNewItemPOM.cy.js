@@ -175,11 +175,11 @@ describe("US_00.000 | New Item > Create New item", () => {
     it('TC_00.000.13 | Verify that after saving, new item is present on dashboard', () => {
 
         dashboardPage.clickNewItemMenuLink()
-                     .typeNewItemName(randomItemName)
+        newJobPage.typeNewItemName(randomItemName)
                      .selectFreestyleProject()
                      .clickOKButton()
-                     .clickSaveButton();
-        header.clickJenkinsLogo();
+        freestyleProjectPage.clickSaveButton()
+                           .clickJenkinsLogo();
 
         dashboardPage.getJobTable().should('contain.text', randomItemName).and('be.visible');
     })
@@ -193,5 +193,16 @@ describe("US_00.000 | New Item > Create New item", () => {
         newJobPage.getEmptyItemInvalidName()
                   .should('contain.text', newItem.emptyNameFieldReminder)
                   .and('have.css', 'color', errorMessageColor);
+    })
+
+    it('TC_00.000.18 | Create New item from the "New Item" link in the left sidebar.', () => {
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(randomItemName)
+                  .selectFreestyleProject()
+                  .clickOKButton();
+        header.clickJenkinsLogo();
+
+        cy.log('Verifying that new item was created');
+        dashboardPage.getJobTable().should('contain.text', randomItemName).and('be.visible');
     })
 });

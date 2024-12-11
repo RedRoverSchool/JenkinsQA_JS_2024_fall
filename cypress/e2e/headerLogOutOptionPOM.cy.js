@@ -41,4 +41,9 @@ describe('US_14.003 | Header > Log out option', () => {
       expect(duration).to.be.lessThan(1000);
       cy.log(`Logout process completed in ${duration} ms`);
     });
+
+    it('TC_14.003.07 | Verify "Log out" button is keyboard-navigable', () => {     
+      header.tabAndClickLogoutButton();
+      loginPage.verifyRedirectionToLoginPage();
+    });
 });

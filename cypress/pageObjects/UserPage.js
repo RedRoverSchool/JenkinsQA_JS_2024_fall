@@ -1,23 +1,20 @@
 /// <reference types="cypress" />
+import DashboardPage from "./DashboardPage";
 
-class UserPage {
+class UserPage extends DashboardPage{
 
     getInsensitiveSearchLabel = () => cy.get("label[class='attach-previous ']");
     getInsensitiveSearchCheckBox = () => cy.get("input[name='insensitiveSearch']");
-    getSaveButton = () => cy.get("[name='Submit']");
     getUserDescriptionFieldFromConfig = () => cy.get(".jenkins-input").eq("1");
     getUserAvatar = () => cy.get('h1 .icon-lg > svg');
     getUserDescription = () => cy.get('#description');
     getEditDescriptionBtn = () => cy.get("#description-link");
-    getUserDescriptionFieldFromStatus = () => cy.get(".jenkins-input")
+    getUserDescriptionFieldFromStatus = () => cy.get(".jenkins-input");
+    getAppearanceDark = () => cy.get(':nth-child(1) > .help-sibling > .app-theme-picker__item > label');
+    getDarkTheme = () => cy.get('html').invoke('attr', 'data-theme');
 
     checkCheckBox() {
         this.getInsensitiveSearchCheckBox().check({ force: true })
-        return this
-    }
-
-    clickOnSaveBtn() {
-        this.getSaveButton().click()
         return this
     }
 
@@ -27,7 +24,7 @@ class UserPage {
     }
 
     typeUserDescription(userDescription) {
-         this.getUserDescriptionFieldFromConfig().type(userDescription)
+        this.getUserDescriptionFieldFromConfig().type(userDescription)
         return this
     }
 
@@ -50,6 +47,11 @@ class UserPage {
         this.getUserDescriptionFieldFromStatus().type(userDescription)
        return this
    }
+
+    clickAppearanceDark() {
+        this.getAppearanceDark().click()
+       return this
+    }
 }
 
 export default UserPage;

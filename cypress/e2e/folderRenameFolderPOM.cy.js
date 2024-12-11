@@ -4,7 +4,6 @@ import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import FolderPage from "../pageObjects/FolderPage";
 import Header from "../pageObjects/Header";
-
 import genData from "../fixtures/genData";
 
 const dashboardPage = new DashboardPage();
@@ -18,29 +17,56 @@ describe('US_04.001 | Folder > Rename Folder', () => {
 
     beforeEach(() => {
         dashboardPage.clickNewItemMenuLink();
-        newJobPage.typeNewItemName(folderName.name).selectFolder().clickOKButton()
-        folderPage.clickSaveBtn()
-        header.clickJenkinsLogo();
+        newJobPage.typeNewItemName(folderName.name).selectFolder().clickOKButton();
+        folderPage.clickSaveButton()
+                  .clickJenkinsLogo();
     });
 
     it('TC_04.001.02 | Rename folder from drop-down menu', () => {
 
-        dashboardPage.openDropdownForProject(folderName.name)
-            .clickRenameFolderDropdownMenuItem()
+        dashboardPage.openDropdownForItem(folderName.name)
+            .clickRenameDropdownOption();
         folderPage.clearNewNameField()
             .typeNewFolderName(newFolderName.name)
-            .clickSaveBtn()
-        folderPage.verifyFolderUrl(newFolderName.name)
+            .clickRenameButton();
+        folderPage.verifyFolderUrl(newFolderName.name);
 
         folderPage.getFolderNameOnMainPanel()
-            .should('include.text', `${newFolderName.name}`)
+            .should('include.text', `${newFolderName.name}`);
     });
 
     it('TC_04.001.06 | Successfully enter a valid folder name in the special field', () => {
-        dashboardPage.openDropdownForProject(folderName.name)
-            .clickRenameFolderDropdownMenuItem()
+
+        dashboardPage.openDropdownForItem(folderName.name)
+            .clickRenameDropdownOption()
         folderPage.clearNewNameField()
             .typeNewFolderName(newFolderName.name)
             .getNewNameField().should('have.value', newFolderName.name)
-    })
+    });
+
+    it('TC_04.001.03| Verify that error message is displayed when an invalid folder name is entered in the Rename Folder field', () => {
+
+        dashboardPage.openDropdownForItem(folderName.name)
+            .clickRenameDropdownOption()
+        folderPage.clearNewNameField()
+            .typeNewFolderName(newFolderName.name +"*")
+            .clickRenameButton()
+
+        folderPage.getFolderNameOnMainPanel()
+            .should('contain', 'is an unsafe character')
+    });
+
+    it('TC_04.001.04 |Verify to rename the folder from drop-down menu of the folder element in the breadcrumbs', () => {
+       
+        dashboardPage.clickJobName(folderName.name)
+        header.getBreadcrumbBar().should('contain', folderName.name)
+        header.hoverBreadcrumbsFolderName()
+              .getBreadcrumbsFolderDropdownMenu().click()
+        dashboardPage.getRenameProjectDropdownMenuItem().click()
+        
+        folderPage.clearNewNameField()
+                 .typeNewFolderName(newFolderName.name)
+                 .getNewNameField()
+                 .should('have.value', newFolderName.name)
+    });
 });
