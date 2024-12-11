@@ -21,7 +21,12 @@ describe('US_13.001 | Create new User', () => {
     manageJenkinsPage.clickUsersIcon();
     securityUsersPage.clickCreateUser();
 
-    // Use a single method to create a user
+    // Create a user
     addUserPage.createUser(userName, password, email);
+    
+    // User unique, password match, fullname
+    addUserPage.checkUserNameUnique();
+    addUserPage.checkPasswordMatch();
+    addUserPage.checkNullError();
   });
 });
