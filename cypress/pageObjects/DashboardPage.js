@@ -33,7 +33,7 @@ class DashboardPage extends BasePage {
   getAllItemNamesFromNameColumn = () => cy.get('table#projectstatus tbody tr a span');
   getBuildNowDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item').contains('Build Now');
   getNotificationBar = () => cy.get('#notification-bar');
-
+  getUserName = (userName) => cy.contains('a', userName);
 
   selectNewItemFromDashboardChevron() {
     this.getJobTableDropdownItem().each(($els) => {
@@ -154,6 +154,10 @@ class DashboardPage extends BasePage {
   clickBuildNowDropdownMenuItem() {
     this.getBuildNowDropdownMenuItem().click();
     return this;
+  }
+
+  checkUserNameVisible(userName) {
+    this.getUserName(userName).should('be.visible');
   }
 
 };
