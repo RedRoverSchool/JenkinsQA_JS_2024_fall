@@ -71,12 +71,9 @@ class FolderPage extends Header {
         this.getFolderEditDescription().click()
             return this
         }
-    } 
-
-
-        this.getDescriptionField().type(description, {delay: 0});
+}
+    this.getDescriptionField().type(description, {delay: 0});{
         return this;
     };
-};
 
-export default FolderPage;
+    export default FolderPage;
