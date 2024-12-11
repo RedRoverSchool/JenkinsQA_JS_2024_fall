@@ -24,7 +24,7 @@ describe('US_13.001 | Create new User', () => {
     cy.get('input[name="password1"]').should('be.visible').and('be.enabled').type(password);
     cy.get('input[name="password2"]').type(password);
     cy.get('input[name="email"]').type(email);
-    cy.get('[name="Submit"]').click({forse:true});
+    cy.findAllByRole ('button',{ name:/Create User/}).click();
     
     
     cy.contains('a', userName).should('be.visible');  
@@ -32,23 +32,20 @@ describe('US_13.001 | Create new User', () => {
     cy.contains("Password didn't match").should('not.exist');
     cy.contains('"null" is prohibited as a full name for security reasons').should('not.exist');
 
-    //Logout from current session
+    cy.log('Log UI validation');
     cy.get('[href="/logout"]').should('be.visible');
     cy.get('[href="/logout"] > .hidden-xs').click();
 
-    //Check correct page, sign in button exist
+    cy.log('Verifying login page is displayed');
     cy.get('.app-sign-in-register__content-inner').contains('Sign in to Jenkins').should('exist');
     cy.url().should('eq', 'http://localhost:8080/login?from=%2F');
 
-    //Login with new username, password
+    cy.log(`Logging back in with username: ${userName}`);
     cy.get('#j_username').type(userName);
     cy.get('#j_password').type(password);
     cy.get('button.jenkins-button--primary').click();
     
-    //New user name is visible
+    cy.log(`Checking that username "${userName}" is visible on the dashboard`);
     cy.contains('a', userName).should('be.visible');  
-
   })
-
-
 })

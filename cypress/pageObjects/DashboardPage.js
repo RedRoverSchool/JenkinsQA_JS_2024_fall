@@ -158,6 +158,7 @@ class DashboardPage extends BasePage {
 
   checkUserNameVisible(userName) {
     this.getUserName(userName).should('be.visible');
+    return this;
   }
 
 };

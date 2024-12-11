@@ -23,43 +23,37 @@ describe('US_13.001 | Create new User', () => {
   userName = userName.toLowerCase();
 
   it('TC_13.001.01 | Create new User via Manage Jenkins left side menu', () => {
-    // Navigate through the application
+    
+    cy.log('Navigate through the application');
     dashboardPage.clickManageJenkins();
     manageJenkinsPage.clickUsersIcon();
     securityUsersPage.clickCreateUser();
 
-    // Create a user
+    cy.log('Creating user');
     addUserPage.createUser(userName, password, email);
-    
-    // User unique, password match, fullname
-    addUserPage.checkUserNameUnique();
-    addUserPage.checkPasswordMatch();
-    addUserPage.checkNullError();
+    addUserPage
+      .checkUserNameUniqueErrorMsg()
+      .checkPasswordMatchErrorMsg()
+      .checkNulErrorMsg();
 
-    //Check user was created
+    cy.log(`Verifying user "${userName}" was created successfully`);
     securityUsersPage.checkUserCreated(userName);
 
-    //Logout current user
+    cy.log('Log UI validation');
     dashboardPage.getLogOutButton().should('have.text', 'log out');
     dashboardPage.clickLogOutButton();        
 
-    //Check correct page, sign in button exist
+    cy.log('Verifying login page is displayed');
     loginPage.getHeader().should('be.visible');
     loginPage.getSignInButton().should('be.visible');
 
-    //Login with new username, password
-    loginPage.typeLogin(userName);
-    loginPage.typePassword(password);
-    loginPage.clickSignInButton();
+    cy.log(`Logging back in with username: ${userName}`);
+    loginPage
+      .typeLogin(userName)
+      .typePassword(password)
+      .clickSignInButton();
 
-    //New user name is visible
+    cy.log(`Checking that username "${userName}" is visible on the dashboard`);
     dashboardPage.checkUserNameVisible(userName);
-
-
-
-
-
-
-
   });
 });

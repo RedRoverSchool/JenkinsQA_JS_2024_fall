@@ -9,18 +9,22 @@ class LoginPage
       return cy.getCookies().then((cookies) => {
         return (cookies.find((cookie) => cookie.name.includes(cookieName))).value;
       });
+      return this
    }
    
    typeLogin(userName) {
       this.getLogin().type(userName)
+      return this
    }
 
    typePassword(password) {
       this.getPassword().type(password)
+      return this
    }
 
    clickSignInButton() {
       this.getSignInButton().click()
+      return this
    }
 
    verifyRedirectionToLoginPage() {
