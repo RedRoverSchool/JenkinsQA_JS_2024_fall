@@ -2,10 +2,13 @@
 
 describe('US_13.001 | Create new User', () => {
 
-  const userName = 'userName';
+  let userName = 'Simon';
   const password = 'Password';
   const email = 'user@email.com';
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  userName = userName.toLowerCase();
+
 
   it('TC_13.001.01 | Create new User via Manage Jenkins left side menu', () => {
 
@@ -22,7 +25,8 @@ describe('US_13.001 | Create new User', () => {
     cy.get('input[name="password2"]').type(password);
     cy.get('input[name="email"]').type(email);
     cy.get('[name="Submit"]').click({forse:true});
-
+    
+    cy.contains('a', userName).should('be.visible');  
     cy.contains('User name is already taken').should('not.exist');
     cy.contains("Password didn't match").should('not.exist');
     cy.contains('"null" is prohibited as a full name for security reasons').should('not.exist');

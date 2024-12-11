@@ -11,9 +11,12 @@ const securityUsersPage = new SecurityUsersPage();
 const addUserPage = new AddUserPage();
 
 describe('US_13.001 | Create new User', () => {
-  const userName = 'userName';
+  let userName = 'userName';
   const password = 'Password';
   const email = 'test@mail.com';
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  userName = userName.toLowerCase();
 
   it('TC_13.001.01 | Create new User via Manage Jenkins left side menu', () => {
     // Navigate through the application
@@ -28,5 +31,9 @@ describe('US_13.001 | Create new User', () => {
     addUserPage.checkUserNameUnique();
     addUserPage.checkPasswordMatch();
     addUserPage.checkNullError();
+
+    //Check user was created
+    securityUsersPage.checkUserCreated(userName);
+
   });
 });
