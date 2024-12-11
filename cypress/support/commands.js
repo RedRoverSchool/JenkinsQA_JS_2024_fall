@@ -23,4 +23,23 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import '@testing-library/cypress/add-commands'
+import '@testing-library/cypress/add-commands';
+const USERNAME = Cypress.env('local.admin.username');
+const PASSWORD = Cypress.env('local.admin.password');
+const LOCAL_PORT = Cypress.env('local.port');
+const LOCAL_HOST = Cypress.env('local.host');
+
+
+Cypress.Commands.add('login',(userName = USERNAME,pass = PASSWORD) => {
+    cy.intercept('POST','/j_spring_security_check').as('security_check')
+
+    cy.visit(`http://${LOCAL_HOST}:${LOCAL_PORT}/login`);
+    cy.get('#j_username').type(userName);
+    cy.get('input[name="j_password"]').type(pass);
+    cy.get('button[name="Submit"]').click();
+    cy.wait('@security_check')
+});
+
+Cypress.Commands.add('createItemBasedOnType',(itemName, itemType) => { 
+    
+});
