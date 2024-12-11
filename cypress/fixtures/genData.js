@@ -9,7 +9,8 @@ module.exports = {
             description: faker.lorem.sentences(3),
             newDescription: faker.lorem.sentences(2),
             folderName: faker.company.buzzNoun(),
-            longDescription: faker.lorem.sentences(50)
+            longDescription: faker.lorem.sentences(50),
+            userName: faker.person.lastName(),
         };
         return Project;
     },
