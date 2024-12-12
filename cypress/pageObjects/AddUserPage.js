@@ -2,17 +2,20 @@
 
 class AddUserPage {
   getUserName = () => cy.get('#username');
-  getPassword = () => cy.get('.setting-main').eq(1);
-  getConfirmPassword = () => cy.get('.setting-main').eq(2);
-  getEmail = () => cy.get('.setting-main').eq(4);
-  getCreateUserBtn = () => cy.get('.jenkins-button').eq(0);
+  getPassword = () => cy.get('input[name="password1"]');
+  getConfirmPassword = () => cy.get('input[name="password2"]');
+  getEmail = () => cy.get('input[name="email"]');
+  getCreateUserBtn = () => cy.findAllByRole ('button',{ name:/Create User/});
+  getUserNameUniqueErrorMsg = () => cy.contains('User name is already taken');
+  getPasswordMatchErrorMsg = () => cy.contains("Password didn't match");
+  getNulErrorMsg = () => cy.contains('"null" is prohibited as a full name for security reasons');
 
   typeUserName(userName) {
     this.getUserName().type(userName);
   }
 
   typePassword(password) {
-    this.getPassword().type(password);
+    this.getPassword().should('be.visible').and('be.enabled').type(password);
   }
 
   typeConfirmPassword(confirmPassword) {
@@ -24,7 +27,22 @@ class AddUserPage {
   }
 
   clickCreateUserBtn() {
-    this.getCreateUserBtn().click({ force: true });
+    this.getCreateUserBtn().click();
+  }
+
+  checkUserNameUniqueErrorMsg() {
+    this.getUserNameUniqueErrorMsg().should('not.exist');
+    return this;
+  }
+
+  checkPasswordMatchErrorMsg() {
+    this.getPasswordMatchErrorMsg().should('not.exist');
+    return this;
+  }
+
+  checkNulErrorMsg() {
+    this.getNulErrorMsg().should('not.exist');
+    return this;
   }
 
   createUser(userName, password, email) {
