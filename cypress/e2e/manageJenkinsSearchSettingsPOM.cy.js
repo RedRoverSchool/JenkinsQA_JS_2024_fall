@@ -82,5 +82,22 @@ describe('US_09.001 | Manage Jenkins > Search settings', () =>{
                     });                
               });       
             });    
-           });                
+           }); 
+   
+    it('TC_09.002.07 | Verify the search setting tooltip displays on hover', () => {
+        dashboardPage.clickManageJenkins();
+        const hoverOnSearchShortcut = () => {
+            cy.get('.jenkins-search__shortcut')
+                .trigger('mouseover')
+                .wait(1000);
+        };
+
+        hoverOnSearchShortcut();
+
+        const getTooltipElement = () => cy.get('div[tooltip="Press / on your keyboard to focus"]', { timeout: 10000 });
+
+        getTooltipElement()
+            .should('be.visible')
+    });
+
 });   
