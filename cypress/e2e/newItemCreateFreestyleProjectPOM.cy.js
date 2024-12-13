@@ -184,4 +184,11 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
 
     });
 
-});
+    it('TC_00.001.22| New Item > Verify Project Description size ', () => {
+        dashboardPage.clickNewItemMenuLink();
+        newJobPage.typeNewItemName(project.name)
+                  .selectFreestyleProject()
+
+        newJobPage.getFreestyleProjectDescriptionSize().should('have.css', 'font-size', '14px');
+    });
+})
