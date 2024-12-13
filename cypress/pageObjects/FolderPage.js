@@ -15,40 +15,59 @@ class FolderPage extends BasePage {
     getCreateAJobLink = () => cy.get('a[href="newJob"]');
     getDescriptionField = () => cy.get('[name$="description"]');
     getFolderDescription = () => cy.get('#view-message');
+    getMoveDestinationDropDownList = () => cy.get('select');
+    getMoveButton = () => cy.get('form > .jenkins-button');
+    getJobTitleLink = () => cy.get(".model-link.inside");
 
-    verifyTitleConfigurationIsVisible () {
+
+    verifyTitleConfigurationIsVisible() {
         this.getTitleConfiguration()
             .should('be.visible');
         return this;
     }
 
-    clearNewNameField () {
+    clearNewNameField() {
         this.getNewNameField().clear();
         return this;
     }
 
-    typeNewFolderName (newFolderName) {
+    typeNewFolderName(newFolderName) {
         this.getNewNameField().type(newFolderName);
         return this;
-    }   
+    }
 
     verifyFolderUrl(folderName) {
         this.getFolderUrl().should('contain', folderName)
     }
 
-    clickCreateAJobLink () {
+    clickCreateAJobLink() {
         this.getCreateAJobLink().click()
         return new NewJobPage();
     }
 
-    typeDescription (description) {
-        this.getDescriptionField().type(description, {delay: 0});
+    typeDescription(description) {
+        this.getDescriptionField().type(description, { delay: 0 });
         return this;
     };
 
-    clickItemName (itemName) {
+    clickItemName(itemName) {
         this.getItemName().contains(itemName).click();
         return this;
+    }
+
+    clickFolderMoveDestinationDropdownList(ddOption) {
+        this.getMoveDestinationDropDownList().select(ddOption);
+        return this;
+    }
+
+    clickMoveButton() {
+        this.getMoveButton().click();
+        return this;
+    }
+
+    verifyFolderIsVisible() {
+        this.getJobTitleLink();
+        return this
     }
 };
 
