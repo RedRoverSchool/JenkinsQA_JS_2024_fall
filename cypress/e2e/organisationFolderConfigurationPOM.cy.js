@@ -16,8 +16,8 @@ describe("US_06.001 | Organisation folder > Configuration", () => {
   const encodedOrgFolderName = encodeURIComponent(orgFolderName);
   let displayName = faker.commerce.productName();
   let description = faker.lorem.sentences();
-//very long name, can be changed to : " Change Display Name and Description from empty values"
-    it("TC_06.001.01 | A Jenkins administrator can change Display Name and Description from empty values by clicking Save button", () => {
+
+    it("TC_06.001.01 | Change Display Name and Description from empty values", () => {
         cy.log("Preconditions:");
         dashboardPage.clickNewItemMenuLink();
         newJobPage
