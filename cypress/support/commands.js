@@ -24,11 +24,15 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import '@testing-library/cypress/add-commands';
+import DashboardPage from '../pageObjects/DashboardPage';
+import NewJobPage from '../pageObjects/NewJobPage';
+
 const USERNAME = Cypress.env('local.admin.username');
 const PASSWORD = Cypress.env('local.admin.password');
 const LOCAL_PORT = Cypress.env('local.port');
 const LOCAL_HOST = Cypress.env('local.host');
-
+const dashBoardPage = new DashboardPage();
+const newJobPage = new NewJobPage();
 
 Cypress.Commands.add('login',(userName = USERNAME,pass = PASSWORD) => {
     cy.intercept('POST','/j_spring_security_check').as('security_check')
@@ -40,6 +44,13 @@ Cypress.Commands.add('login',(userName = USERNAME,pass = PASSWORD) => {
     cy.wait('@security_check')
 });
 
-Cypress.Commands.add('createItemBasedOnType',(itemName, itemType) => { 
-    
+Cypress.Commands.add('createItemByType',(itemName, itemType) => { 
+    dashBoardPage.clickNewItemMenuLink();
+    newJobPage.clearItemNameField()
+            .typeNewItemName(`${itemName}`)
+            .getAllItemsList().contains(itemType).click();
+    newJobPage.clickOKButton()
+            .clickSaveButton();
+    let endPoint = itemName.replace(/ /g, '%20');
+    cy.url().should('contain', `${endPoint}`);
 });

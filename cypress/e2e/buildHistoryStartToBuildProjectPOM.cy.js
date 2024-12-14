@@ -10,23 +10,17 @@ const newJobPage = new NewJobPage();
 const header = new Header();
 
 describe('US_08.001 | Build history > Start to build a project', () => {
-        function createItemByType(itemsType, itemsName) {
-                dashBoardPage.clickNewItemMenuLink();
-                newJobPage.clearItemNameField()
-                        .typeNewItemName(`${itemsName}`)
-                        .getAllItemsList().contains(itemsType).click()
-                newJobPage.clickOKButton()
-                        .clickSaveButton()
-                header.clickDashboardBtn();
-        }
-        const itemsForBuilding = newInstance.filter(itemsType => 
-                itemsType !== 'Folder' && 
-                itemsType !== 'Organization Folder' && 
-                itemsType !== 'Multibranch Pipeline');
+        
+        const itemsForBuilding = newInstance.filter(itemType => 
+                itemType !== 'Folder' && 
+                itemType !== 'Organization Folder' && 
+                itemType !== 'Multibranch Pipeline');
         
         itemsForBuilding.forEach(item => {
                 it(`TC_08.001.01 | Build status icon for "Not built" ${item} is shown on "Dashboard" page`, () => {
-                        createItemByType(item, `New ${item}`);
+                        
+                        cy.createItemByType(`New ${item}`, item);
+                        header.clickDashboardBtn();
                         dashBoardPage.getAllIconsProjectRow(item).eq(0)
                                 .should('have.attr', 'tooltip', 'Not built')
                                 .and('be.visible');
@@ -35,7 +29,9 @@ describe('US_08.001 | Build history > Start to build a project', () => {
 
         itemsForBuilding.forEach(item => {
                 it(`TC_08.001.02 | The build is triggered from the ${item}'s dropdown menu`, () => {
-                        createItemByType(item, `New ${item}`);
+                        
+                        cy.createItemByType(`New ${item}`, item);
+                        header.clickDashboardBtn();
                         dashBoardPage.openDropdownForItem(`New ${item}`)
                                 .clickBuildNowDropdownMenuItem()
                                 .getNotificationBar()
@@ -54,10 +50,11 @@ describe('US_08.001 | Build history > Start to build a project', () => {
                 it(`TC_08.001.04 | Dashboard page displays information about the latest build for ${item}`, () => {
                         
                         cy.log('Create item');
-                        createItemByType(item, `New ${item}`);
-                        dashBoardPage.clickItemName(`New ${item}`);
+                        cy.createItemByType(`New ${item}`, item);
+                        header.clickDashboardBtn();
 
                         cy.log('Start the first build and verify the build appeared in the build history.');
+                        dashBoardPage.clickItemName(`New ${item}`)
                         dashBoardPage.clickBuildNowMenuOption()
                                 .getBuildHistoryRows()
                                         .should('have.length.greaterThan', 0)
