@@ -18,6 +18,7 @@ import './commands'
 import "cypress-real-events"
 import './globalHooks'
 import './cleanData'
+import 'cypress-mochawesome-reporter/register'
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
     // failing the test
