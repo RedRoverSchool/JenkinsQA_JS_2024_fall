@@ -4,14 +4,12 @@ import DashboardPage from "../pageObjects/DashboardPage";
 import NewJobPage from "../pageObjects/NewJobPage";
 import FolderPage from "../pageObjects/FolderPage";
 import Header from "../pageObjects/Header";
-import OrganizationFolderPage from "../pageObjects/OrganizationFolderPage";
 import genData from "../fixtures/genData";
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const folderPage = new FolderPage();
 const header = new Header();
-const organizationFolderPage = new OrganizationFolderPage();
 const folderName = genData.newProject();
 const newFolderName = genData.newProject();
 
@@ -87,8 +85,8 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         
         dashboardPage.clickItemName(folderName.name);
         folderPage.getFolderNameOnMainPanel().should('include.text', folderName.name);
-        folderPage.clickConfigureLMenuOption();
-        organizationFolderPage.typeDisplayName(newFolderName.name)
+        folderPage.clickConfigureLMenuOption()
+            .typeDisplayName(newFolderName.name)
             .clickSaveButton();
 
         folderPage.getFolderNameOnMainPanel().should('include.text', newFolderName.name);
