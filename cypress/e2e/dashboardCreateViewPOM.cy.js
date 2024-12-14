@@ -135,16 +135,39 @@ describe("US_16.002 | Dashboard > Create View", () => {
                .clickOKButton();
 
     cy.log('Verifying that the 1st View contains the "Weather" column, includes the "Last Stable" column, but lacks the "Description" column');
-    dashboardPage.clickViewTab(view.name);
-    dashboardPage.getWeatherColumn().should('be.visible').and('contain.text', 'W');
-    dashboardPage.getLastStableColumn().should('be.visible').and('contain.text', 'Last Stable');
-    dashboardPage.getDescriptionColumn().should('not.exist');
+    myViewsPage.clickViewTab(view.name);
+    myViewsPage.getWeatherColumn().should('be.visible').and('contain.text', 'W');
+    myViewsPage.getLastStableColumn().should('be.visible').and('contain.text', 'Last Stable');
+    myViewsPage.getDescriptionColumn().should('not.exist');
 
     cy.log('Verifying that the 2nd View does not contain the "Weather" column, includes the "Description" column, but lacks the "Last Stable" column');
-    dashboardPage.clickViewTab(newView.name);
-    dashboardPage.getWeatherColumn().should('not.exist');
-    dashboardPage.getDescriptionColumn().should('be.visible').and('contain.text', 'Description');
-    dashboardPage.getLastStableColumn().should('not.exist');
+    myViewsPage.clickViewTab(newView.name);
+    myViewsPage.getWeatherColumn().should('not.exist');
+    myViewsPage.getDescriptionColumn().should('be.visible').and('contain.text', 'Description');
+    myViewsPage.getLastStableColumn().should('not.exist');
   });
 
+  it('TC_16.002.08 | Verify that only selected columns are displayed in the saved view', () => {
+
+    cy.log('Creating the View');
+    dashboardPage.clickAddViewLink();
+    myViewsPage.typeViewName(view.name)
+               .clickListViewRadio()
+               .clickCreateButton()
+               .selectJobCheckbox(project.name)
+               .selectJobCheckbox(folder.name)
+               .deleteDefaultColumns();
+    myViewsPage.clickOKButton()
+               .clickEditViewMenuOption()
+               .clickAddColumnButton().selectColumnDropdownOption(myViewsPageData.columnName.status)
+               .clickAddColumnButton().selectColumnDropdownOption(myViewsPageData.columnName.weather)
+               .clickAddColumnButton().selectColumnDropdownOption(myViewsPageData.columnName.name_1)
+               .clickOKButton();
+  
+    cy.log('Verifying that the View contains the "Status", the "Weather" and the "Name" columns');
+    myViewsPage.clickViewTab(view.name);
+    myViewsPage.getStatusColumn().should('be.visible').and('contain.text', 'S');
+    myViewsPage.getWeatherColumn().should('be.visible').and('contain.text', 'W');
+    myViewsPage.getNameColumn().should('be.visible').and('contain.text', 'Name');
+  });
 });
