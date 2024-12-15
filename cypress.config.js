@@ -14,11 +14,16 @@ module.exports = defineConfig({
     },
   },
   video: false,
-  reporter: 'cypress-mochawesome-reporter',
+  reporter: 'cypress-multi-reporters',
   reporterOptions: {
-    embeddedScreenshots: true,
-    reportFilename: 'mochawesome',
-    reportDir: 'mochawesomeReports',
-    mochaFile: 'reports/test-results-[hash].xml',
+    reporterEnabled: 'cypress-mochawesome-reporter, mocha-junit-reporter',
+    cypressMochawesomeReporterReporterOptions: {
+      embeddedScreenshots: true,
+      reportFilename: 'mochawesome',
+      reportDir: 'reports/mochawesomeReports'
+    },
+    mochaJunitReporterReporterOptions: {
+     mochaFile: 'reports/junit/test-results-[hash].xml'
+    }
   },
 });

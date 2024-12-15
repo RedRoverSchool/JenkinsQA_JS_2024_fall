@@ -5,7 +5,7 @@
   "main": "cypress.config.js",
   "scripts": {
     "start": "npx cypress open --e2e --browser chrome",
-     "test:run:chrome": "npx cypress run --spec 'cypress/e2e/*POM.cy.js' --browser chrome"
+    "test:run:chrome": "npx cypress run --spec 'cypress/e2e/*POM.cy.js' --browser chrome"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,8 @@
     "@faker-js/faker": "^9.2.0",
     "@testing-library/cypress": "^10.0.2",
     "cypress": "^13.15.2",
-    "cypress-mochawesome-reporter": "^3.8.2"
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "cypress-multi-reporters": "^2.0.4",
+    "mocha-junit-reporter": "^2.2.1"
   }
 }
