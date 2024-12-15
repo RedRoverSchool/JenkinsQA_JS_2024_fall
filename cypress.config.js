@@ -18,7 +18,7 @@ module.exports = defineConfig({
   reporterOptions: {
     embeddedScreenshots: true,
     reportFilename: 'mochawesome',
-    reportDir: 'mochawesomeReports',
-    mochaFile: 'reports/test-results-[hash].xml',
+    reportDir: 'reports/mochawesomeReports',
+    mochaFile: 'reports/junit/test-results-[hash].xml',
   },
 });
