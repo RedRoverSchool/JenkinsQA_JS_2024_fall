@@ -30,7 +30,7 @@ const pipelinePage = new PipelinePage();
 let searchTermNoMatches = faker.string.alpha(10)
 let project = genData.newProject()
 
-function createFreestyleProject (jobName) {
+function createFreestyleProject(jobName) {
   dashboardPage.clickNewItemMenuLink()
   newJobPage
     .typeNewItemName(jobName)
@@ -42,7 +42,7 @@ function createFreestyleProject (jobName) {
 
 describe('US_14.002 | Header > Search Box', () => {
 
-  it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search",() => {
+  it("TC_14.002.05 | User can select suggestion to auto-fill and complete the search", () => {
     dashboardPage.clickNewItemMenuLink()
     newJobPage.typeNewItemName(newJobPageData.projectName)
       .selectFreestyleProject()
@@ -88,9 +88,9 @@ describe('US_14.002 | Header > Search Box', () => {
 
   it("TC_14.002.03 | Verify that user can not see suggested results searched with with Upper Case characters with Insensitive mode being on", () => {
     header.clickUserDropdownLink()
-       .clickUserConfigureItem();
+      .clickUserConfigureItem();
     userPage.checkCheckBox()
-       .clickSaveButton();
+      .clickSaveButton();
 
     header.typeSearchTerm(headerData.search.input.upperCaseMatchForManage);
 
@@ -131,7 +131,7 @@ describe('US_14.002 | Header > Search Box', () => {
       .typeNewItemName("New Folder TC_14.002.15_A")
       .selectFolder()
       .clickOKButton();
-    folderPage.clickSaveButton()  
+    folderPage.clickSaveButton()
       .clickNewItemMenuOption();
     newJobPage
       .typeNewItemName("Project TC_14.002.15_A")
@@ -155,22 +155,22 @@ describe('US_14.002 | Header > Search Box', () => {
       .should('contain', searchResultsData.error.text)
       .and('have.css', 'color', searchResultsData.error.cssRequirements.color)
   });
-  
+
   it('TC_14.002.13 | Verify auto-fill suggestions contain the search term', () => {
     cy.log('create a job')
     dashboardPage
       .clickNewItemMenuLink()
     newJobPage
       .typeNewItemName(project.name)
-      .selectFolder() 
+      .selectFolder()
       .clickOKButton()
     folderPage.clickSaveButton()
 
     cy.log('start search')
     header
-      .typeSearchTerm(project.name.slice(0,4))
+      .typeSearchTerm(project.name.slice(0, 4))
       .getSearchAutofillSuggestionList().each(($row) => {
-        cy.wrap($row).invoke('text').should('contain', project.name.slice(0,4))
+        cy.wrap($row).invoke('text').should('contain', project.name.slice(0, 4))
       })
   });
 
@@ -195,13 +195,19 @@ describe('US_14.002 | Header > Search Box', () => {
           header
             .typeSearchTerm(`${project.name} ${el.buildNumber}`)
             .verifyAutoCompletionVisible(`${project.name} ${el.buildNumber}`)
-            .searchTerm()  
+            .searchTerm()
           searchResults
             .getTitle()
-              .should('contain', el.buildNumber)
-          cy.url().should('include', encodeURI(`/${project.name}/${el.buildNumber.slice(1)}`))   
+            .should('contain', el.buildNumber)
+          cy.url().should('include', encodeURI(`/${project.name}/${el.buildNumber.slice(1)}`))
         })
       })
+  });
+
+  it('TC_14.002.11 | Verify that Dashboard page has a Search box on its top right', () => {
+    header.getDashboardLink().should('be.visible')
+    header.getHeader().should("exist")
+    header.getSearchField().should("exist")
   });
 
 });

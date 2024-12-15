@@ -25,7 +25,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
       .selectFreestyleProject()
       .clickOKButton();
     freestyleProjectPage.clickSaveButton().clickDashboardBreadcrumbsLink();
-    dashboardPage.openProjectPage(project.name);
+    dashboardPage.clickItemName(project.name);
     freestyleProjectPage
       .clickRenameMenuOption()
       .typeNewName(project.newName)
@@ -36,6 +36,29 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
 
     dashboardPage.getJobTitleLink().should("have.text", project.newName);
   });
+  
+  it('TC_01.002.03 | Rename a project from the Dashboard page using Cyrillic', () => {
+    const cyrillicName = [
+      "Новый проект", "Тест-кейсы", "Проект1", "Главная страница", 
+      "Создание сервиса", "Функциональный продукт", "Решение задачи"];
+    let newProjectName = faker.helpers.arrayElement(cyrillicName);
+    
+    dashboardPage.clickNewItemMenuLink()
+    newJobPage.typeNewItemName(project.name)
+        .selectFreestyleProject()
+        .clickOKButton()
+        .clickSaveButton()
+        .clickJenkinsLogo();
+
+    dashboardPage.clickProjectChevronIcon(project.name)
+        .clickRenameDropdownOption();
+    freestyleProjectPage.clearRenameField()
+        .typeNewName(newProjectName)
+        .clickRenameButton()
+        .getJobHeadline().should('include.text', newProjectName)
+
+    header.getBreadcrumps().should('contain', newProjectName)
+   });
 
   it("TC-01.002.06| Rename a project name from the Dashboard page", () => {
     dashboardPage.clickNewItemMenuLink();
@@ -140,7 +163,7 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     header.clickJenkinsLogo();
 
     cy.log("step1: check error for the same name");
-    dashboardPage.openProjectPage(project.longName);
+    dashboardPage.clickItemName(project.longName);
     freestyleProjectPage
       .clickRenameMenuOption()
       .getWarningMessageOnRenamePage()

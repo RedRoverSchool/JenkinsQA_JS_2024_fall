@@ -80,4 +80,27 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         folderPage.getFolderNameOnMainPanel()
             .should('include.text', `${newFolderName.name}`);
     });
+
+    it('TC_04.001.11 | Rename a folder on the folder page in the Configure section', () => {
+        
+        dashboardPage.clickItemName(folderName.name);
+        folderPage.getFolderNameOnMainPanel().should('include.text', folderName.name);
+        folderPage.clickConfigureLMenuOption()
+            .typeDisplayName(newFolderName.name)
+            .clickSaveButton();
+
+        folderPage.getFolderNameOnMainPanel().should('include.text', newFolderName.name);
+        folderPage.clickJenkinsLogo();
+        dashboardPage.getItemName().should('contain', newFolderName.name).and('be.visible');
+    });
+
+    it('TC_04.001.12 | Verify that there is "Display Name" field and hint sign in the Configure section', () => {
+        
+        dashboardPage.clickItemName(folderName.name);
+        folderPage.clickConfigureLMenuOption();
+
+        folderPage.getDisplayNameField().should('exist').and('be.visible');
+        folderPage.getDisplayNameTooltip().should('exist'). and('be.visible');
+        
+    });
 });

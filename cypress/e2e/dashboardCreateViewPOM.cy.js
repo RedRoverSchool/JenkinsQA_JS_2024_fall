@@ -6,7 +6,7 @@ import FreestyleProjectPage from "../pageObjects/FreestyleProjectPage";
 import Header from "../pageObjects/Header";
 import MyViewsPage from "../pageObjects/MyViewsPage";
 
-
+import myViewsPageData from "../fixtures/myViewsPageData.json";
 import genData from "../fixtures/genData";
 
 const dashboardPage = new DashboardPage();
@@ -19,6 +19,7 @@ describe("US_16.002 | Dashboard > Create View", () => {
   let project = genData.newProject();
   let folder = genData.newProject();
   let view = genData.newProject();
+  let newView = genData.newProject();
 
   beforeEach(() => {
     dashboardPage.clickNewItemMenuLink();
@@ -96,4 +97,77 @@ describe("US_16.002 | Dashboard > Create View", () => {
       });
   });
 
+  it("TC_16.002.04 | Only selected jobs are displayed in the view after it is saved", () => {
+    
+    dashboardPage.clickAddViewLink()
+    myViewsPage.typeViewName(view.name)
+               .clickListViewRadio()
+               .clickCreateButton()
+               .selectJobCheckbox(project.name)
+               .clickOKButton()
+
+    dashboardPage.getItemName().should('have.text', project.name)         
+  });
+
+  it('TC_16.002.07 | Verify the possibility to configure different column sets for different views', () => {
+
+    cy.log('Creating the 1st View');
+    dashboardPage.clickAddViewLink();
+    myViewsPage.typeViewName(view.name)
+               .clickListViewRadio()
+               .clickCreateButton()
+               .selectJobCheckbox(project.name)
+               .selectJobCheckbox(folder.name)
+               .clickAddColumnButton()
+               .selectColumnDropdownOption(myViewsPageData.columnName.lastStable)
+               .clickOKButton();
+
+    cy.log('Creating the 2nd View');
+    dashboardPage.clickAddViewLink();
+    myViewsPage.typeViewName(newView.name)
+               .clickListViewRadio()
+               .clickCreateButton()
+               .selectJobCheckbox(project.name)
+               .selectJobCheckbox(folder.name)
+               .clickDeleteWeatherColumnButton()
+               .clickAddColumnButton()
+               .selectColumnDropdownOption(myViewsPageData.columnName.projectDescription)
+               .clickOKButton();
+
+    cy.log('Verifying that the 1st View contains the "Weather" column, includes the "Last Stable" column, but lacks the "Description" column');
+    myViewsPage.clickViewTab(view.name);
+    myViewsPage.getWeatherColumn().should('be.visible').and('contain.text', 'W');
+    myViewsPage.getLastStableColumn().should('be.visible').and('contain.text', 'Last Stable');
+    myViewsPage.getDescriptionColumn().should('not.exist');
+
+    cy.log('Verifying that the 2nd View does not contain the "Weather" column, includes the "Description" column, but lacks the "Last Stable" column');
+    myViewsPage.clickViewTab(newView.name);
+    myViewsPage.getWeatherColumn().should('not.exist');
+    myViewsPage.getDescriptionColumn().should('be.visible').and('contain.text', 'Description');
+    myViewsPage.getLastStableColumn().should('not.exist');
+  });
+
+  it('TC_16.002.08 | Verify that only selected columns are displayed in the saved view', () => {
+
+    cy.log('Creating the View');
+    dashboardPage.clickAddViewLink();
+    myViewsPage.typeViewName(view.name)
+               .clickListViewRadio()
+               .clickCreateButton()
+               .selectJobCheckbox(project.name)
+               .selectJobCheckbox(folder.name)
+               .deleteDefaultColumns();
+    myViewsPage.clickOKButton()
+               .clickEditViewMenuOption()
+               .clickAddColumnButton().selectColumnDropdownOption(myViewsPageData.columnName.status)
+               .clickAddColumnButton().selectColumnDropdownOption(myViewsPageData.columnName.weather)
+               .clickAddColumnButton().selectColumnDropdownOption(myViewsPageData.columnName.name_1)
+               .clickOKButton();
+  
+    cy.log('Verifying that the View contains the "Status", the "Weather" and the "Name" columns');
+    myViewsPage.clickViewTab(view.name);
+    myViewsPage.getStatusColumn().should('be.visible').and('contain.text', 'S');
+    myViewsPage.getWeatherColumn().should('be.visible').and('contain.text', 'W');
+    myViewsPage.getNameColumn().should('be.visible').and('contain.text', 'Name');
+  });
 });

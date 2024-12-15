@@ -16,7 +16,7 @@ class NewJobPage extends BasePage{
     getUrlConfigurePageField = () => cy.location('href');
     getBreadcrumbsListItem = () => cy.get("[aria-current='page']");
     getEmptyNameFieldReminder = () => cy.get('div[class$="validation-message"]');
-  
+    getFreestyleProjectDescriptionSize = () => cy.get('li.hudson_model_FreeStyleProject .desc');
 
     typeNewItemName (itemName) {
         this.getItemNameField().type(itemName);
