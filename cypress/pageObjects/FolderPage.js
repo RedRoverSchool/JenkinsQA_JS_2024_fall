@@ -16,6 +16,7 @@ class FolderPage extends BasePage {
     getDisplayNameField = () => cy.get('input[class="jenkins-input validated  "]');
     getDescriptionField = () => cy.get('[name$="description"]');
     getFolderDescription = () => cy.get('#view-message');
+    getDisplayNameTooltip = () => cy.get('[tooltip="Help for feature: Display Name"]');
 
     verifyTitleConfigurationIsVisible () {
         this.getTitleConfiguration()
