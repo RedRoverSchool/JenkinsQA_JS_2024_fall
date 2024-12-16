@@ -8,6 +8,7 @@ import Header from "../pageObjects/Header";
 import genData from "../fixtures/genData";
 import { faker } from "@faker-js/faker";
 import messages from "../fixtures/messages.json";
+import { newInstance } from '../fixtures/newJobPageData.json'
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
@@ -238,5 +239,17 @@ describe("US_01.002 | FreestyleProject > Rename Project", () => {
     freestyleProjectPage
       .getErrorMessageParagraph()
       .should("have.text", messages.renameItem.nameEndsWithDotError);
+  });
+
+  it("TC_01.002.05 | Rename a project name from the Project Page", () => {
+    cy.createItemByType(project.name, newInstance[0])
+    freestyleProjectPage
+      .clickRenameMenuOption()
+      .clearRenameField()
+      .typeNewName(project.newName)
+      .clickRenameButton();
+    freestyleProjectPage.getJobHeadline().should("contain", project.newName);
+    freestyleProjectPage.clickDashboardBreadcrumbsLink();
+    dashboardPage.getJobTitleLink().should("contain", project.newName);
   });
 });
