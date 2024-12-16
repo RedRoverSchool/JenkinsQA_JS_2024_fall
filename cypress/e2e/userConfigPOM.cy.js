@@ -60,7 +60,7 @@ describe('US_13.003 | User > Config', () => {
       userPage.getDarkTheme().should('equal', 'dark');
   });
 
-  it.only('TC_13.003.06 | Rename user', () => {
+  it('TC_13.003.06 | Rename user', () => {
     header.clickUserName();
     basePage.clickConfigureLMenuOption()
     userPage.clearUserNameFieldFromConfig()
