@@ -202,7 +202,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         newJobPage.getFreestyleProjectDescriptionSize().should('have.css', 'font-size', '14px');
     });
 
-    it.only('TC_00.001.23 | Create freestyleProject via API', () => {
+    it('TC_00.001.23 | Create freestyleProject via API', () => {
         cy.log('step1: generate API token:');
         header.clickUserName();
         basePage.clickConfigureLMenuOption();
