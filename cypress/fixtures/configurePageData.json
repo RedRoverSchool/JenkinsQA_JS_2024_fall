@@ -3,5 +3,6 @@
     "Developing and executing end-to-end test automation scripts using Cypress and JavaScript",
     "sideBarLinks": [   
         
-    ]
+    ],
+    "userStatusEndpoint": "i18n/resourceBundle?baseName=jenkins.dialogs&_=1734364921492"
 }
