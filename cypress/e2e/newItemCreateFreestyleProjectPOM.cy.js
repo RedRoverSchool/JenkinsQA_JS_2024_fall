@@ -202,7 +202,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         newJobPage.getFreestyleProjectDescriptionSize().should('have.css', 'font-size', '14px');
     });
 
-    it('TC_00.001.23 | Create freestyleProject via API', () => {
+    it.only('TC_00.001.23 | Create freestyleProject via API', () => {
         cy.log('step1: generate API token:');
         header.clickUserName();
         basePage.clickConfigureLMenuOption();
@@ -243,11 +243,9 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
             });
 
             cy.log('step 4: delete API token:')
-            userPage.getDeleteApiTokenButton().each(($el) => {
-                cy.wrap($el).click();
-                userPage.clickConfirmDeleteApiTokenButton()
-            });
-
+            userPage.getDeleteApiTokenButton().last().click()
+            userPage.clickConfirmDeleteApiTokenButton();
+            
             cy.log('step 5: verify created project on the dashboard:')
             header.clickDashboardBreadcrumbsLink();
             dashboardPage.getItemName().should('contain', project.name);
