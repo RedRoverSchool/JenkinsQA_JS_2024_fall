@@ -8,16 +8,18 @@ class FolderPage extends BasePage {
     getFolderNameOnMainPanel = () => cy.get("#main-panel");
     getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
     getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
-
     getNewNameField = () => cy.get('input[name="newName"]');
     getFolderUrl = () => cy.url({ decode: true });
     getItemName = () => cy.get('*.jenkins-table__link span');
     getCreateAJobLink = () => cy.get('a[href="newJob"]');
+    getDisplayNameField = () => cy.get('input[class="jenkins-input validated  "]');
     getDescriptionField = () => cy.get('[name$="description"]');
     getFolderDescription = () => cy.get('#view-message');
     getMoveDestinationDropDownList = () => cy.get('select');
     getMoveButton = () => cy.get('form > .jenkins-button');
     getJobTitleLink = () => cy.get(".model-link.inside");
+    getDisplayNameTooltip = () => cy.get('[tooltip="Help for feature: Display Name"]');
+  
 
 
     verifyTitleConfigurationIsVisible() {
@@ -69,6 +71,12 @@ class FolderPage extends BasePage {
         this.getJobTitleLink();
         return this
     }
+
+    typeDisplayName (displayName) {
+        this.getDisplayNameField().type(displayName);
+        return this;
+    }
+
 };
 
 export default FolderPage;

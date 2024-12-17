@@ -40,6 +40,7 @@ class DashboardPage extends BasePage {
   getDescriptionColumn = () => cy.get('a[href="#"]').contains('Description');
 
 
+
   selectNewItemFromDashboardChevron() {
     this.getJobTableDropdownItem().each(($els) => {
       let eText = $els.text().trim()

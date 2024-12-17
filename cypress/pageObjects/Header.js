@@ -44,7 +44,7 @@ class Header {
     };
 
     clickUserDropdownLink () {
-        this.getUserDropdownlink().realHover().click();
+        this.getUserDropdownlink().realHover().click({ force: true });
         return this;
     }
 

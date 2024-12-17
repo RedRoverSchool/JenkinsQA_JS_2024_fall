@@ -10,5 +10,8 @@
                     "Multibranch Pipeline", 
                     "Organization Folder"],
     "projectNameSpecialSymbols": "!@#$%^&*|:?><][;/",
-    "projectNameSpecialSymbolDot" : "."
+    "projectNameSpecialSymbolDot" : ".",
+    "simpleProjectXml": "<?xml version='1.1' encoding='UTF-8'?>\n<project>\n  <actions/>\n  <description>A simple freestyle project</description>\n  <keepDependencies>false</keepDependencies>\n  <properties/>\n  <scm class=\"hudson.scm.NullSCM\"/>\n  <builders/>\n  <publishers/>\n  <buildWrappers/>\n</project>",
+    "getCrumbEndpoint": "/crumbIssuer/api/json",
+    "createNewItemEndpoint": "/createItem?name="
 }
