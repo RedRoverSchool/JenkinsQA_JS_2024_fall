@@ -13,6 +13,11 @@ class UserPage extends DashboardPage{
     getAppearanceDark = () => cy.get(':nth-child(1) > .help-sibling > .app-theme-picker__item > label');
     getDarkTheme = () => cy.get('html').invoke('attr', 'data-theme');
     getUserNameFieldFromConfig = () => cy.get('input[name="_.fullName"]');
+    getAddNewTokenButton = () => cy.get('button.repeatable-add')
+    getGenerateApiTokenButton = () => cy.get('button#api-token-property-token-save')
+    getApiTokenValue = () => cy.get('span.new-token-value')
+    getDeleteApiTokenButton = () => cy.get("a[data-confirm-title='Revoke Token']")
+    getConfirmDeleteApiTokenButton = () => cy.get("button[data-id='ok']")
 
     checkCheckBox() {
         this.getInsensitiveSearchCheckBox().check({ force: true })
@@ -63,6 +68,32 @@ class UserPage extends DashboardPage{
         this.getUserNameFieldFromConfig().type(userName)
         return this
     }
+
+    clickAddNewTokenButton() {
+        this.getAddNewTokenButton().click()
+       return this
+    }
+
+    clickGenerateApiTokenButton() {
+        this.getGenerateApiTokenButton().click()
+       return this
+    }
+
+    generateNewApiToken() {
+       return this.clickAddNewTokenButton()
+            .clickGenerateApiTokenButton()
+            .getApiTokenValue().should('be.visible')
+            .invoke('text').then((tokenValue) => {
+                const token = tokenValue.trim();  
+                return token; 
+            });
+    }
+
+    clickConfirmDeleteApiTokenButton() {
+        this.getConfirmDeleteApiTokenButton().click()
+       return this
+    }
+
 }
 
 export default UserPage;
