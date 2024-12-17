@@ -8,7 +8,7 @@ class BasePage extends Header {
     getRenameMenuOption = () => cy.get('[href*="rename"]');
     getBuildNowMenuOption = () => cy.contains('a[href*="build"]',"Build Now");
     getNewItemLink = () => cy.get('a[href="/view/all/newJob"]');//please delete as duplicate for getNewItemMenuOption
-    getConfigureLink = () => cy.get('#side-panel [href$="configure"]');//please rename to getConfigureMenuOption
+    getConfigureMenuOption = () => cy.get('#side-panel [href$="configure"]');
 
     getMoveButton = () => cy.findByRole('button',{ name: /Move/ });
     getYesButton = () => cy.findByRole('button',{ name: /Yes/ });
@@ -47,7 +47,7 @@ class BasePage extends Header {
     }
 
     clickConfigureLMenuOption () {
-        this.getConfigureLink().click();
+        this.getConfigureMenuOption().click();
         return this;
     }
 
