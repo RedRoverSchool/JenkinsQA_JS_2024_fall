@@ -61,19 +61,15 @@ describe('US_13.003 | User > Config', () => {
   });
 
   it('TC_13.003.06 | Rename user', () => {
+    cy.intercept("GET", `http://${LOCAL_HOST}:${LOCAL_PORT}/${endPoint}`).as('getRequest')
     header.clickUserName();
     basePage.clickConfigureLMenuOption()
     userPage.clearUserNameFieldFromConfig()
       .typeUserName(name.userName)
       .clickSaveButton();
-    cy.request(
-      {
-        method: "GET",
-        url: `http://${LOCAL_HOST}:${LOCAL_PORT}/${endPoint}`,
-      }
-    ).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.data.save).to.eq('Save');
+    cy.wait('@getRequest').then((interception) => {
+      expect(interception.response.statusCode).to.eq(200);
+      expect(interception.response.body.data.add).to.eq('Add');
     })
     header.getBreadcrumbBar()
       .should('not.contain', 'Configure')

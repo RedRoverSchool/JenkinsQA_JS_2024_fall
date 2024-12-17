@@ -4,5 +4,5 @@
     "sideBarLinks": [   
         
     ],
-    "userStatusEndpoint": "i18n/resourceBundle?baseName=jenkins.dialogs&_=1734364921492"
+    "userStatusEndpoint": "i18n/resourceBundle*"
 }
