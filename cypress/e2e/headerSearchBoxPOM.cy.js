@@ -17,6 +17,7 @@ import messages from "../fixtures/messages.json";
 import newJobPageData from "../fixtures/newJobPageData.json";
 import configurePageData from "../fixtures/configurePageData.json";
 import genData from "../fixtures/genData";
+import firstCharacterSearchResultsData from "../fixtures/firstCharacterSearchResultsData";
 
 const header = new Header();
 const newJobPage = new NewJobPage();
@@ -210,4 +211,36 @@ describe('US_14.002 | Header > Search Box', () => {
     header.getSearchField().should("exist")
   });
 
+  it('TC_14.002.19 | Verify the search results for Lower and Uppercase characters are the same when insensitive search option is activated', () => {
+
+    const { firstSearchCharacter, characterSearchResults } = firstCharacterSearchResultsData;
+    const randomFirstSearchCharacter = faker.helpers.arrayElement(firstSearchCharacter);
+    header.clickUserDropdownLink()
+          .clickUserConfigureItem();
+    userPage.checkCheckBox()
+            .clickSaveButton();
+    header.typeSearchTerm(randomFirstSearchCharacter.toUpperCase())
+          .searchTerm();
+
+    cy.log('Verifying the search results contain the values, corresponding to the specified random Uppercase character');
+    const expectedResults = characterSearchResults[randomFirstSearchCharacter];
+    searchResults.retrieveSearchResults().then((uiResults) => {
+      expect(uiResults).to.have.members(expectedResults);
+
+    header.clearSearchField()
+          .typeSearchTerm(randomFirstSearchCharacter.toLowerCase())
+          .searchTerm();
+    searchResults.fetchAutoCompletionSuggestions().then((lowerCaseSuggestions) => {
+      header.clearSearchField()
+            .typeSearchTerm(randomFirstSearchCharacter.toUpperCase())
+            .searchTerm();
+
+    cy.log('Verifying the auto - completion suggested variants of the Upper and Lowercase characters are the same');
+    searchResults.fetchAutoCompletionSuggestions().then((upperCaseSuggestions) => {
+      expect(lowerCaseSuggestions).to.have.members(upperCaseSuggestions);
+    });
+    });
+    });
+  });
+  
 });
