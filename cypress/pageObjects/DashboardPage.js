@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import FolderPage from "./FolderPage";
 import NewJobPage from "./NewJobPage";
 import BasePage from "./basePage";
 
@@ -34,25 +35,30 @@ class DashboardPage extends BasePage {
   getBuildNowDropdownMenuItem = () => cy.get('button.jenkins-dropdown__item').contains('Build Now');
   getNotificationBar = () => cy.get('#notification-bar');
   getUserName = (userName) => cy.contains('a', userName);
+  getLastStableColumn = () => cy.contains('.sortheader', 'Last Stable');
+  getWeatherColumn = () => cy.get('a[href="#"]').contains('W');
+  getDescriptionColumn = () => cy.get('a[href="#"]').contains('Description');
+
+
 
   selectNewItemFromDashboardChevron() {
     this.getJobTableDropdownItem().each(($els) => {
       let eText = $els.text().trim()
       if (eText == 'New Item') { cy.wrap($els).click() }
-  });
+    });
     return new NewJobPage();
   }
 
-  clickJobTitleLink () {
+  clickJobTitleLink() {
     this.getJobTitleLink().click();
   }
 
-  clickManageJenkins () {
+  clickManageJenkins() {
     this.getManageJenkins().click();
     return this;
   }
 
-  clickItemName (projectName) {
+  clickItemName(projectName) {
     this.getItemName().contains(projectName).click();
   }
 
@@ -62,7 +68,7 @@ class DashboardPage extends BasePage {
     });
   }
 
-  openDropdownForItem (projectName) {
+  openDropdownForItem(projectName) {
     this.getItemName().contains(projectName)
       .trigger("mouseover").should("be.visible");
     this.getItemChevronIcon(projectName)
@@ -70,7 +76,7 @@ class DashboardPage extends BasePage {
     return this;
   }
 
-  clickJobName (name) {
+  clickJobName(name) {
     this.getJobTable().contains(name).click()
     return new NewJobPage()
   }
@@ -110,7 +116,7 @@ class DashboardPage extends BasePage {
     return this
   }
 
-  clickMoveTheProjectButton() {//rename please to clickMoveDropdownOption since it's available not only for project
+  clickMoveDropdownOption() {
     this.getMoveTheProject().click()
     return this;
   }
@@ -136,12 +142,12 @@ class DashboardPage extends BasePage {
   }
 
   clickCreateViewButton() {
-    this.getCreateViewButton().click({force:true})
+    this.getCreateViewButton().click({ force: true })
     return this;
   }
 
-  clickSubmitViewCreationButton(){
-    this.getSubmitViewCreationButton().click({force:true})
+  clickSubmitViewCreationButton() {
+    this.getSubmitViewCreationButton().click({ force: true })
     return this
 
   }
@@ -160,10 +166,15 @@ class DashboardPage extends BasePage {
     this.getUserName(userName).should('be.visible');
     return this;
   }
-  
+
   clickViewTab(viewName) {
     this.getViewTab(viewName).click()
     return this;
+  }
+
+  clickFolderMoveDropdownOption() {
+    this.getMoveTheProject().click()
+    return new FolderPage();
   }
 
 };

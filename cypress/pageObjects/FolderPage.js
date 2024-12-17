@@ -8,7 +8,6 @@ class FolderPage extends BasePage {
     getFolderNameOnMainPanel = () => cy.get("#main-panel");
     getDashboardBreadcrumbsLink = () => cy.get('#breadcrumbs a[href="/"]');
     getNewItemMenuOption = () => cy.get('[href $= "/newJob"]');
-
     getNewNameField = () => cy.get('input[name="newName"]');
     getFolderUrl = () => cy.url({ decode: true });
     getItemName = () => cy.get('*.jenkins-table__link span');
@@ -16,47 +15,68 @@ class FolderPage extends BasePage {
     getDisplayNameField = () => cy.get('input[class="jenkins-input validated  "]');
     getDescriptionField = () => cy.get('[name$="description"]');
     getFolderDescription = () => cy.get('#view-message');
+    getMoveDestinationDropDownList = () => cy.get('select');
+    getMoveButton = () => cy.get('form > .jenkins-button');
+    getJobTitleLink = () => cy.get(".model-link.inside");
     getDisplayNameTooltip = () => cy.get('[tooltip="Help for feature: Display Name"]');
+  
 
-    verifyTitleConfigurationIsVisible () {
+
+    verifyTitleConfigurationIsVisible() {
         this.getTitleConfiguration()
             .should('be.visible');
         return this;
     }
 
-    clearNewNameField () {
+    clearNewNameField() {
         this.getNewNameField().clear();
         return this;
     }
 
-    typeNewFolderName (newFolderName) {
+    typeNewFolderName(newFolderName) {
         this.getNewNameField().type(newFolderName);
         return this;
-    }   
+    }
 
     verifyFolderUrl(folderName) {
         this.getFolderUrl().should('contain', folderName)
     }
 
-    clickCreateAJobLink () {
+    clickCreateAJobLink() {
         this.getCreateAJobLink().click()
         return new NewJobPage();
     }
 
-    typeDescription (description) {
-        this.getDescriptionField().type(description, {delay: 0});
+    typeDescription(description) {
+        this.getDescriptionField().type(description, { delay: 0 });
         return this;
     };
 
-    clickItemName (itemName) {
+    clickItemName(itemName) {
         this.getItemName().contains(itemName).click();
         return this;
+    }
+
+    clickFolderMoveDestinationDropdownList(ddOption) {
+        this.getMoveDestinationDropDownList().select(ddOption);
+        return this;
+    }
+
+    clickMoveButton() {
+        this.getMoveButton().click();
+        return this;
+    }
+
+    verifyFolderIsVisible() {
+        this.getJobTitleLink();
+        return this
     }
 
     typeDisplayName (displayName) {
         this.getDisplayNameField().type(displayName);
         return this;
     }
+
 };
 
 export default FolderPage;
