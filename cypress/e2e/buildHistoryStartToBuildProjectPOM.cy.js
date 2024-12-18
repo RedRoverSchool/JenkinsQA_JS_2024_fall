@@ -90,7 +90,7 @@ describe('US_08.001 | Build history > Start to build a project', () => {
                 });
         });
 
-        it.only('TC_08.001.05 | API Trigger a new build of created freestyleProject via API', () => {
+        it('TC_08.001.05 | API Trigger a new build of created freestyleProject via API', () => {
             
             cy.log('Preconditions: A new Jenkisn FreestyleProject is created')
             dashBoardPage.clickCreateJobLink()
