@@ -11,6 +11,7 @@ module.exports = {
             folderName: faker.company.buzzNoun(),
             longDescription: faker.lorem.sentences(50),
             userName: faker.person.lastName(),
+            tokenName: faker.person.lastName()
         };
         return Project;
     },
