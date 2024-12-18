@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import BasePage from "./basePage";
+import DashboardPage from "./DashboardPage";
 import NewJobPage from "./NewJobPage";
 
 class FolderPage extends BasePage {
@@ -19,7 +20,8 @@ class FolderPage extends BasePage {
     getMoveButton = () => cy.get('form > .jenkins-button');
     getJobTitleLink = () => cy.get(".model-link.inside");
     getDisplayNameTooltip = () => cy.get('[tooltip="Help for feature: Display Name"]');
-  
+    getDeleteFolderFromMenu = () => cy.get(':nth-child(4) > .task-link-wrapper > .task-link')
+    getYesOptionInPopUpWindow = () => cy.get('.jenkins-button--primary')
 
 
     verifyTitleConfigurationIsVisible() {
@@ -72,9 +74,19 @@ class FolderPage extends BasePage {
         return this
     }
 
-    typeDisplayName (displayName) {
+    typeDisplayName(displayName) {
         this.getDisplayNameField().type(displayName);
         return this;
+    }
+
+    clickDeleteFolderFromMenu() {
+        this.getDeleteFolderFromMenu().click();
+        return this;
+    }
+
+    clickYesOptionInPopUpWindow() {
+        this.getYesOptionInPopUpWindow().click();
+        return new DashboardPage();
     }
 
 };
