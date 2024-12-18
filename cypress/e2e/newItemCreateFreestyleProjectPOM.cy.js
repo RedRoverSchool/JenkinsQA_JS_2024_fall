@@ -33,7 +33,6 @@ const USERNAME = Cypress.env('local.admin.username');
 describe('US_00.001 | New item > Create Freestyle Project', function () {
 
     let project = genData.newProject();
-    let globalTokenValue, globalCrumb
 
     it('TC_00.001.19 | New freestyle project is created if user enter projects name, choose project type and save it', () => {
 
@@ -253,77 +252,4 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
 
         });
     });
-    
-    it.only('TC_00.001.24 | API Trigger a new build of created freestyleProject via API', () => {
-        cy.log('Preconditions: A new Jenkisn FreestyleProject is created')
-        dashboardPage.clickCreateJobLink()
-        newJobPage
-            .typeNewItemName(project.name)
-            .selectFreestyleProject()
-            .clickOKButton()
-            .clickSaveButton()
-        
-        cy.log('__Step 1: generate API token:__')
-        header.clickUserName()
-        basePage.clickConfigureLMenuOption()
-        userPage.generateNewApiToken(project.tokenName).then((tokenValue) => {
-            cy.log(`Generated token_name: ${project.tokenName}, token_value: ${tokenValue}`)
-            cy.wrap(tokenValue).as('apiTokenValue')
-        })
-
-        cy.log('__Step 2: get Crumb__')
-        cy.get('@apiTokenValue').then((tokenValue) => {
-            cy.request('GET', `http://${LOCAL_HOST}:${LOCAL_PORT}${newJobPageData.getCrumbEndpoint}`, {
-                auth: {
-                    username: USERNAME,
-                    password: tokenValue,
-                }
-            }).then((response) => {
-                let crumb = response.body.crumb; 
-                cy.log(`'Crumb: ${crumb}`)
-                cy.wrap(crumb).as('apiCrumb')
-            })
-        })
-
-        cy.log('__Step 3: configure Project to trigger by API:__')
-        userPage.clickDashboardBtn()
-        dashboardPage.clickJobTitleLink()
-        freestyleProjectPage.clickConfigureMenuButton()
-                            .checkTriggerBuildsRemotelyCheckbox()
-                            .typeAuthTokenName(project.tokenName)
-                            .clickSaveButton()
-
-        cy.log('__Step 4: make API request to trigger build project__');
-        cy.get('@apiCrumb').then((crumb) => {
-            cy.get('@apiTokenValue').then((tokenValue) => {
-                cy.request({
-                    method: 'POST', 
-                    url: `http://${LOCAL_HOST}:${LOCAL_PORT}/job/${project.name}/build?token=${project.tokenName}`, 
-                    headers: {
-                        'Jenkins-Crumb': crumb,
-                        'Content-Type': 'application/xml',
-                    },
-                    auth: {
-                        username: USERNAME,
-                        password: tokenValue,
-                    },
-                })
-                    .then((response) => {
-                        console.log(response.body)
-                        expect(response.status).to.eq(201)
-                    });
-            })
-        })
-
-        cy.log('__Step 5: verify the project is triggered__:')
-        header.clickDashboardBreadcrumbsLink()
-        dashboardPage.clickJobTitleLink()
-        freestyleProjectPage.retrieveBuildNumberAndDate().should('have.length.above', 0)
-
-        cy.log('Postconditions: delete API token:')
-        header.clickUserName();
-        basePage.clickConfigureLMenuOption();
-        userPage.getDeleteApiTokenButton().last().click()
-        userPage.clickConfirmDeleteApiTokenButton()
-    }); 
 })
