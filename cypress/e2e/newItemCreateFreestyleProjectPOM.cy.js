@@ -11,7 +11,7 @@ import BasePage from '../pageObjects/basePage';
 import UserPage from '../pageObjects/UserPage';
 
 import { newItem } from '../fixtures/messages.json'
-import genData from "../fixtures/genData";
+import genData from "../fixtures/genData.js";
 import message from "../fixtures/messages.json"
 import newJobPageData from "../fixtures/newJobPageData.json";
 
@@ -206,8 +206,8 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
         cy.log('step1: generate API token:');
         header.clickUserName();
         basePage.clickConfigureLMenuOption();
-        userPage.generateNewApiToken().then((token) => {
-            cy.log('Generated Token:', token);
+        userPage.generateNewApiToken(project.tokenName).then((tokenValue) => {
+            cy.log('Generated Token:', tokenValue);
     
             cy.log('step2: get Crumb');
             cy.request({
@@ -215,7 +215,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
                 url: `http://${LOCAL_HOST}:${LOCAL_PORT}${newJobPageData.getCrumbEndpoint}`, 
                 auth: {
                     username: USERNAME,
-                    password: token,
+                    password: tokenValue,
                 }
             }).then((response) => {
                 const crumb = response.body.crumb; 
@@ -231,7 +231,7 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
                     },
                     auth: {
                         username: USERNAME,
-                        password: token,
+                        password: tokenValue,
                     },
                     body: newJobPageData.simpleProjectXml,
                     failOnStatusCode: false,
@@ -252,5 +252,4 @@ describe('US_00.001 | New item > Create Freestyle Project', function () {
 
         });
     });
-    
 })
