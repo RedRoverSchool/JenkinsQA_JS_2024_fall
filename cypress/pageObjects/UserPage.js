@@ -18,6 +18,7 @@ class UserPage extends DashboardPage{
     getApiTokenValue = () => cy.get('span.new-token-value')
     getDeleteApiTokenButton = () => cy.get("a[data-confirm-title='Revoke Token']")
     getConfirmDeleteApiTokenButton = () => cy.get("button[data-id='ok']")
+    getNewTokenNameField = () => cy.get('.jenkins-input.token-name')
 
     checkCheckBox() {
         this.getInsensitiveSearchCheckBox().check({ force: true })
@@ -79,13 +80,19 @@ class UserPage extends DashboardPage{
        return this
     }
 
-    generateNewApiToken() {
+    typeNewTokenName(tokenName) {
+        this.getNewTokenNameField().type(tokenName)
+        return this
+    }
+
+    generateNewApiToken(tokenName) {
        return this.clickAddNewTokenButton()
+            .typeNewTokenName(tokenName)
             .clickGenerateApiTokenButton()
             .getApiTokenValue().should('be.visible')
-            .invoke('text').then((tokenValue) => {
-                const token = tokenValue.trim();  
-                return token; 
+            .invoke('text').then((tokenVal) => {
+                const tokenValue = tokenVal.trim();  
+                return tokenValue; 
             });
     }
 

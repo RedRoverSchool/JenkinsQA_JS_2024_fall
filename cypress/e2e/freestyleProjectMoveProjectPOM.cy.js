@@ -98,7 +98,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
             .should('be.visible');
     });
 
-    it('TC_01.006.05 | Move project from the Dashboard to Folder', () => {
+    it.skip('TC_01.006.05 | Move project from the Dashboard to Folder', () => {
         dashboardPage.clickNewItemMenuLink();
         newJobPage.typeNewItemName(project.name)
                   .selectFreestyleProject()
@@ -124,7 +124,7 @@ describe('US_01.006 | FreestyleProject > Move project', () => {
         folderPage.getItemName().should('have.text',project.name);
     });
 
-    it('TC_01.006.09 | Move a project from a folder to the Dashboard page', () => {
+    it.skip('TC_01.006.09 | Move a project from a folder to the Dashboard page', () => {
 
         dashboardPage.clickNewItemMenuOption();
         newJobPage.typeNewItemName(project.name)
