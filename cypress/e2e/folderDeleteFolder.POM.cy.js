@@ -7,7 +7,7 @@ import FolderPage from "../pageObjects/FolderPage";
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const folderPage = new FolderPage();
-const folder1 = 'Folder1';
+const folder1 = 'Folder';
 
 describe('US_04.003 | Folder > Delete Folder', () => {
     beforeEach(() => {
