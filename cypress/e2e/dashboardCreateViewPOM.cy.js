@@ -31,7 +31,7 @@ describe("US_16.002 | Dashboard > Create View", () => {
     header.clickJenkinsLogo();
 
     dashboardPage.clickNewItemMenuLink();
-    newJobPage.typeNewItemName(folder.name).selectFolder().clickOKButton();
+    newJobPage.typeNewItemName(folder.name).selectFolder().clickOKButton(); 
     freestyleProjectPage.clickSaveButton();
     header.clickJenkinsLogo();
   });
@@ -107,6 +107,18 @@ describe("US_16.002 | Dashboard > Create View", () => {
                .clickOKButton()
 
     dashboardPage.getItemName().should('have.text', project.name)         
+  });
+
+  it('TC_16.002.05 | Dashboard > Create View | Create "List view" from Dashboard', ()=> {
+
+    dashboardPage.clickAddViewLink()
+                 .typeViewName(project.name)
+                 .clickListViewRadio()
+                 .clickViewTypeOkButton()
+                 .clickSubmitListViewCreationButton()
+
+    cy.url().should('include', `/view/${project.name}`)
+    dashboardPage.getActiveTab().should('have.text', project.name)
   });
 
   it('TC_16.002.07 | Verify the possibility to configure different column sets for different views', () => {
