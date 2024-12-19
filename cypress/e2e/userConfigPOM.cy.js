@@ -14,18 +14,22 @@ const userPage = new UserPage();
 const basePage = new BasePage();
 const LOCAL_PORT = Cypress.env('local.port');
 const LOCAL_HOST = Cypress.env('local.host');
+let name = genData.newProject();
+let endPoint = configurePageData.userStatusEndpoint;
+let endPointParams = 'baseName=jenkins.dialogs&_=1734623853681'
+
 
 
 describe('US_13.003 | User > Config', () => {
-  let name = genData.newProject();
-  let endPoint = configurePageData.userStatusEndpoint
-
     it('TC_13.003.02 | Update Profile Description via Config Menu', () => {
         header.clickUserDropdownLink();
         header.clickUserConfigureItem();
         userPage.clearUserDescription();
         userPage.typeUserDescription(userDescription).invokeTextUserDescription();
         userPage.clickSaveButton();
+        cy.request({method: "GET",
+                    url: `http://${LOCAL_HOST}:${LOCAL_PORT}/${endPoint}?${endPointParams}`,
+                   }).then((response) => {expect(response.status).to.eq(200)})
         userPage.getUserAvatar().should('be.visible');
         userPage.getUserDescription().should('have.text', userDescription);
     })
@@ -61,7 +65,7 @@ describe('US_13.003 | User > Config', () => {
   });
 
   it('TC_13.003.06 | Rename user', () => {
-    cy.intercept("GET", `http://${LOCAL_HOST}:${LOCAL_PORT}/${endPoint}`).as('getRequest')
+    cy.intercept("GET", `http://${LOCAL_HOST}:${LOCAL_PORT}/${endPoint}*`).as('getRequest')
     header.clickUserName();
     basePage.clickConfigureLMenuOption()
     userPage.clearUserNameFieldFromConfig()

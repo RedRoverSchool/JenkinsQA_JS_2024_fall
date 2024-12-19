@@ -4,5 +4,5 @@
     "sideBarLinks": [   
         
     ],
-    "userStatusEndpoint": "i18n/resourceBundle*"
+    "userStatusEndpoint": "i18n/resourceBundle"
 }
