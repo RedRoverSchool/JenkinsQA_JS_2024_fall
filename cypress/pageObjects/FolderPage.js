@@ -20,7 +20,7 @@ class FolderPage extends BasePage {
     getMoveButton = () => cy.get('form > .jenkins-button');
     getJobTitleLink = () => cy.get(".model-link.inside");
     getDisplayNameTooltip = () => cy.get('[tooltip="Help for feature: Display Name"]');
-    getDeleteFolderFromMenu = () => cy.get(':nth-child(4) > .task-link-wrapper > .task-link')
+    getDeleteFolderFromMenu = () => cy.get('a[data-title="Delete Folder"]')
     getYesOptionInPopUpWindow = () => cy.get('.jenkins-button--primary')
 
 
