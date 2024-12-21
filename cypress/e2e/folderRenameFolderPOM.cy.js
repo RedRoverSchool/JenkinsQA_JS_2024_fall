@@ -75,7 +75,7 @@ describe('US_04.001 | Folder > Rename Folder', () => {
                  .should('have.value', newFolderName.name)
     });
 
-    it.only("TC_04.001.10 | Rename folder from drop-down menu", () => {
+    it("TC_04.001.10 | Rename folder from drop-down menu", () => {
         cy.intercept('GET', '**/job/*').as('jobRequest');
 
         dashboardPage.openDropdownForItem(folderName.name)
@@ -83,7 +83,7 @@ describe('US_04.001 | Folder > Rename Folder', () => {
         folderPage.clearNewNameField()
             .typeNewFolderName(newFolderName.name)
             .clickRenameButton()
-            
+
         cy.request({
             method: "GET",
             url: `http://${LOCAL_HOST}:${LOCAL_PORT}/${endPoint}?${endPointParams}`,
