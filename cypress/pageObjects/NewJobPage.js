@@ -10,7 +10,7 @@ class NewJobPage extends BasePage{
     getItemNameInvalidErrorMessage = () => cy.get("#itemname-invalid");
     getUnsaveItemInvalidName = () => cy.get("#itemname-invalid").contains(/is an unsafe character/);
     getEmptyItemInvalidName = () => cy.get("#itemname-required");
-    getFolderType = () => cy.get('.label');
+    getFolderType = () => cy.get('.label').contains('Folder');
     getOrganizationFolderType = () => cy.get('[class="jenkins_branch_OrganizationFolder"]');
     getAllItemsList = () => cy.get('#items li');
     getUrlConfigurePageField = () => cy.location('href');

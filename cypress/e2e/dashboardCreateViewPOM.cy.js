@@ -31,7 +31,7 @@ describe("US_16.002 | Dashboard > Create View", () => {
     header.clickJenkinsLogo();
 
     dashboardPage.clickNewItemMenuLink();
-    newJobPage.typeNewItemName(folder.name).selectFolder().clickOKButton(); 
+    newJobPage.typeNewItemName(folder.name).selectFolder().clickOKButton();
     freestyleProjectPage.clickSaveButton();
     header.clickJenkinsLogo();
   });
