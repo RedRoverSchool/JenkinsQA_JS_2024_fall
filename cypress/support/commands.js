@@ -54,3 +54,19 @@ Cypress.Commands.add('createItemByType',(itemName, itemType) => {
     let endPoint = itemName.replace(/ /g, '%20');
     cy.url().should('contain', `${endPoint}`);
 });
+
+Cypress.Commands.add('getCrumbToken', (baseUrl) => {
+    return cy.request({
+      method: 'GET',
+      url: `${baseUrl}/crumbIssuer/api/json`,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      expect(response.status).to.eq(200);
+      return {
+        crumb: response.body.crumb,
+        crumbField: response.body.crumbRequestField
+      };
+    });
+});
