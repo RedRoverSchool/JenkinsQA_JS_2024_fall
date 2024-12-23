@@ -14,13 +14,15 @@ const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const header = new Header();
 
+const LOCAL_PORT = Cypress.env("local.port");
+const LOCAL_HOST = Cypress.env("local.host");
 const { projectNameInvalid, errorMessageColor } = allKeys;
 
 describe("US_00.002 | New Item > Create Pipeline Project", () => {
   let project = genData.newProject();
 
   const randomItemName = faker.commerce.productName();
-  const baseUrl = 'http://localhost:8080';
+  const baseUrl = `http://${LOCAL_HOST}:${LOCAL_PORT}`;
 
   it("TC_00.002.01 | Special characters are not allowed in the project name", () => {
     dashboardPage
