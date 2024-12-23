@@ -5,6 +5,7 @@ import NewJobPage from "../pageObjects/NewJobPage";
 import FolderPage from "../pageObjects/FolderPage";
 import Header from "../pageObjects/Header";
 import genData from "../fixtures/genData";
+import configurePageData from "../fixtures/configurePageData.json";
 
 const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
@@ -12,6 +13,10 @@ const folderPage = new FolderPage();
 const header = new Header();
 const folderName = genData.newProject();
 const newFolderName = genData.newProject();
+const LOCAL_PORT = Cypress.env('local.port');
+const LOCAL_HOST = Cypress.env('local.host');
+let endPoint = configurePageData.userStatusEndpoint;
+let endPointParams = 'baseName=jenkins.dialogs&_=1734623853681'
 
 describe('US_04.001 | Folder > Rename Folder', () => {
 
@@ -70,12 +75,22 @@ describe('US_04.001 | Folder > Rename Folder', () => {
                  .should('have.value', newFolderName.name)
     });
 
-    it("TC_04.001.05 | Rename folder from drop-down menu", () => {
+    it("TC_04.001.10 | Rename folder from drop-down menu", () => {
+        cy.intercept('GET', '**/job/*').as('jobRequest');
+
         dashboardPage.openDropdownForItem(folderName.name)
             .clickRenameDropdownOption();
         folderPage.clearNewNameField()
             .typeNewFolderName(newFolderName.name)
             .clickRenameButton()
+
+        cy.request({
+            method: "GET",
+            url: `http://${LOCAL_HOST}:${LOCAL_PORT}/${endPoint}?${endPointParams}`,
+        }).then((response) => { expect(response.status).to.eq(200) })
+        cy.wait('@jobRequest').then(({ request }) => {
+            expect(request.url).to.include(`/job/${newFolderName.name}`);
+        });
 
         folderPage.getFolderNameOnMainPanel()
             .should('include.text', `${newFolderName.name}`);

@@ -16,7 +16,7 @@ const LOCAL_PORT = Cypress.env('local.port');
 const LOCAL_HOST = Cypress.env('local.host');
 let name = genData.newProject();
 let endPoint = configurePageData.userStatusEndpoint;
-let endPointParams = 'baseName=jenkins.dialogs&_=1734623853681'
+let endPointParams = 'baseName=jenkins.dialogs&_=1734802732188'
 
 
 
