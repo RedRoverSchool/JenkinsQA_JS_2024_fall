@@ -7,7 +7,7 @@ const searchResultsData = {
         'd': ['admin', 'Built-In Node'],
         'e': ['manage', 'configure', 'Built-In Node'],
         'f': ['config', 'configure'],
-        'g': ['log', 'configure', 'manage', 'configure'],
+        'g': ['log', 'config', 'manage', 'configure'],
         'i': ['admin', 'config', 'configure', 'Built-In Node'],
         'l': ['log', 'All', 'Built-In Node'],
         'm': ['manage', 'admin'],

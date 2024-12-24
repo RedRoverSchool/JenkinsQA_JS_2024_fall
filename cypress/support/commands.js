@@ -26,6 +26,7 @@
 import '@testing-library/cypress/add-commands';
 import DashboardPage from '../pageObjects/DashboardPage';
 import NewJobPage from '../pageObjects/NewJobPage';
+import newJobPageData from '../fixtures/newJobPageData.json'
 
 const USERNAME = Cypress.env('local.admin.username');
 const PASSWORD = Cypress.env('local.admin.password');
@@ -53,4 +54,20 @@ Cypress.Commands.add('createItemByType',(itemName, itemType) => {
             .clickSaveButton();
     let endPoint = itemName.replace(/ /g, '%20');
     cy.url().should('contain', `${endPoint}`);
+});
+
+Cypress.Commands.add('getCrumbToken', (baseUrl) => {
+    return cy.request({
+      method: 'GET',
+      url: `${baseUrl}/${newJobPageData.getCrumbEndpoint}`,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      expect(response.status).to.eq(200);
+      return {
+        crumb: response.body.crumb,
+        crumbField: response.body.crumbRequestField
+      };
+    });
 });
