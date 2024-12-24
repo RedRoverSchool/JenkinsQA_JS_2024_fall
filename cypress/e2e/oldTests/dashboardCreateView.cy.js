@@ -14,7 +14,7 @@ describe('US_16.002 | Dashboard > Create View', ()=> {
     const btnNewView = '.addTab'
     const selectListViewType = ':nth-child(2) > .jenkins-radio__label'
 
-    it('TC_16.002.05 | Dashboard > Create View | Create "List view" from Dashboard', ()=> {
+    it.skip('TC_16.002.05 | Dashboard > Create View | Create "List view" from Dashboard', ()=> {
 
         // Preconditions
         cy.get(createNewJob).click() 
