@@ -9,7 +9,7 @@ class FreestyleProjectPage extends BasePage {
     getAddDescriptionButton = () => cy.get('[href="editDescription"]');
     getProjectDestination = () => cy.get('select[name="destination"]');
     getProjectInfoSection = () => cy.get('#main-panel');
-    getDeleteMenuItem = () => cy.get('a[data-title="Delete Project"]');// please rename to getDeleteProjectMenuOption since the option name is "Delete Project"
+    getDeleteProjectMenuOption = () => cy.get('a[data-title="Delete Project"]');// please rename to getDeleteProjectMenuOption since the option name is "Delete Project"
     getNewNameField = () => cy.get('[name="newName"]');
     getConfirmationMessageDialog = () => cy.get('.jenkins-dialog');
     getConfirmationMessageTitle = () => cy.get('.jenkins-dialog__title');
@@ -39,7 +39,7 @@ class FreestyleProjectPage extends BasePage {
     }
 
     clickDeleteMenuItem () {
-        this.getDeleteMenuItem().click();
+        this.getDeleteProjectMenuOption().click();
         return this;
     }
 
