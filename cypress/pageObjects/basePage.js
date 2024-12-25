@@ -8,7 +8,7 @@ class BasePage extends Header {
     getRenameMenuOption = () => cy.get('[href*="rename"]');
     getBuildNowMenuOption = () => cy.contains('a[href*="build"]',"Build Now");
     getNewItemLink = () => cy.get('a[href="/view/all/newJob"]');//please delete as duplicate for getNewItemMenuOption
-    getConfigureMenuOption = () => cy.get('#side-panel [href$="configure"]');
+    getConfigureMenuOption = () => cy.get('a[href$="configure"]');
 
     getMoveButton = () => cy.findByRole('button',{ name: /Move/ });
     getYesButton = () => cy.findByRole('button',{ name: /Yes/ });

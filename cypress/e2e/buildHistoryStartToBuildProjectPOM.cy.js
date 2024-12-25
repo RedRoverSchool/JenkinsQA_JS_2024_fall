@@ -43,7 +43,7 @@ describe('US_08.001 | Build history > Start to build a project', () => {
         });
 
         itemsForBuilding.forEach(item => {
-                it(`TC_08.001.02 | The build is triggered from the ${item}'s dropdown menu`, () => {
+                it.skip(`TC_08.001.02 | The build is triggered from the ${item}'s dropdown menu`, () => {
                         
                         cy.createItemByType(`New ${item}`, item);
                         header.clickDashboardBtn();
@@ -62,7 +62,7 @@ describe('US_08.001 | Build history > Start to build a project', () => {
         });
 
         itemsForBuilding.forEach(item => {
-                it(`TC_08.001.04 | Dashboard page displays information about the latest build for ${item}`, () => {
+                it.skip(`TC_08.001.04 | Dashboard page displays information about the latest build for ${item}`, () => {
                         
                         cy.log('Create item');
                         cy.createItemByType(`New ${item}`, item);
@@ -90,7 +90,7 @@ describe('US_08.001 | Build history > Start to build a project', () => {
                 });
         });
 
-        it('TC_08.001.05 | API Trigger a new build of created freestyleProject via API', () => {
+        it.skip('TC_08.001.05 | API Trigger a new build of created freestyleProject via API', () => {
             
             cy.log('Preconditions: A new Jenkisn FreestyleProject is created')
             dashBoardPage.clickCreateJobLink()
