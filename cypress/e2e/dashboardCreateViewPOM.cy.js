@@ -109,6 +109,18 @@ describe("US_16.002 | Dashboard > Create View", () => {
     dashboardPage.getItemName().should('have.text', project.name)         
   });
 
+  it('TC_16.002.05 | Dashboard > Create View | Create "List view" from Dashboard', ()=> {
+
+    dashboardPage.clickAddViewLink()
+                 .typeViewName(project.name)
+                 .clickListViewRadio()
+                 .clickViewTypeOkButton()
+                 .clickSubmitListViewCreationButton()
+
+    cy.url().should('include', `/view/${project.name}`)
+    dashboardPage.getActiveTab().should('have.text', project.name)
+  });
+
   it('TC_16.002.07 | Verify the possibility to configure different column sets for different views', () => {
 
     cy.log('Creating the 1st View');

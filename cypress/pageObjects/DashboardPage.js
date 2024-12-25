@@ -38,8 +38,9 @@ class DashboardPage extends BasePage {
   getLastStableColumn = () => cy.contains('.sortheader', 'Last Stable');
   getWeatherColumn = () => cy.get('a[href="#"]').contains('W');
   getDescriptionColumn = () => cy.get('a[href="#"]').contains('Description');
-
-
+  getViewTypeOkButton = () => cy.get('#ok');
+  getSubmitListViewCreationButton = () => cy.get('.jenkins-submit-button');
+  getActiveTab = () => cy.get('.tab.active')
 
   selectNewItemFromDashboardChevron() {
     this.getJobTableDropdownItem().each(($els) => {
@@ -175,6 +176,16 @@ class DashboardPage extends BasePage {
   clickFolderMoveDropdownOption() {
     this.getMoveTheProject().click()
     return new FolderPage();
+  }
+
+  clickViewTypeOkButton() {
+    this.getViewTypeOkButton().click()
+    return this;
+  }
+
+  clickSubmitListViewCreationButton() {
+    this.getSubmitListViewCreationButton().click()
+    return this;
   }
 
 };
