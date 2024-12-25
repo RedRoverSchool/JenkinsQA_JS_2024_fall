@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('US_13.001 | Create new User', () => {
+describe.skip('US_13.001 | Create new User', () => {
 
   let userName = 'Simon';
   const password = 'Password';

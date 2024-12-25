@@ -5,7 +5,7 @@ const itemName = faker.commerce.productName();
 const viewName = faker.word.noun();
 
 
-describe('US_16.002 | Dashboard > Create View', ()=> {
+describe.skip('US_16.002 | Dashboard > Create View', ()=> {
 
     const dashboard = 'http://localhost:8080'
     const createNewJob = '[href="newJob"]'

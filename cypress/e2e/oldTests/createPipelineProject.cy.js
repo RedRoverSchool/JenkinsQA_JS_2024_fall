@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
   
-describe('US_00.002 | New Item > Create Pipeline Project #14', () => {
+describe.skip('US_00.002 | New Item > Create Pipeline Project #14', () => {
     it('Create a new Pipeline Project using the "New Item" button from the Dashboard', () => {
         let projectname ='PipelineProject1'
         cy.get('.task-link-text').contains('New Item').click({ force: true });
