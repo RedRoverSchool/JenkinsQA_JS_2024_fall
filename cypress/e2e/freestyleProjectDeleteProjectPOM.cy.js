@@ -17,6 +17,10 @@ const dashboardPage = new DashboardPage();
 const newJobPage = new NewJobPage();
 const freestyleProjectPage = new FreestyleProjectPage();
 const header = new Header();
+const LOCAL_PORT = Cypress.env('local.port');
+const LOCAL_HOST = Cypress.env('local.host');
+let endPoint = configurePageData.userStatusEndpoint;
+let endPointParams = 'baseName=jenkins.dialogs&_=1735039532691'
 
 describe('US_01.004 | FreestyleProject > Delete Project', () => {
 
@@ -143,5 +147,38 @@ describe('US_01.004 | FreestyleProject > Delete Project', () => {
                             .should('have.text', `${confirmationMessage.question} ‘${project.name}’?`);
 
     });
+
+
+it("TC_01.004.02 |Freestyle project |Delete Project on Project Page", () => {
+    dashboardPage.clickJobName(project.name);
+    freestyleProjectPage.getDeleteProjectMenuOption()
+      .should("be.visible")
+      .click();
+    freestyleProjectPage.getConfirmationMessageDialog().should("be.visible");
+    freestyleProjectPage
+      .getConfirmationMessageTitle()
+      .should("have.text", "Delete Project");
+
+
+    dashboardPage
+      .getYesButton()
+      .should("exist")
+      .and("not.be.disabled")
+      .click();
+    cy.request({
+      method: "GET",
+      url: `http://${LOCAL_HOST}:${LOCAL_PORT}/${endPoint}?${endPointParams}`
+
+  }).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+
+    cy.request("GET", `http://${LOCAL_HOST}:${LOCAL_PORT}`).then(
+      (response) => {
+        expect(response.status).to.eq(200);
+      }
+    );
+    cy.get("span").contains(project.name).should("not.exist");
+  });
 
 });
