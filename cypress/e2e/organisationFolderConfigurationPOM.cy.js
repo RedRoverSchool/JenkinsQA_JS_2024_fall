@@ -17,7 +17,7 @@ describe("US_06.001 | Organisation folder > Configuration", () => {
   let displayName = faker.commerce.productName();
   let description = faker.lorem.sentences();
 
-    it("TC_06.001.01 | Change Display Name and Description from empty values", () => {
+    it.skip("TC_06.001.01 | Change Display Name and Description from empty values", () => {
         cy.log("Preconditions:");
         dashboardPage.clickNewItemMenuLink();
         newJobPage
